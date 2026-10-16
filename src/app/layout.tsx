@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
 
+import { OfflineBanner } from "@/components/shared/offline-banner";
+import { SkipLink } from "@/components/shared/skip-link";
+import { Toaster } from "@/components/ui/toaster";
+import { fontVariables } from "@/styles/fonts";
+
 import "@/styles/globals.css";
 
 export const metadata: Metadata = {
@@ -9,8 +14,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className="h-full antialiased">
-      <body className="flex min-h-full flex-col">{children}</body>
+    <html lang="en" className={`${fontVariables} h-full antialiased`}>
+      <body className="flex min-h-full flex-col">
+        <SkipLink />
+        <OfflineBanner />
+        {children}
+        <Toaster />
+      </body>
     </html>
   );
 }
