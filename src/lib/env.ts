@@ -6,6 +6,8 @@ export const env = createEnv({
     SENTRY_AUTH_TOKEN: z.string().min(1).optional(),
     SENTRY_ORG: z.string().min(1).optional(),
     SENTRY_PROJECT: z.string().min(1).optional(),
+    // Serves /dev/** in a production build. Only the Playwright web server sets it, never Vercel.
+    DEV_ROUTES: z.enum(["true"]).optional(),
   },
   client: {
     NEXT_PUBLIC_CONVEX_URL: z.url(),
