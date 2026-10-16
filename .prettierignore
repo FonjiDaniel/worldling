@@ -1,0 +1,12 @@
+pnpm-lock.yaml
+.next
+out
+build
+coverage
+playwright-report
+test-results
+convex/_generated
+docs/SPEC.md
+CLAUDE.md
+AGENTS.md
+.convex
