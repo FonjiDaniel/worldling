@@ -9,6 +9,7 @@
  */
 
 import type * as lib_env from "../lib/env.js";
+import type * as shared_graphemes from "../shared/graphemes.js";
 
 import type {
   ApiFromModules,
@@ -18,6 +19,7 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   "lib/env": typeof lib_env;
+  "shared/graphemes": typeof shared_graphemes;
 }>;
 
 /**

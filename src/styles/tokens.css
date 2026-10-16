@@ -1,5 +1,225 @@
-/* Design tokens. Phase 1 replaces these with the full §3.2 set. */
+/*
+ * Design tokens (SPEC §3.2, ADR-013). The only place raw color, size and time values live.
+ * Color values come from docs/brand/Worldling-brand-colors/02-color-files/worldling-colors.css.
+ * Components use the semantic names. Scale steps are for art and charts, not text pairs.
+ */
 @theme {
-  --color-background: oklch(0.16 0.03 270);
-  --color-foreground: oklch(0.96 0.01 270);
+  --color-*: initial;
+
+  /* Surfaces */
+  --color-void: #07071a;
+  --color-surface: #11122b;
+  --color-surface-raised: #1a1b3a;
+  --color-glass: color-mix(in srgb, #11122b 62%, transparent);
+  --color-scrim: color-mix(in srgb, #07071a 72%, transparent);
+  --color-line: #34365a;
+  --color-control-line: #696c91;
+
+  /* Text */
+  --color-text: #f4f1ea;
+  --color-text-muted: #9a9bb8;
+  --color-link: #a99fff;
+
+  /* Brand */
+  --color-primary: #7c6cff;
+  --color-accent: #3fe0c5;
+  --color-warm: #ff8a5b;
+  --color-warm-hover: #ff9d75;
+  --color-warm-active: #d96a40;
+  --color-primary-hover: #9182ff;
+
+  /* Ink on bright fills (Starlight fails AA on these) */
+  --color-on-primary: #07071a;
+  --color-on-accent: #07071a;
+  --color-on-warm: #07071a;
+  --color-on-danger: #07071a;
+
+  /* Status */
+  --color-success: #68dfa9;
+  --color-warning: #f4c969;
+  --color-danger: #ff7b91;
+  --color-info: #8ab4ff;
+  --color-success-surface: #1b2b3a;
+  --color-warning-surface: #2c2832;
+  --color-danger-surface: #2e1f37;
+  --color-info-surface: #202544;
+
+  /* Scales */
+  --color-nebula-50: #f3f1ff;
+  --color-nebula-100: #e8e3ff;
+  --color-nebula-200: #cbc2ff;
+  --color-nebula-300: #a99fff;
+  --color-nebula-400: #9182ff;
+  --color-nebula-500: #7c6cff;
+  --color-nebula-600: #6550db;
+  --color-nebula-700: #503eaf;
+  --color-nebula-800: #3d3083;
+  --color-nebula-900: #2a2257;
+  --color-nebula-950: #17132e;
+  --color-aurora-50: #e9fcf6;
+  --color-aurora-100: #ccf8ed;
+  --color-aurora-200: #a2f1df;
+  --color-aurora-300: #76ebd3;
+  --color-aurora-400: #57e5cb;
+  --color-aurora-500: #3fe0c5;
+  --color-aurora-600: #28b49e;
+  --color-aurora-700: #1e8c7c;
+  --color-aurora-800: #196b61;
+  --color-aurora-900: #164e48;
+  --color-aurora-950: #0c2d2a;
+  --color-sunrise-50: #fff4ed;
+  --color-sunrise-100: #ffe5d7;
+  --color-sunrise-200: #ffcdb6;
+  --color-sunrise-300: #ffb394;
+  --color-sunrise-400: #ff9d75;
+  --color-sunrise-500: #ff8a5b;
+  --color-sunrise-600: #d96a40;
+  --color-sunrise-700: #ac4e2e;
+  --color-sunrise-800: #823c26;
+  --color-sunrise-900: #5b2d21;
+  --color-sunrise-950: #331b16;
+
+  /* Type scale (§3.3): fluid, body never below 1rem */
+  --text-*: initial;
+  --text-xs: 0.8125rem;
+  --text-xs--line-height: 1.4;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.45;
+  --text-base: 1rem;
+  --text-base--line-height: 1.6;
+  --text-lg: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+  --text-lg--line-height: 1.5;
+  --text-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --text-xl--line-height: 1.35;
+  --text-2xl: clamp(1.5rem, 1.25rem + 1.1vw, 2rem);
+  --text-2xl--line-height: 1.2;
+  --text-3xl: clamp(2rem, 1.5rem + 2vw, 3rem);
+  --text-3xl--line-height: 1.1;
+  --text-display: clamp(2.75rem, 1.75rem + 4.5vw, 5.5rem);
+  --text-display--line-height: 1;
+
+  /* Radius */
+  --radius-*: initial;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.875rem;
+  --radius-lg: 1.375rem;
+  --radius-full: 9999px;
+
+  /* Motion (mirrored in src/lib/motion.ts) */
+  --ease-*: initial;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-soft: cubic-bezier(0.37, 0, 0.63, 1);
+
+  /* Breakpoints (§3.6) */
+  --breakpoint-*: initial;
+  --breakpoint-sm: 40rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 80rem;
+
+  /* Sizes */
+  --spacing-touch: 2.75rem;
+  --container-prose: 40rem;
+  --container-panel: 28rem;
+  --container-page: 72rem;
+  --blur-glass: 1rem;
+  --shadow-raised: 0 0.75rem 2rem -0.5rem color-mix(in srgb, #07071a 80%, transparent);
+
+  /* Animations used by overlays (Radix waits for animationend on exit) */
+  --animate-fade-in: fade-in var(--duration-base) var(--ease-out);
+  --animate-fade-out: fade-out var(--duration-fast) var(--ease-in-out);
+  --animate-pop-in: pop-in var(--duration-base) var(--ease-out);
+  --animate-pop-out: pop-out var(--duration-fast) var(--ease-in-out);
+  --animate-sheet-up: sheet-up var(--duration-slow) var(--ease-out);
+  --animate-sheet-down: sheet-down var(--duration-base) var(--ease-in-out);
+  --animate-sheet-left: sheet-left var(--duration-slow) var(--ease-out);
+  --animate-sheet-right: sheet-right var(--duration-base) var(--ease-in-out);
+  --animate-shimmer: shimmer 1.6s var(--ease-soft) infinite;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+  @keyframes fade-out {
+    to {
+      opacity: 0;
+    }
+  }
+  @keyframes pop-in {
+    from {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+  }
+  @keyframes pop-out {
+    to {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+  }
+  @keyframes sheet-up {
+    from {
+      transform: translateY(100%);
+    }
+  }
+  @keyframes sheet-down {
+    to {
+      transform: translateY(100%);
+    }
+  }
+  @keyframes sheet-left {
+    from {
+      transform: translateX(100%);
+    }
+  }
+  @keyframes sheet-right {
+    to {
+      transform: translateX(100%);
+    }
+  }
+  @keyframes shimmer {
+    50% {
+      opacity: 0.55;
+    }
+  }
+}
+
+/* Fonts resolve at the element, so next/font variables set on <html> apply (src/styles/fonts.ts). */
+@theme inline {
+  --font-*: initial;
+  --font-display: var(--font-display-face), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-sans-face), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono-face), ui-monospace, monospace;
+}
+
+/* Tokens with no Tailwind namespace. */
+:root {
+  --duration-fast: 160ms;
+  --duration-base: 260ms;
+  --duration-slow: 480ms;
+  --duration-flight: 1600ms;
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+  --gradient-brand: linear-gradient(135deg, #7c6cff 0%, #3fe0c5 100%);
+  --space-backdrop:
+    radial-gradient(ellipse at 20% 0%, #17132e 0%, transparent 60%),
+    radial-gradient(ellipse at 90% 100%, #0c2d2a 0%, transparent 55%), #07071a;
+}
+
+@utility duration-fast {
+  transition-duration: var(--duration-fast);
+}
+@utility duration-base {
+  transition-duration: var(--duration-base);
+}
+@utility duration-slow {
+  transition-duration: var(--duration-slow);
+}
+@utility bg-gradient-brand {
+  background-image: var(--gradient-brand);
+}
+@utility bg-space {
+  background: var(--space-backdrop);
 }
