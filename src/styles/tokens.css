@@ -1,0 +1,5 @@
+/* Design tokens. Phase 1 replaces these with the full §3.2 set. */
+@theme {
+  --color-background: oklch(0.16 0.03 270);
+  --color-foreground: oklch(0.96 0.01 270);
+}
