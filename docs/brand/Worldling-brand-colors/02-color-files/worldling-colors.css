@@ -1,0 +1,56 @@
+/* Worldling, Step 3: sRGB color tokens only. Full theme handoff follows in Step 8. */
+:root {
+  --color-void: #07071A; /* Void */
+  --color-surface: #11122B; /* Deep Space */
+  --color-surface-raised: #1A1B3A; /* Orbit */
+  --color-text: #F4F1EA; /* Starlight */
+  --color-text-muted: #9A9BB8; /* Dust */
+  --color-primary: #7C6CFF; /* Nebula */
+  --color-accent: #3FE0C5; /* Aurora */
+  --color-warm: #FF8A5B; /* Sunrise */
+  --color-link: #A99FFF; /* Nebula 300 */
+  --color-line: #34365A; /* Line */
+  --color-control-line: #696C91; /* Control Line */
+  --color-success: #68DFA9; /* Success */
+  --color-warning: #F4C969; /* Warning */
+  --color-danger: #FF7B91; /* Danger */
+  --color-info: #8AB4FF; /* Info */
+  --color-success-surface: #1B2B3A; /* Success surface */
+  --color-warning-surface: #2C2832; /* Warning surface */
+  --color-danger-surface: #2E1F37; /* Danger surface */
+  --color-info-surface: #202544; /* Info surface */
+  --color-nebula-50: #F3F1FF; /* Nebula 50 */
+  --color-nebula-100: #E8E3FF; /* Nebula 100 */
+  --color-nebula-200: #CBC2FF; /* Nebula 200 */
+  --color-nebula-300: #A99FFF; /* Nebula 300 */
+  --color-nebula-400: #9182FF; /* Nebula 400 */
+  --color-nebula-500: #7C6CFF; /* Nebula 500 */
+  --color-nebula-600: #6550DB; /* Nebula 600 */
+  --color-nebula-700: #503EAF; /* Nebula 700 */
+  --color-nebula-800: #3D3083; /* Nebula 800 */
+  --color-nebula-900: #2A2257; /* Nebula 900 */
+  --color-nebula-950: #17132E; /* Nebula 950 */
+  --color-aurora-50: #E9FCF6; /* Aurora 50 */
+  --color-aurora-100: #CCF8ED; /* Aurora 100 */
+  --color-aurora-200: #A2F1DF; /* Aurora 200 */
+  --color-aurora-300: #76EBD3; /* Aurora 300 */
+  --color-aurora-400: #57E5CB; /* Aurora 400 */
+  --color-aurora-500: #3FE0C5; /* Aurora 500 */
+  --color-aurora-600: #28B49E; /* Aurora 600 */
+  --color-aurora-700: #1E8C7C; /* Aurora 700 */
+  --color-aurora-800: #196B61; /* Aurora 800 */
+  --color-aurora-900: #164E48; /* Aurora 900 */
+  --color-aurora-950: #0C2D2A; /* Aurora 950 */
+  --color-sunrise-50: #FFF4ED; /* Sunrise 50 */
+  --color-sunrise-100: #FFE5D7; /* Sunrise 100 */
+  --color-sunrise-200: #FFCDB6; /* Sunrise 200 */
+  --color-sunrise-300: #FFB394; /* Sunrise 300 */
+  --color-sunrise-400: #FF9D75; /* Sunrise 400 */
+  --color-sunrise-500: #FF8A5B; /* Sunrise 500 */
+  --color-sunrise-600: #D96A40; /* Sunrise 600 */
+  --color-sunrise-700: #AC4E2E; /* Sunrise 700 */
+  --color-sunrise-800: #823C26; /* Sunrise 800 */
+  --color-sunrise-900: #5B2D21; /* Sunrise 900 */
+  --color-sunrise-950: #331B16; /* Sunrise 950 */
+  --gradient-worldling: linear-gradient(135deg, #7C6CFF 0%, #3FE0C5 100%);
+}

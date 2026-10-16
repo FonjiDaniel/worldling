@@ -1,0 +1,3277 @@
+{
+  "brand": "Worldling",
+  "stage": 3,
+  "version": "1.0",
+  "color_space": "sRGB",
+  "canonical_representation": "HEX; RGB is exact. HSL is rounded to one decimal for reference.",
+  "foundation": [
+    {
+      "name": "Void",
+      "hex": "#07071A",
+      "rgb": [
+        7,
+        7,
+        26
+      ],
+      "hsl": {
+        "h": 240.0,
+        "s": 57.6,
+        "l": 6.5
+      },
+      "role": "Main canvas; ink on bright filled controls.",
+      "token": "--color-void"
+    },
+    {
+      "name": "Deep Space",
+      "hex": "#11122B",
+      "rgb": [
+        17,
+        18,
+        43
+      ],
+      "hsl": {
+        "h": 237.7,
+        "s": 43.3,
+        "l": 11.8
+      },
+      "role": "Panels, cards, navigation and status containers.",
+      "token": "--color-surface"
+    },
+    {
+      "name": "Orbit",
+      "hex": "#1A1B3A",
+      "rgb": [
+        26,
+        27,
+        58
+      ],
+      "hsl": {
+        "h": 238.1,
+        "s": 38.1,
+        "l": 16.5
+      },
+      "role": "Raised panels, menus and nested surfaces.",
+      "token": "--color-surface-raised"
+    },
+    {
+      "name": "Starlight",
+      "hex": "#F4F1EA",
+      "rgb": [
+        244,
+        241,
+        234
+      ],
+      "hsl": {
+        "h": 42.0,
+        "s": 31.3,
+        "l": 93.7
+      },
+      "role": "Headings, body copy and primary icons on dark.",
+      "token": "--color-text"
+    },
+    {
+      "name": "Dust",
+      "hex": "#9A9BB8",
+      "rgb": [
+        154,
+        155,
+        184
+      ],
+      "hsl": {
+        "h": 238.0,
+        "s": 17.4,
+        "l": 66.3
+      },
+      "role": "Secondary copy, metadata and supporting labels.",
+      "token": "--color-text-muted"
+    },
+    {
+      "name": "Nebula",
+      "hex": "#7C6CFF",
+      "rgb": [
+        124,
+        108,
+        255
+      ],
+      "hsl": {
+        "h": 246.5,
+        "s": 100.0,
+        "l": 71.2
+      },
+      "role": "Primary brand, selected controls and secondary actions.",
+      "token": "--color-primary"
+    },
+    {
+      "name": "Aurora",
+      "hex": "#3FE0C5",
+      "rgb": [
+        63,
+        224,
+        197
+      ],
+      "hsl": {
+        "h": 169.9,
+        "s": 72.2,
+        "l": 56.3
+      },
+      "role": "Growth details, bloom accents and focus color on dark.",
+      "token": "--color-accent"
+    },
+    {
+      "name": "Sunrise",
+      "hex": "#FF8A5B",
+      "rgb": [
+        255,
+        138,
+        91
+      ],
+      "hsl": {
+        "h": 17.2,
+        "s": 100.0,
+        "l": 67.8
+      },
+      "role": "Main call to action: create a world or send a comet.",
+      "token": "--color-warm"
+    }
+  ],
+  "utility": [
+    {
+      "name": "Nebula 300",
+      "hex": "#A99FFF",
+      "rgb": [
+        169,
+        159,
+        255
+      ],
+      "hsl": {
+        "h": 246.2,
+        "s": 100.0,
+        "l": 81.2
+      },
+      "role": "Default link and selected-text color on dark surfaces.",
+      "token": "--color-link"
+    },
+    {
+      "name": "Line",
+      "hex": "#34365A",
+      "rgb": [
+        52,
+        54,
+        90
+      ],
+      "hsl": {
+        "h": 236.8,
+        "s": 26.8,
+        "l": 27.8
+      },
+      "role": "Decorative separators only, never a required control boundary.",
+      "token": "--color-line"
+    },
+    {
+      "name": "Control Line",
+      "hex": "#696C91",
+      "rgb": [
+        105,
+        108,
+        145
+      ],
+      "hsl": {
+        "h": 235.5,
+        "s": 16.0,
+        "l": 49.0
+      },
+      "role": "Visible input and control boundaries on dark surfaces.",
+      "token": "--color-control-line"
+    }
+  ],
+  "scales": {
+    "Nebula": {
+      "50": {
+        "name": "Nebula 50",
+        "hex": "#F3F1FF",
+        "rgb": [
+          243,
+          241,
+          255
+        ],
+        "hsl": {
+          "h": 248.6,
+          "s": 100.0,
+          "l": 97.3
+        },
+        "role": "Near-white tint",
+        "token": "--color-nebula-50"
+      },
+      "100": {
+        "name": "Nebula 100",
+        "hex": "#E8E3FF",
+        "rgb": [
+          232,
+          227,
+          255
+        ],
+        "hsl": {
+          "h": 250.7,
+          "s": 100.0,
+          "l": 94.5
+        },
+        "role": "Light wash",
+        "token": "--color-nebula-100"
+      },
+      "200": {
+        "name": "Nebula 200",
+        "hex": "#CBC2FF",
+        "rgb": [
+          203,
+          194,
+          255
+        ],
+        "hsl": {
+          "h": 248.9,
+          "s": 100.0,
+          "l": 88.0
+        },
+        "role": "Soft tint",
+        "token": "--color-nebula-200"
+      },
+      "300": {
+        "name": "Nebula 300",
+        "hex": "#A99FFF",
+        "rgb": [
+          169,
+          159,
+          255
+        ],
+        "hsl": {
+          "h": 246.2,
+          "s": 100.0,
+          "l": 81.2
+        },
+        "role": "Light accent",
+        "token": "--color-nebula-300"
+      },
+      "400": {
+        "name": "Nebula 400",
+        "hex": "#9182FF",
+        "rgb": [
+          145,
+          130,
+          255
+        ],
+        "hsl": {
+          "h": 247.2,
+          "s": 100.0,
+          "l": 75.5
+        },
+        "role": "Bright hover fill",
+        "token": "--color-nebula-400"
+      },
+      "500": {
+        "name": "Nebula 500",
+        "hex": "#7C6CFF",
+        "rgb": [
+          124,
+          108,
+          255
+        ],
+        "hsl": {
+          "h": 246.5,
+          "s": 100.0,
+          "l": 71.2
+        },
+        "role": "Brand anchor",
+        "token": "--color-nebula-500"
+      },
+      "600": {
+        "name": "Nebula 600",
+        "hex": "#6550DB",
+        "rgb": [
+          101,
+          80,
+          219
+        ],
+        "hsl": {
+          "h": 249.1,
+          "s": 65.9,
+          "l": 58.6
+        },
+        "role": "Deeper active fill",
+        "token": "--color-nebula-600"
+      },
+      "700": {
+        "name": "Nebula 700",
+        "hex": "#503EAF",
+        "rgb": [
+          80,
+          62,
+          175
+        ],
+        "hsl": {
+          "h": 249.6,
+          "s": 47.7,
+          "l": 46.5
+        },
+        "role": "Strong dark accent",
+        "token": "--color-nebula-700"
+      },
+      "800": {
+        "name": "Nebula 800",
+        "hex": "#3D3083",
+        "rgb": [
+          61,
+          48,
+          131
+        ],
+        "hsl": {
+          "h": 249.4,
+          "s": 46.4,
+          "l": 35.1
+        },
+        "role": "Dark accent",
+        "token": "--color-nebula-800"
+      },
+      "900": {
+        "name": "Nebula 900",
+        "hex": "#2A2257",
+        "rgb": [
+          42,
+          34,
+          87
+        ],
+        "hsl": {
+          "h": 249.1,
+          "s": 43.8,
+          "l": 23.7
+        },
+        "role": "Subtle dark fill",
+        "token": "--color-nebula-900"
+      },
+      "950": {
+        "name": "Nebula 950",
+        "hex": "#17132E",
+        "rgb": [
+          23,
+          19,
+          46
+        ],
+        "hsl": {
+          "h": 248.9,
+          "s": 41.5,
+          "l": 12.7
+        },
+        "role": "Near-black accent fill",
+        "token": "--color-nebula-950"
+      }
+    },
+    "Aurora": {
+      "50": {
+        "name": "Aurora 50",
+        "hex": "#E9FCF6",
+        "rgb": [
+          233,
+          252,
+          246
+        ],
+        "hsl": {
+          "h": 161.1,
+          "s": 76.0,
+          "l": 95.1
+        },
+        "role": "Near-white tint",
+        "token": "--color-aurora-50"
+      },
+      "100": {
+        "name": "Aurora 100",
+        "hex": "#CCF8ED",
+        "rgb": [
+          204,
+          248,
+          237
+        ],
+        "hsl": {
+          "h": 165.0,
+          "s": 75.9,
+          "l": 88.6
+        },
+        "role": "Light wash",
+        "token": "--color-aurora-100"
+      },
+      "200": {
+        "name": "Aurora 200",
+        "hex": "#A2F1DF",
+        "rgb": [
+          162,
+          241,
+          223
+        ],
+        "hsl": {
+          "h": 166.3,
+          "s": 73.8,
+          "l": 79.0
+        },
+        "role": "Soft tint",
+        "token": "--color-aurora-200"
+      },
+      "300": {
+        "name": "Aurora 300",
+        "hex": "#76EBD3",
+        "rgb": [
+          118,
+          235,
+          211
+        ],
+        "hsl": {
+          "h": 167.7,
+          "s": 74.5,
+          "l": 69.2
+        },
+        "role": "Light accent",
+        "token": "--color-aurora-300"
+      },
+      "400": {
+        "name": "Aurora 400",
+        "hex": "#57E5CB",
+        "rgb": [
+          87,
+          229,
+          203
+        ],
+        "hsl": {
+          "h": 169.0,
+          "s": 73.2,
+          "l": 62.0
+        },
+        "role": "Bright hover fill",
+        "token": "--color-aurora-400"
+      },
+      "500": {
+        "name": "Aurora 500",
+        "hex": "#3FE0C5",
+        "rgb": [
+          63,
+          224,
+          197
+        ],
+        "hsl": {
+          "h": 169.9,
+          "s": 72.2,
+          "l": 56.3
+        },
+        "role": "Brand anchor",
+        "token": "--color-aurora-500"
+      },
+      "600": {
+        "name": "Aurora 600",
+        "hex": "#28B49E",
+        "rgb": [
+          40,
+          180,
+          158
+        ],
+        "hsl": {
+          "h": 170.6,
+          "s": 63.6,
+          "l": 43.1
+        },
+        "role": "Deeper active fill",
+        "token": "--color-aurora-600"
+      },
+      "700": {
+        "name": "Aurora 700",
+        "hex": "#1E8C7C",
+        "rgb": [
+          30,
+          140,
+          124
+        ],
+        "hsl": {
+          "h": 171.3,
+          "s": 64.7,
+          "l": 33.3
+        },
+        "role": "Strong dark accent",
+        "token": "--color-aurora-700"
+      },
+      "800": {
+        "name": "Aurora 800",
+        "hex": "#196B61",
+        "rgb": [
+          25,
+          107,
+          97
+        ],
+        "hsl": {
+          "h": 172.7,
+          "s": 62.1,
+          "l": 25.9
+        },
+        "role": "Dark accent",
+        "token": "--color-aurora-800"
+      },
+      "900": {
+        "name": "Aurora 900",
+        "hex": "#164E48",
+        "rgb": [
+          22,
+          78,
+          72
+        ],
+        "hsl": {
+          "h": 173.6,
+          "s": 56.0,
+          "l": 19.6
+        },
+        "role": "Subtle dark fill",
+        "token": "--color-aurora-900"
+      },
+      "950": {
+        "name": "Aurora 950",
+        "hex": "#0C2D2A",
+        "rgb": [
+          12,
+          45,
+          42
+        ],
+        "hsl": {
+          "h": 174.5,
+          "s": 57.9,
+          "l": 11.2
+        },
+        "role": "Near-black accent fill",
+        "token": "--color-aurora-950"
+      }
+    },
+    "Sunrise": {
+      "50": {
+        "name": "Sunrise 50",
+        "hex": "#FFF4ED",
+        "rgb": [
+          255,
+          244,
+          237
+        ],
+        "hsl": {
+          "h": 23.3,
+          "s": 100.0,
+          "l": 96.5
+        },
+        "role": "Near-white tint",
+        "token": "--color-sunrise-50"
+      },
+      "100": {
+        "name": "Sunrise 100",
+        "hex": "#FFE5D7",
+        "rgb": [
+          255,
+          229,
+          215
+        ],
+        "hsl": {
+          "h": 21.0,
+          "s": 100.0,
+          "l": 92.2
+        },
+        "role": "Light wash",
+        "token": "--color-sunrise-100"
+      },
+      "200": {
+        "name": "Sunrise 200",
+        "hex": "#FFCDB6",
+        "rgb": [
+          255,
+          205,
+          182
+        ],
+        "hsl": {
+          "h": 18.9,
+          "s": 100.0,
+          "l": 85.7
+        },
+        "role": "Soft tint",
+        "token": "--color-sunrise-200"
+      },
+      "300": {
+        "name": "Sunrise 300",
+        "hex": "#FFB394",
+        "rgb": [
+          255,
+          179,
+          148
+        ],
+        "hsl": {
+          "h": 17.4,
+          "s": 100.0,
+          "l": 79.0
+        },
+        "role": "Light accent",
+        "token": "--color-sunrise-300"
+      },
+      "400": {
+        "name": "Sunrise 400",
+        "hex": "#FF9D75",
+        "rgb": [
+          255,
+          157,
+          117
+        ],
+        "hsl": {
+          "h": 17.4,
+          "s": 100.0,
+          "l": 72.9
+        },
+        "role": "Bright hover fill",
+        "token": "--color-sunrise-400"
+      },
+      "500": {
+        "name": "Sunrise 500",
+        "hex": "#FF8A5B",
+        "rgb": [
+          255,
+          138,
+          91
+        ],
+        "hsl": {
+          "h": 17.2,
+          "s": 100.0,
+          "l": 67.8
+        },
+        "role": "Brand anchor",
+        "token": "--color-sunrise-500"
+      },
+      "600": {
+        "name": "Sunrise 600",
+        "hex": "#D96A40",
+        "rgb": [
+          217,
+          106,
+          64
+        ],
+        "hsl": {
+          "h": 16.5,
+          "s": 66.8,
+          "l": 55.1
+        },
+        "role": "Deeper active fill",
+        "token": "--color-sunrise-600"
+      },
+      "700": {
+        "name": "Sunrise 700",
+        "hex": "#AC4E2E",
+        "rgb": [
+          172,
+          78,
+          46
+        ],
+        "hsl": {
+          "h": 15.2,
+          "s": 57.8,
+          "l": 42.7
+        },
+        "role": "Strong dark accent",
+        "token": "--color-sunrise-700"
+      },
+      "800": {
+        "name": "Sunrise 800",
+        "hex": "#823C26",
+        "rgb": [
+          130,
+          60,
+          38
+        ],
+        "hsl": {
+          "h": 14.3,
+          "s": 54.8,
+          "l": 32.9
+        },
+        "role": "Dark accent",
+        "token": "--color-sunrise-800"
+      },
+      "900": {
+        "name": "Sunrise 900",
+        "hex": "#5B2D21",
+        "rgb": [
+          91,
+          45,
+          33
+        ],
+        "hsl": {
+          "h": 12.4,
+          "s": 46.8,
+          "l": 24.3
+        },
+        "role": "Subtle dark fill",
+        "token": "--color-sunrise-900"
+      },
+      "950": {
+        "name": "Sunrise 950",
+        "hex": "#331B16",
+        "rgb": [
+          51,
+          27,
+          22
+        ],
+        "hsl": {
+          "h": 10.3,
+          "s": 39.7,
+          "l": 14.3
+        },
+        "role": "Near-black accent fill",
+        "token": "--color-sunrise-950"
+      }
+    }
+  },
+  "semantic": [
+    {
+      "name": "Success",
+      "hex": "#68DFA9",
+      "rgb": [
+        104,
+        223,
+        169
+      ],
+      "hsl": {
+        "h": 152.8,
+        "s": 65.0,
+        "l": 64.1
+      },
+      "role": "Saved, delivered, completed or a healthy system state.",
+      "token": "--color-success",
+      "surface": {
+        "name": "Success surface",
+        "hex": "#1B2B3A",
+        "rgb": [
+          27,
+          43,
+          58
+        ],
+        "hsl": {
+          "h": 209.0,
+          "s": 36.5,
+          "l": 16.7
+        },
+        "role": "Opaque success message background; precomposed 12% color over Deep Space.",
+        "token": "--color-success-surface"
+      },
+      "icon_and_label_rule": "Pair the color with a recognizable icon and a visible status label."
+    },
+    {
+      "name": "Warning",
+      "hex": "#F4C969",
+      "rgb": [
+        244,
+        201,
+        105
+      ],
+      "hsl": {
+        "h": 41.4,
+        "s": 86.3,
+        "l": 68.4
+      },
+      "role": "Needs attention; a recoverable limit or unsaved change.",
+      "token": "--color-warning",
+      "surface": {
+        "name": "Warning surface",
+        "hex": "#2C2832",
+        "rgb": [
+          44,
+          40,
+          50
+        ],
+        "hsl": {
+          "h": 264.0,
+          "s": 11.1,
+          "l": 17.6
+        },
+        "role": "Opaque warning message background; precomposed 12% color over Deep Space.",
+        "token": "--color-warning-surface"
+      },
+      "icon_and_label_rule": "Pair the color with a recognizable icon and a visible status label."
+    },
+    {
+      "name": "Danger",
+      "hex": "#FF7B91",
+      "rgb": [
+        255,
+        123,
+        145
+      ],
+      "hsl": {
+        "h": 350.0,
+        "s": 100.0,
+        "l": 74.1
+      },
+      "role": "Failed action, destructive action or an error that needs repair.",
+      "token": "--color-danger",
+      "surface": {
+        "name": "Danger surface",
+        "hex": "#2E1F37",
+        "rgb": [
+          46,
+          31,
+          55
+        ],
+        "hsl": {
+          "h": 277.5,
+          "s": 27.9,
+          "l": 16.9
+        },
+        "role": "Opaque danger message background; precomposed 12% color over Deep Space.",
+        "token": "--color-danger-surface"
+      },
+      "icon_and_label_rule": "Pair the color with a recognizable icon and a visible status label."
+    },
+    {
+      "name": "Info",
+      "hex": "#8AB4FF",
+      "rgb": [
+        138,
+        180,
+        255
+      ],
+      "hsl": {
+        "h": 218.5,
+        "s": 100.0,
+        "l": 77.1
+      },
+      "role": "Neutral guidance, updates and helpful status information.",
+      "token": "--color-info",
+      "surface": {
+        "name": "Info surface",
+        "hex": "#202544",
+        "rgb": [
+          32,
+          37,
+          68
+        ],
+        "hsl": {
+          "h": 231.7,
+          "s": 36.0,
+          "l": 19.6
+        },
+        "role": "Opaque info message background; precomposed 12% color over Deep Space.",
+        "token": "--color-info-surface"
+      },
+      "icon_and_label_rule": "Pair the color with a recognizable icon and a visible status label."
+    }
+  ],
+  "gradient": {
+    "name": "Worldling signature",
+    "from": "#7C6CFF",
+    "to": "#3FE0C5",
+    "css": "linear-gradient(135deg, #7C6CFF 0%, #3FE0C5 100%)",
+    "use": "Large hero artwork, the approved hero mark and short decorative accents. Avoid normal body text and main CTA backgrounds. Use a solid dark surface behind text."
+  },
+  "usage": {
+    "dark_surfaces_percent": 70,
+    "neutral_text_and_icons_percent": 20,
+    "brand_accents_percent": 10,
+    "detail": {
+      "Void": 50,
+      "Deep Space": 15,
+      "Orbit": 5,
+      "Starlight": 15,
+      "Dust": 5,
+      "Nebula": 5,
+      "Aurora": 3,
+      "Sunrise": 2
+    },
+    "interpretation": "A visual-emphasis guide for branded UI, not a literal pixel quota. Planet artwork can have its own world-specific colors. Status colors appear only when needed."
+  },
+  "contrast": {
+    "method": "WCAG 2.2 sRGB relative luminance and (Llighter + 0.05)/(Ldarker + 0.05). Threshold decisions use unrounded ratios.",
+    "thresholds": {
+      "normal_AA": 4.5,
+      "normal_AAA": 7,
+      "large_AA": 3,
+      "large_AAA": 4.5,
+      "non_text_AA": 3
+    },
+    "large_text": "At least 24 CSS px regular, or 14pt bold (about 18.67 CSS px).",
+    "limits": "These are opaque color-pair results, not a full application conformance claim. Recheck rendered composites over planets, gradients, transparent panels and animated backgrounds.",
+    "curated": [
+      {
+        "foreground": "Starlight",
+        "foreground_hex": "#F4F1EA",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 17.657307457885693,
+        "display_ratio": "17.66:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Starlight",
+        "foreground_hex": "#F4F1EA",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 16.25583858313419,
+        "display_ratio": "16.26:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Starlight",
+        "foreground_hex": "#F4F1EA",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 14.754271688911466,
+        "display_ratio": "14.75:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Dust",
+        "foreground_hex": "#9A9BB8",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 7.354996051931517,
+        "display_ratio": "7.35:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Dust",
+        "foreground_hex": "#9A9BB8",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 6.771226523916711,
+        "display_ratio": "6.77:1",
+        "normal_AA": true,
+        "normal_AAA": false,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Dust",
+        "foreground_hex": "#9A9BB8",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 6.145762046670665,
+        "display_ratio": "6.15:1",
+        "normal_AA": true,
+        "normal_AAA": false,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula",
+        "foreground_hex": "#7C6CFF",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 5.1653467935421835,
+        "display_ratio": "5.17:1",
+        "normal_AA": true,
+        "normal_AAA": false,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula",
+        "foreground_hex": "#7C6CFF",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 4.755370766579255,
+        "display_ratio": "4.76:1",
+        "normal_AA": true,
+        "normal_AAA": false,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula",
+        "foreground_hex": "#7C6CFF",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 4.316112756213775,
+        "display_ratio": "4.32:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": true,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 300",
+        "foreground_hex": "#A99FFF",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 8.621735771958429,
+        "display_ratio": "8.62:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 300",
+        "foreground_hex": "#A99FFF",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 7.9374245110512565,
+        "display_ratio": "7.94:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 300",
+        "foreground_hex": "#A99FFF",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 7.204237243582179,
+        "display_ratio": "7.20:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora",
+        "foreground_hex": "#3FE0C5",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 12.026323297246568,
+        "display_ratio": "12.03:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": "Growth labels"
+      },
+      {
+        "foreground": "Sunrise",
+        "foreground_hex": "#FF8A5B",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 8.57260531596366,
+        "display_ratio": "8.57:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": "Warm emphasis"
+      },
+      {
+        "foreground": "Void",
+        "foreground_hex": "#07071A",
+        "background": "Nebula",
+        "background_hex": "#7C6CFF",
+        "contrast_ratio": 5.1653467935421835,
+        "display_ratio": "5.17:1",
+        "normal_AA": true,
+        "normal_AAA": false,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": "Primary fill with dark label"
+      },
+      {
+        "foreground": "Starlight",
+        "foreground_hex": "#F4F1EA",
+        "background": "Nebula",
+        "background_hex": "#7C6CFF",
+        "contrast_ratio": 3.4184166453182194,
+        "display_ratio": "3.42:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": true,
+        "large_AAA": false,
+        "use": "Avoid for small button labels"
+      },
+      {
+        "foreground": "Void",
+        "foreground_hex": "#07071A",
+        "background": "Aurora",
+        "background_hex": "#3FE0C5",
+        "contrast_ratio": 12.026323297246568,
+        "display_ratio": "12.03:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": "Accent fill with dark label"
+      },
+      {
+        "foreground": "Starlight",
+        "foreground_hex": "#F4F1EA",
+        "background": "Aurora",
+        "background_hex": "#3FE0C5",
+        "contrast_ratio": 1.468221585389139,
+        "display_ratio": "1.47:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": "Avoid"
+      },
+      {
+        "foreground": "Void",
+        "foreground_hex": "#07071A",
+        "background": "Sunrise",
+        "background_hex": "#FF8A5B",
+        "contrast_ratio": 8.57260531596366,
+        "display_ratio": "8.57:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": "Main CTA label"
+      },
+      {
+        "foreground": "Starlight",
+        "foreground_hex": "#F4F1EA",
+        "background": "Sunrise",
+        "background_hex": "#FF8A5B",
+        "contrast_ratio": 2.059736428668279,
+        "display_ratio": "2.06:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": "Avoid"
+      },
+      {
+        "foreground": "Void",
+        "foreground_hex": "#07071A",
+        "background": "Starlight",
+        "background_hex": "#F4F1EA",
+        "contrast_ratio": 17.657307457885693,
+        "display_ratio": "17.66:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": "Light-background copy"
+      },
+      {
+        "foreground": "Dust",
+        "foreground_hex": "#9A9BB8",
+        "background": "Starlight",
+        "background_hex": "#F4F1EA",
+        "contrast_ratio": 2.4007229008979083,
+        "display_ratio": "2.40:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": "Avoid"
+      },
+      {
+        "foreground": "Nebula",
+        "foreground_hex": "#7C6CFF",
+        "background": "Starlight",
+        "background_hex": "#F4F1EA",
+        "contrast_ratio": 3.4184166453182194,
+        "display_ratio": "3.42:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": true,
+        "large_AAA": false,
+        "use": "Avoid for small links"
+      },
+      {
+        "foreground": "Nebula 700",
+        "foreground_hex": "#503EAF",
+        "background": "Starlight",
+        "background_hex": "#F4F1EA",
+        "contrast_ratio": 7.0274145953084055,
+        "display_ratio": "7.03:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": "Light-background links"
+      },
+      {
+        "foreground": "Void",
+        "foreground_hex": "#07071A",
+        "background": "Sunrise 400",
+        "background_hex": "#FF9D75",
+        "contrast_ratio": 9.799153696415123,
+        "display_ratio": "9.80:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": "CTA hover"
+      },
+      {
+        "foreground": "Void",
+        "foreground_hex": "#07071A",
+        "background": "Sunrise 600",
+        "background_hex": "#D96A40",
+        "contrast_ratio": 5.772310619979268,
+        "display_ratio": "5.77:1",
+        "normal_AA": true,
+        "normal_AAA": false,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": "CTA pressed"
+      },
+      {
+        "foreground": "Void",
+        "foreground_hex": "#07071A",
+        "background": "Nebula 600",
+        "background_hex": "#6550DB",
+        "contrast_ratio": 3.531775519893653,
+        "display_ratio": "3.53:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": true,
+        "large_AAA": false,
+        "use": "Avoid for small button labels"
+      }
+    ],
+    "semantic": [
+      {
+        "foreground": "Success",
+        "foreground_hex": "#68DFA9",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 12.061168360052031,
+        "display_ratio": "12.06:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Success",
+        "foreground_hex": "#68DFA9",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 11.103867701949621,
+        "display_ratio": "11.10:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Success",
+        "foreground_hex": "#68DFA9",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 10.078193138696063,
+        "display_ratio": "10.08:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Success",
+        "foreground_hex": "#68DFA9",
+        "background": "Success surface",
+        "background_hex": "#1B2B3A",
+        "contrast_ratio": 8.750448662697227,
+        "display_ratio": "8.75:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Warning",
+        "foreground_hex": "#F4C969",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 12.714338710543636,
+        "display_ratio": "12.71:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Warning",
+        "foreground_hex": "#F4C969",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 11.705195611666616,
+        "display_ratio": "11.71:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Warning",
+        "foreground_hex": "#F4C969",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 10.623975831401614,
+        "display_ratio": "10.62:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Warning",
+        "foreground_hex": "#F4C969",
+        "background": "Warning surface",
+        "background_hex": "#2C2832",
+        "contrast_ratio": 9.202680952665395,
+        "display_ratio": "9.20:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Danger",
+        "foreground_hex": "#FF7B91",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 8.056257265133008,
+        "display_ratio": "8.06:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Danger",
+        "foreground_hex": "#FF7B91",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 7.416828301741862,
+        "display_ratio": "7.42:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Danger",
+        "foreground_hex": "#FF7B91",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 6.731728989204122,
+        "display_ratio": "6.73:1",
+        "normal_AA": true,
+        "normal_AAA": false,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Danger",
+        "foreground_hex": "#FF7B91",
+        "background": "Danger surface",
+        "background_hex": "#2E1F37",
+        "contrast_ratio": 6.212142979436197,
+        "display_ratio": "6.21:1",
+        "normal_AA": true,
+        "normal_AAA": false,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Info",
+        "foreground_hex": "#8AB4FF",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 9.535006727086714,
+        "display_ratio": "9.54:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Info",
+        "foreground_hex": "#8AB4FF",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 8.778208716946702,
+        "display_ratio": "8.78:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Info",
+        "foreground_hex": "#8AB4FF",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 7.967357432189228,
+        "display_ratio": "7.97:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Info",
+        "foreground_hex": "#8AB4FF",
+        "background": "Info surface",
+        "background_hex": "#202544",
+        "contrast_ratio": 7.13236063508314,
+        "display_ratio": "7.13:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      }
+    ],
+    "ui_boundaries": [
+      {
+        "foreground": "Line",
+        "background": "Void",
+        "contrast_ratio": 1.7274438792344353,
+        "display_ratio": "1.73:1",
+        "non_text_AA": false
+      },
+      {
+        "foreground": "Line",
+        "background": "Deep Space",
+        "contrast_ratio": 1.5903358385322348,
+        "display_ratio": "1.59:1",
+        "non_text_AA": false
+      },
+      {
+        "foreground": "Line",
+        "background": "Orbit",
+        "contrast_ratio": 1.4434350414048853,
+        "display_ratio": "1.44:1",
+        "non_text_AA": false
+      },
+      {
+        "foreground": "Control Line",
+        "background": "Void",
+        "contrast_ratio": 3.940413226865977,
+        "display_ratio": "3.94:1",
+        "non_text_AA": true
+      },
+      {
+        "foreground": "Control Line",
+        "background": "Deep Space",
+        "contrast_ratio": 3.6276607585588376,
+        "display_ratio": "3.63:1",
+        "non_text_AA": true
+      },
+      {
+        "foreground": "Control Line",
+        "background": "Orbit",
+        "contrast_ratio": 3.292570368071422,
+        "display_ratio": "3.29:1",
+        "non_text_AA": true
+      },
+      {
+        "foreground": "Aurora",
+        "background": "Void",
+        "contrast_ratio": 12.026323297246568,
+        "display_ratio": "12.03:1",
+        "non_text_AA": true
+      },
+      {
+        "foreground": "Aurora",
+        "background": "Deep Space",
+        "contrast_ratio": 11.071788308319771,
+        "display_ratio": "11.07:1",
+        "non_text_AA": true
+      },
+      {
+        "foreground": "Aurora",
+        "background": "Orbit",
+        "contrast_ratio": 10.04907694842327,
+        "display_ratio": "10.05:1",
+        "non_text_AA": true
+      },
+      {
+        "foreground": "Nebula",
+        "background": "Void",
+        "contrast_ratio": 5.1653467935421835,
+        "display_ratio": "5.17:1",
+        "non_text_AA": true
+      },
+      {
+        "foreground": "Nebula",
+        "background": "Deep Space",
+        "contrast_ratio": 4.755370766579255,
+        "display_ratio": "4.76:1",
+        "non_text_AA": true
+      },
+      {
+        "foreground": "Nebula",
+        "background": "Orbit",
+        "contrast_ratio": 4.316112756213775,
+        "display_ratio": "4.32:1",
+        "non_text_AA": true
+      }
+    ],
+    "all_scale_pairs": [
+      {
+        "foreground": "Nebula 50",
+        "foreground_hex": "#F3F1FF",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 17.8661726548368,
+        "display_ratio": "17.87:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 50",
+        "foreground_hex": "#F3F1FF",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 16.448126050256214,
+        "display_ratio": "16.45:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 50",
+        "foreground_hex": "#F3F1FF",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 14.928797384265904,
+        "display_ratio": "14.93:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 50",
+        "foreground_hex": "#F3F1FF",
+        "background": "Starlight",
+        "background_hex": "#F4F1EA",
+        "contrast_ratio": 1.0118288248335296,
+        "display_ratio": "1.01:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 100",
+        "foreground_hex": "#E8E3FF",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 15.993667280022077,
+        "display_ratio": "15.99:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 100",
+        "foreground_hex": "#E8E3FF",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 14.724242315907732,
+        "display_ratio": "14.72:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 100",
+        "foreground_hex": "#E8E3FF",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 13.364150390104568,
+        "display_ratio": "13.36:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 100",
+        "foreground_hex": "#E8E3FF",
+        "background": "Starlight",
+        "background_hex": "#F4F1EA",
+        "contrast_ratio": 1.1040186811902541,
+        "display_ratio": "1.10:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 200",
+        "foreground_hex": "#CBC2FF",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 12.045443241870043,
+        "display_ratio": "12.05:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 200",
+        "foreground_hex": "#CBC2FF",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 11.089390693862356,
+        "display_ratio": "11.09:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 200",
+        "foreground_hex": "#CBC2FF",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 10.065053385279485,
+        "display_ratio": "10.07:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 200",
+        "foreground_hex": "#CBC2FF",
+        "background": "Starlight",
+        "background_hex": "#F4F1EA",
+        "contrast_ratio": 1.465891051356979,
+        "display_ratio": "1.47:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 300",
+        "foreground_hex": "#A99FFF",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 8.621735771958429,
+        "display_ratio": "8.62:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 300",
+        "foreground_hex": "#A99FFF",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 7.9374245110512565,
+        "display_ratio": "7.94:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 300",
+        "foreground_hex": "#A99FFF",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 7.204237243582179,
+        "display_ratio": "7.20:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 300",
+        "foreground_hex": "#A99FFF",
+        "background": "Starlight",
+        "background_hex": "#F4F1EA",
+        "contrast_ratio": 2.0479991413463177,
+        "display_ratio": "2.05:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 400",
+        "foreground_hex": "#9182FF",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 6.488408127112352,
+        "display_ratio": "6.49:1",
+        "normal_AA": true,
+        "normal_AAA": false,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 400",
+        "foreground_hex": "#9182FF",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 5.9734200940545925,
+        "display_ratio": "5.97:1",
+        "normal_AA": true,
+        "normal_AAA": false,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 400",
+        "foreground_hex": "#9182FF",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 5.42164973704433,
+        "display_ratio": "5.42:1",
+        "normal_AA": true,
+        "normal_AAA": false,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 400",
+        "foreground_hex": "#9182FF",
+        "background": "Starlight",
+        "background_hex": "#F4F1EA",
+        "contrast_ratio": 2.721362021618703,
+        "display_ratio": "2.72:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 500",
+        "foreground_hex": "#7C6CFF",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 5.1653467935421835,
+        "display_ratio": "5.17:1",
+        "normal_AA": true,
+        "normal_AAA": false,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 500",
+        "foreground_hex": "#7C6CFF",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 4.755370766579255,
+        "display_ratio": "4.76:1",
+        "normal_AA": true,
+        "normal_AAA": false,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 500",
+        "foreground_hex": "#7C6CFF",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 4.316112756213775,
+        "display_ratio": "4.32:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": true,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 500",
+        "foreground_hex": "#7C6CFF",
+        "background": "Starlight",
+        "background_hex": "#F4F1EA",
+        "contrast_ratio": 3.4184166453182194,
+        "display_ratio": "3.42:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": true,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 600",
+        "foreground_hex": "#6550DB",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 3.531775519893653,
+        "display_ratio": "3.53:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": true,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 600",
+        "foreground_hex": "#6550DB",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 3.251456820366803,
+        "display_ratio": "3.25:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": true,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 600",
+        "foreground_hex": "#6550DB",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 2.9511167367415294,
+        "display_ratio": "2.95:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 600",
+        "foreground_hex": "#6550DB",
+        "background": "Starlight",
+        "background_hex": "#F4F1EA",
+        "contrast_ratio": 4.999555424297572,
+        "display_ratio": "5.00:1",
+        "normal_AA": true,
+        "normal_AAA": false,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 700",
+        "foreground_hex": "#503EAF",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 2.5126320951198675,
+        "display_ratio": "2.51:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 700",
+        "foreground_hex": "#503EAF",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 2.3132032929986512,
+        "display_ratio": "2.31:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 700",
+        "foreground_hex": "#503EAF",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 2.0995305583310273,
+        "display_ratio": "2.10:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 700",
+        "foreground_hex": "#503EAF",
+        "background": "Starlight",
+        "background_hex": "#F4F1EA",
+        "contrast_ratio": 7.0274145953084055,
+        "display_ratio": "7.03:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 800",
+        "foreground_hex": "#3D3083",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 1.8484890520769295,
+        "display_ratio": "1.85:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 800",
+        "foreground_hex": "#3D3083",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 1.7017735985467948,
+        "display_ratio": "1.70:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 800",
+        "foreground_hex": "#3D3083",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 1.544579192120334,
+        "display_ratio": "1.54:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 800",
+        "foreground_hex": "#3D3083",
+        "background": "Starlight",
+        "background_hex": "#F4F1EA",
+        "contrast_ratio": 9.552292148036395,
+        "display_ratio": "9.55:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 900",
+        "foreground_hex": "#2A2257",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 1.3893813269799724,
+        "display_ratio": "1.39:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 900",
+        "foreground_hex": "#2A2257",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 1.2791054715264971,
+        "display_ratio": "1.28:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 900",
+        "foreground_hex": "#2A2257",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 1.1609533121998128,
+        "display_ratio": "1.16:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 900",
+        "foreground_hex": "#2A2257",
+        "background": "Starlight",
+        "background_hex": "#F4F1EA",
+        "contrast_ratio": 12.708755411494183,
+        "display_ratio": "12.71:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 950",
+        "foreground_hex": "#17132E",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 1.1087787396172295,
+        "display_ratio": "1.11:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 950",
+        "foreground_hex": "#17132E",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 1.0207744447231188,
+        "display_ratio": "1.02:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 950",
+        "foreground_hex": "#17132E",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 1.0793487997050075,
+        "display_ratio": "1.08:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Nebula 950",
+        "foreground_hex": "#17132E",
+        "background": "Starlight",
+        "background_hex": "#F4F1EA",
+        "contrast_ratio": 15.925005437948165,
+        "display_ratio": "15.93:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 50",
+        "foreground_hex": "#E9FCF6",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 18.703279789858232,
+        "display_ratio": "18.70:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 50",
+        "foreground_hex": "#E9FCF6",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 17.218791594601203,
+        "display_ratio": "17.22:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 50",
+        "foreground_hex": "#E9FCF6",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 15.6282758371552,
+        "display_ratio": "15.63:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 50",
+        "foreground_hex": "#E9FCF6",
+        "background": "Starlight",
+        "background_hex": "#F4F1EA",
+        "contrast_ratio": 1.0592373630275895,
+        "display_ratio": "1.06:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 100",
+        "foreground_hex": "#CCF8ED",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 17.27837798317421,
+        "display_ratio": "17.28:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 100",
+        "foreground_hex": "#CCF8ED",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 15.906984920706128,
+        "display_ratio": "15.91:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 100",
+        "foreground_hex": "#CCF8ED",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 14.437641962994057,
+        "display_ratio": "14.44:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 100",
+        "foreground_hex": "#CCF8ED",
+        "background": "Starlight",
+        "background_hex": "#F4F1EA",
+        "contrast_ratio": 1.021930847622415,
+        "display_ratio": "1.02:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 200",
+        "foreground_hex": "#A2F1DF",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 15.349799168552378,
+        "display_ratio": "15.35:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 200",
+        "foreground_hex": "#A2F1DF",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 14.131478322085757,
+        "display_ratio": "14.13:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 200",
+        "foreground_hex": "#A2F1DF",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 12.826140556436089,
+        "display_ratio": "12.83:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 200",
+        "foreground_hex": "#A2F1DF",
+        "background": "Starlight",
+        "background_hex": "#F4F1EA",
+        "contrast_ratio": 1.1503282397375452,
+        "display_ratio": "1.15:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 300",
+        "foreground_hex": "#76EBD3",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 13.842066941641962,
+        "display_ratio": "13.84:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 300",
+        "foreground_hex": "#76EBD3",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 12.743415517736764,
+        "display_ratio": "12.74:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 300",
+        "foreground_hex": "#76EBD3",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 11.566294401351495,
+        "display_ratio": "11.57:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 300",
+        "foreground_hex": "#76EBD3",
+        "background": "Starlight",
+        "background_hex": "#F4F1EA",
+        "contrast_ratio": 1.2756265037821846,
+        "display_ratio": "1.28:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 400",
+        "foreground_hex": "#57E5CB",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 12.780797322304615,
+        "display_ratio": "12.78:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 400",
+        "foreground_hex": "#57E5CB",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 11.766379371864616,
+        "display_ratio": "11.77:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 400",
+        "foreground_hex": "#57E5CB",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 10.67950799089581,
+        "display_ratio": "10.68:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 400",
+        "foreground_hex": "#57E5CB",
+        "background": "Starlight",
+        "background_hex": "#F4F1EA",
+        "contrast_ratio": 1.3815497587987533,
+        "display_ratio": "1.38:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 500",
+        "foreground_hex": "#3FE0C5",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 12.026323297246568,
+        "display_ratio": "12.03:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 500",
+        "foreground_hex": "#3FE0C5",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 11.071788308319771,
+        "display_ratio": "11.07:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 500",
+        "foreground_hex": "#3FE0C5",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 10.04907694842327,
+        "display_ratio": "10.05:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 500",
+        "foreground_hex": "#3FE0C5",
+        "background": "Starlight",
+        "background_hex": "#F4F1EA",
+        "contrast_ratio": 1.468221585389139,
+        "display_ratio": "1.47:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 600",
+        "foreground_hex": "#28B49E",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 7.694325943020302,
+        "display_ratio": "7.69:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 600",
+        "foreground_hex": "#28B49E",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 7.0836236404718935,
+        "display_ratio": "7.08:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 600",
+        "foreground_hex": "#28B49E",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 6.429302751686636,
+        "display_ratio": "6.43:1",
+        "normal_AA": true,
+        "normal_AAA": false,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 600",
+        "foreground_hex": "#28B49E",
+        "background": "Starlight",
+        "background_hex": "#F4F1EA",
+        "contrast_ratio": 2.29484786434126,
+        "display_ratio": "2.29:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 700",
+        "foreground_hex": "#1E8C7C",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 4.834754312047202,
+        "display_ratio": "4.83:1",
+        "normal_AA": true,
+        "normal_AAA": false,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 700",
+        "foreground_hex": "#1E8C7C",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 4.451017567270821,
+        "display_ratio": "4.45:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": true,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 700",
+        "foreground_hex": "#1E8C7C",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 4.039872944344267,
+        "display_ratio": "4.04:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": true,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 700",
+        "foreground_hex": "#1E8C7C",
+        "background": "Starlight",
+        "background_hex": "#F4F1EA",
+        "contrast_ratio": 3.652162306135672,
+        "display_ratio": "3.65:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": true,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 800",
+        "foreground_hex": "#196B61",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 3.1460628079812447,
+        "display_ratio": "3.15:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": true,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 800",
+        "foreground_hex": "#196B61",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 2.896358309494419,
+        "display_ratio": "2.90:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 800",
+        "foreground_hex": "#196B61",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 2.628819004825389,
+        "display_ratio": "2.63:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 800",
+        "foreground_hex": "#196B61",
+        "background": "Starlight",
+        "background_hex": "#F4F1EA",
+        "contrast_ratio": 5.612509519228567,
+        "display_ratio": "5.61:1",
+        "normal_AA": true,
+        "normal_AAA": false,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 900",
+        "foreground_hex": "#164E48",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 2.103156517022158,
+        "display_ratio": "2.10:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 900",
+        "foreground_hex": "#164E48",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 1.936227985910185,
+        "display_ratio": "1.94:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 900",
+        "foreground_hex": "#164E48",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 1.7573768101654441,
+        "display_ratio": "1.76:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 900",
+        "foreground_hex": "#164E48",
+        "background": "Starlight",
+        "background_hex": "#F4F1EA",
+        "contrast_ratio": 8.395622158871245,
+        "display_ratio": "8.40:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 950",
+        "foreground_hex": "#0C2D2A",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 1.3510041518814895,
+        "display_ratio": "1.35:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 950",
+        "foreground_hex": "#0C2D2A",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 1.2437743110329982,
+        "display_ratio": "1.24:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 950",
+        "foreground_hex": "#0C2D2A",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 1.128885723785982,
+        "display_ratio": "1.13:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Aurora 950",
+        "foreground_hex": "#0C2D2A",
+        "background": "Starlight",
+        "background_hex": "#F4F1EA",
+        "contrast_ratio": 13.06976550241912,
+        "display_ratio": "13.07:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 50",
+        "foreground_hex": "#FFF4ED",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 18.41447892915263,
+        "display_ratio": "18.41:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 50",
+        "foreground_hex": "#FFF4ED",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 16.952912995301862,
+        "display_ratio": "16.95:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 50",
+        "foreground_hex": "#FFF4ED",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 15.386956690790166,
+        "display_ratio": "15.39:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 50",
+        "foreground_hex": "#FFF4ED",
+        "background": "Starlight",
+        "background_hex": "#F4F1EA",
+        "contrast_ratio": 1.0428814796974488,
+        "display_ratio": "1.04:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 100",
+        "foreground_hex": "#FFE5D7",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 16.54205565022639,
+        "display_ratio": "16.54:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 100",
+        "foreground_hex": "#FFE5D7",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 15.229104840852223,
+        "display_ratio": "15.23:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 100",
+        "foreground_hex": "#FFE5D7",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 13.822378295142284,
+        "display_ratio": "13.82:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 100",
+        "foreground_hex": "#FFE5D7",
+        "background": "Starlight",
+        "background_hex": "#F4F1EA",
+        "contrast_ratio": 1.0674191788034542,
+        "display_ratio": "1.07:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 200",
+        "foreground_hex": "#FFCDB6",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 13.904414853978222,
+        "display_ratio": "13.90:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 200",
+        "foreground_hex": "#FFCDB6",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 12.800814846674712,
+        "display_ratio": "12.80:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 200",
+        "foreground_hex": "#FFCDB6",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 11.618391701012822,
+        "display_ratio": "11.62:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 200",
+        "foreground_hex": "#FFCDB6",
+        "background": "Starlight",
+        "background_hex": "#F4F1EA",
+        "contrast_ratio": 1.2699065471880482,
+        "display_ratio": "1.27:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 300",
+        "foreground_hex": "#FFB394",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 11.502589861402717,
+        "display_ratio": "11.50:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 300",
+        "foreground_hex": "#FFB394",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 10.589623843892001,
+        "display_ratio": "10.59:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 300",
+        "foreground_hex": "#FFB394",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 9.61145046299011,
+        "display_ratio": "9.61:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 300",
+        "foreground_hex": "#FFB394",
+        "background": "Starlight",
+        "background_hex": "#F4F1EA",
+        "contrast_ratio": 1.5350723333303673,
+        "display_ratio": "1.54:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 400",
+        "foreground_hex": "#FF9D75",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 9.799153696415123,
+        "display_ratio": "9.80:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 400",
+        "foreground_hex": "#FF9D75",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 9.021390215930518,
+        "display_ratio": "9.02:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 400",
+        "foreground_hex": "#FF9D75",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 8.188076030456227,
+        "display_ratio": "8.19:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 400",
+        "foreground_hex": "#FF9D75",
+        "background": "Starlight",
+        "background_hex": "#F4F1EA",
+        "contrast_ratio": 1.8019216765979862,
+        "display_ratio": "1.80:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 500",
+        "foreground_hex": "#FF8A5B",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 8.57260531596366,
+        "display_ratio": "8.57:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 500",
+        "foreground_hex": "#FF8A5B",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 7.8921935626707285,
+        "display_ratio": "7.89:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 500",
+        "foreground_hex": "#FF8A5B",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 7.163184319874766,
+        "display_ratio": "7.16:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 500",
+        "foreground_hex": "#FF8A5B",
+        "background": "Starlight",
+        "background_hex": "#F4F1EA",
+        "contrast_ratio": 2.059736428668279,
+        "display_ratio": "2.06:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 600",
+        "foreground_hex": "#D96A40",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 5.772310619979268,
+        "display_ratio": "5.77:1",
+        "normal_AA": true,
+        "normal_AAA": false,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 600",
+        "foreground_hex": "#D96A40",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 5.3141595859899,
+        "display_ratio": "5.31:1",
+        "normal_AA": true,
+        "normal_AAA": false,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 600",
+        "foreground_hex": "#D96A40",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 4.823285733857919,
+        "display_ratio": "4.82:1",
+        "normal_AA": true,
+        "normal_AAA": false,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 600",
+        "foreground_hex": "#D96A40",
+        "background": "Starlight",
+        "background_hex": "#F4F1EA",
+        "contrast_ratio": 3.0589669580098082,
+        "display_ratio": "3.06:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": true,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 700",
+        "foreground_hex": "#AC4E2E",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 3.6831865641674066,
+        "display_ratio": "3.68:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": true,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 700",
+        "foreground_hex": "#AC4E2E",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 3.390850298182624,
+        "display_ratio": "3.39:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": true,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 700",
+        "foreground_hex": "#AC4E2E",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 3.077634309663956,
+        "display_ratio": "3.08:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": true,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 700",
+        "foreground_hex": "#AC4E2E",
+        "background": "Starlight",
+        "background_hex": "#F4F1EA",
+        "contrast_ratio": 4.794030155753777,
+        "display_ratio": "4.79:1",
+        "normal_AA": true,
+        "normal_AAA": false,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 800",
+        "foreground_hex": "#823C26",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 2.488278843733856,
+        "display_ratio": "2.49:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 800",
+        "foreground_hex": "#823C26",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 2.2907829707354916,
+        "display_ratio": "2.29:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 800",
+        "foreground_hex": "#823C26",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 2.0791812220398302,
+        "display_ratio": "2.08:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 800",
+        "foreground_hex": "#823C26",
+        "background": "Starlight",
+        "background_hex": "#F4F1EA",
+        "contrast_ratio": 7.096193219000138,
+        "display_ratio": "7.10:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 900",
+        "foreground_hex": "#5B2D21",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 1.747198573317358,
+        "display_ratio": "1.75:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 900",
+        "foreground_hex": "#5B2D21",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 1.6085225931683598,
+        "display_ratio": "1.61:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 900",
+        "foreground_hex": "#5B2D21",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 1.4599418686392156,
+        "display_ratio": "1.46:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 900",
+        "foreground_hex": "#5B2D21",
+        "background": "Starlight",
+        "background_hex": "#F4F1EA",
+        "contrast_ratio": 10.106067923556193,
+        "display_ratio": "10.11:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 950",
+        "foreground_hex": "#331B16",
+        "background": "Void",
+        "background_hex": "#07071A",
+        "contrast_ratio": 1.241646594250158,
+        "display_ratio": "1.24:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 950",
+        "foreground_hex": "#331B16",
+        "background": "Deep Space",
+        "background_hex": "#11122B",
+        "contrast_ratio": 1.1430965146622494,
+        "display_ratio": "1.14:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 950",
+        "foreground_hex": "#331B16",
+        "background": "Orbit",
+        "background_hex": "#1A1B3A",
+        "contrast_ratio": 1.0375076288880603,
+        "display_ratio": "1.04:1",
+        "normal_AA": false,
+        "normal_AAA": false,
+        "large_AA": false,
+        "large_AAA": false,
+        "use": ""
+      },
+      {
+        "foreground": "Sunrise 950",
+        "foreground_hex": "#331B16",
+        "background": "Starlight",
+        "background_hex": "#F4F1EA",
+        "contrast_ratio": 14.220880192200829,
+        "display_ratio": "14.22:1",
+        "normal_AA": true,
+        "normal_AAA": true,
+        "large_AA": true,
+        "large_AAA": true,
+        "use": ""
+      }
+    ]
+  },
+  "sources": [
+    {
+      "title": "WCAG 2.2 contrast minimum, SC 1.4.3",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html"
+    },
+    {
+      "title": "WCAG 2.2 contrast enhanced, SC 1.4.6",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-enhanced.html"
+    },
+    {
+      "title": "WCAG 2.2 non-text contrast, SC 1.4.11",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html"
+    },
+    {
+      "title": "WCAG 2.2 relative luminance definition",
+      "url": "https://www.w3.org/TR/WCAG22/#dfn-relative-luminance"
+    }
+  ]
+}

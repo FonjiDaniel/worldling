@@ -1,0 +1,9 @@
+{
+  "status": "verified",
+  "rgb_hsl_entries_checked": 52,
+  "accent_steps": 33,
+  "text_contrast_pairs_checked": 175,
+  "ui_contrast_pairs_checked": 12,
+  "decisions_use_unrounded_ratios": true,
+  "scope": "Arithmetic and table validation for opaque sRGB pairs. Full application accessibility is outside this audit."
+}

@@ -270,24 +270,29 @@ Warm, curious, short. Speak like a friendly guide, never like a corporation.
 - **Glass over space.** Panels float above the 3D scene with blur and a subtle border. Text contrast MUST pass WCAG AA against the worst-case background behind the glass (use a darker scrim behind text when needed).
 - **Tokens are the only source of values.** No raw hex, px or ms values in components. Everything comes from tokens defined in `src/styles/tokens.css` via Tailwind v4 `@theme`.
 
-### 3.2 Tokens (initial, final values come from the brand kit)
+### 3.2 Tokens (brand kit values, ADR-013)
 
 ```css
 @theme {
-  /* Color: semantic names only in components */
-  --color-void: #07071a;          /* app background */
-  --color-surface: #11122b;       /* panels base */
-  --color-surface-raised: #1a1b3a;
+  /* Color: semantic names only in components. Values from docs/brand (ADR-013). */
+  --color-void: #07071a;          /* Void: app background, ink on bright fills */
+  --color-surface: #11122b;       /* Deep Space: panels base */
+  --color-surface-raised: #1a1b3a; /* Orbit */
   --color-glass: rgb(17 18 43 / 0.62);
-  --color-line: rgb(255 255 255 / 0.08);
-  --color-text: #f4f1ea;          /* starlight */
-  --color-text-muted: #9a9bb8;    /* dust */
-  --color-primary: #7c6cff;       /* nebula */
-  --color-accent: #3fe0c5;        /* aurora */
-  --color-warm: #ff8a5b;          /* sunrise, main CTA */
-  --color-success: #4ade80;
-  --color-warning: #fbbf24;
-  --color-danger: #f87171;
+  --color-line: #34365a;          /* decorative separators only */
+  --color-control-line: #696c91;  /* required control boundaries */
+  --color-text: #f4f1ea;          /* Starlight */
+  --color-text-muted: #9a9bb8;    /* Dust */
+  --color-link: #a99fff;          /* Nebula 300 */
+  --color-primary: #7c6cff;       /* Nebula */
+  --color-accent: #3fe0c5;        /* Aurora, also the focus ring */
+  --color-warm: #ff8a5b;          /* Sunrise, main CTA */
+  --color-success: #68dfa9;
+  --color-warning: #f4c969;
+  --color-danger: #ff7b91;
+  --color-info: #8ab4ff;
+  /* Plus: on-* (Void), *-surface status backgrounds, warm-hover/active,
+     nebula/aurora/sunrise 50..950 scales, gradient-brand. See tokens.css. */
 
   /* Type */
   --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui;
@@ -425,6 +430,7 @@ Pin exact versions in `package.json` at Phase 0. Upgrade deliberately, never wit
 | ADR-010 | Security enforced in Convex, Next.js checks are UX only | Relying on `proxy.ts` or layouts | Any client can call Convex directly, so Convex is the real boundary |
 | ADR-011 | No admin impersonation | "Log in as user" | Large security and trust risk, read-only detail views cover support needs |
 | ADR-012 | Universe data streamed by sector | Subscribing to all worlds | Scales to 100k+ worlds with bounded bandwidth and memory |
+| ADR-013 | Brand color tokens replace §3.2 values | Two parallel palettes | One semantic palette from the brand kit, light theme deferred |
 
 ### 4.4 Repository structure
 
