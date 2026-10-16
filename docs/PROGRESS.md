@@ -4,9 +4,34 @@ Where the build stands, phase by phase (SPEC §15). Updated at the end of every 
 
 ## Current status
 
-**Phase 0: Foundation** is complete. Typecheck, lint, test, build and the e2e smoke test pass locally, and the app is live on Vercel with Convex (https://worldling-ecru.vercel.app). One open item: GitHub Actions can't start jobs because the GitHub account has a billing lock (not a code issue). A support ticket is open. Until it clears, run the CI checks locally before pushing.
+**Phase 1: Design system and shell** is complete. Typecheck, lint, unit tests, build and e2e (smoke, axe, keyboard) pass locally. GitHub Actions is still blocked by the account billing lock (see Phase 0), so run the checks locally before pushing.
 
-**Next:** Phase 1, Design system and shell.
+**Next:** Phase 2, Backend core.
+
+## Phase 1: Design system and shell
+
+- [x] ADR-013: brand colors from `docs/brand/Worldling-brand-colors/` fill the §3.2 token names, plus `link`, `control-line`, `info`, status surfaces, `on-*` inks, warm hover/active and the nebula/aurora/sunrise 50 to 950 scales. SPEC §3.2 updated.
+- [x] `src/styles/tokens.css`: Tailwind v4 `@theme` with the default palette, radius, ease, type and breakpoint scales reset, so only our tokens exist. Fluid type scale, motion, touch size, overlay animations.
+- [x] `globals.css`: space backdrop, Aurora focus ring (2px offset), selection, reduced-motion override.
+- [x] Fonts via `next/font/google` in `src/styles/fonts.ts`. **Final typography is a one-file change there**; tokens read the `--font-*-face` variables.
+- [x] `src/lib/motion.ts` mirrors the CSS motion tokens (parity unit test).
+- [x] shadcn/ui setup (`components.json`, `cn()`), components restyled to tokens: Button (primary, secondary, ghost, danger, pending), IconButton, Input, Field/Label, Textarea with grapheme counter, Slider, SwatchPicker, SegmentedControl, Dialog, Sheet, Popover, Tooltip, Tabs, Badge, Avatar, Skeleton, Toaster (sonner), DataTable (TanStack Table v9), Chart (recharts).
+- [x] Shared: EmptyState, ErrorState, LoadingState, ConfirmDialog with typed confirmation, OfflineBanner, SkipLink, Logo, RouteError.
+- [x] `convex/shared/graphemes.ts` (`countGraphemes`, shared with future server validation). `@convex/*` path alias.
+- [x] Layout shells: `(marketing)`, `(auth)`, `(app)`, `admin`. Root layout has skip link, offline banner and toaster. Layouts only, pages arrive with their phases.
+- [x] `error.tsx` per group, `global-error.tsx`, on-brand `not-found.tsx`. Brand favicon, icon and apple icon.
+- [x] Logo: brand SVGs (horizontal white-transparent, hero gradient mark) in `public/brand/`. No PNG fallback needed.
+- [x] `/dev/ui` showcases every component and state. 404 in production unless built with `DEV_ROUTES=true`.
+- [x] Acceptance: axe shows zero serious/critical violations on `/`, `/dev/ui` and the 404 page. Keyboard e2e covers the skip link, Tab reach plus focus ring on every `/dev/ui` control, dialog focus trap and Escape, and arrow keys in tabs and segmented control. A unit test fails on any raw hex, color function, px or ms value in `src/components`, `src/features` or `src/app`.
+
+### Phase 1 notes
+
+- **Light theme deferred.** Dark only for now (ADR-013). A light theme can override token values under `[data-theme="light"]` without touching components.
+- **`DEV_ROUTES`.** Optional build-time env var. The Playwright web server sets it so e2e can reach `/dev/ui` in a production build. Never set it on Vercel.
+- **Playwright port is 3000** (was 3100). Locally `reuseExistingServer` reuses whatever already listens on 3000, including `pnpm dev`. Set `PLAYWRIGHT_PORT=3100` to test a fresh production build while dev runs.
+- **TanStack Table is v9** (latest), not the v8 that shadcn examples use. The API is `useTable` + `tableFeatures`.
+- **`docs/brand/` is in `.prettierignore`** so the delivered kit stays byte for byte.
+- **Tooltip delay and popover offsets** are numeric Radix props, not CSS values, so they live in the components.
 
 ## Phase 0: Foundation
 
