@@ -1,7 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 
-// A dedicated port so a dev server (or another local app) on 3000 is never mistaken for this one.
-const port = process.env.PLAYWRIGHT_PORT ?? "3100";
+// Locally an existing server on this port is reused (reuseExistingServer), so stop other apps on 3000 first.
+const port = process.env.PLAYWRIGHT_PORT ?? "3000";
 const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? `http://localhost:${port}`;
 const isCI = process.env.CI !== undefined;
 
@@ -23,5 +23,7 @@ export default defineConfig({
         url: baseURL,
         reuseExistingServer: !isCI,
         timeout: 180_000,
+        // Builds /dev/** into this production build so axe and keyboard tests can reach /dev/ui.
+        env: { DEV_ROUTES: "true" },
       },
 });
