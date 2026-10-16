@@ -4,7 +4,7 @@ Where the build stands, phase by phase (SPEC §15). Updated at the end of every 
 
 ## Current status
 
-**Phase 0: Foundation** is done locally. Typecheck, lint, test and build pass. The Vercel + Convex deploy needs the owner steps below, then Phase 0 is closed.
+**Phase 0: Foundation** is complete. Typecheck, lint, test, build and the e2e smoke test pass locally, and the app is live on Vercel with Convex (https://worldling-ecru.vercel.app). One open item: GitHub Actions can't start jobs because the GitHub account has a billing lock (not a code issue). A support ticket is open. Until it clears, run the CI checks locally before pushing.
 
 **Next:** Phase 1, Design system and shell.
 
@@ -23,15 +23,14 @@ Where the build stands, phase by phase (SPEC §15). Updated at the end of every 
 - [x] Playwright config + smoke test (`tests/e2e/smoke.spec.ts`)
 - [x] GitHub Actions CI, §13.3 steps 1-5
 - [x] ADR template + ADR-001 to ADR-012
-- [ ] CI green on GitHub (after first push)
-- [ ] Vercel deploy with Convex (owner steps below)
+- [x] Convex cloud project, `APP_ENV` and `SITE_URL` set on deployments
+- [x] Vercel deploy with Convex (build command `npx convex deploy --cmd 'pnpm build'`)
+- [ ] CI green on GitHub. Blocked by a GitHub account billing lock, not by the code. Re-run the failed job once support unlocks the account.
 
-### Owner steps to close Phase 0
+### Deploy setup (for reference)
 
-1. `npx convex dev --configure=new`: log in and create the cloud project. This replaces the anonymous local deployment in `.env.local`.
-2. Create the GitHub repo, `git remote add origin <url>`, `git push -u origin main`.
-3. Vercel: import the repo. Build command `npx convex deploy --cmd 'pnpm build'`. Env: `CONVEX_DEPLOY_KEY` (production key for Production, preview key for Preview), `NEXT_PUBLIC_SITE_URL`.
-4. Convex env on each deployment: `npx convex env set APP_ENV development` (and `production` with `--prod`), `npx convex env set SITE_URL <origin>`.
+- Vercel env: `CONVEX_DEPLOY_KEY` as Secret (production key for Production, preview key for Preview), `NEXT_PUBLIC_SITE_URL` as Config.
+- Convex env per deployment: `APP_ENV`, `SITE_URL` (`npx convex env set NAME value [--prod]`). Preview defaults are set in Convex Project Settings.
 
 ## Notes and decisions
 
