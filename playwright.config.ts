@@ -1,6 +1,8 @@
 import { defineConfig, devices } from "@playwright/test";
 
-const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? "http://localhost:3000";
+// A dedicated port so a dev server (or another local app) on 3000 is never mistaken for this one.
+const port = process.env.PLAYWRIGHT_PORT ?? "3100";
+const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? `http://localhost:${port}`;
 const isCI = process.env.CI !== undefined;
 
 export default defineConfig({
@@ -17,7 +19,7 @@ export default defineConfig({
   webServer: process.env.PLAYWRIGHT_BASE_URL
     ? undefined
     : {
-        command: "pnpm build && pnpm start",
+        command: `pnpm build && pnpm start --port ${port}`,
         url: baseURL,
         reuseExistingServer: !isCI,
         timeout: 180_000,
