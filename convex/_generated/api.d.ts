@@ -65,6 +65,7 @@ import type * as shared_errors from "../shared/errors.js";
 import type * as shared_galaxy from "../shared/galaxy.js";
 import type * as shared_graphemes from "../shared/graphemes.js";
 import type * as shared_moderation from "../shared/moderation.js";
+import type * as shared_otp from "../shared/otp.js";
 import type * as shared_password from "../shared/password.js";
 import type * as shared_random from "../shared/random.js";
 import type * as shared_usernames from "../shared/usernames.js";
@@ -136,6 +137,7 @@ declare const fullApi: ApiFromModules<{
   "shared/galaxy": typeof shared_galaxy;
   "shared/graphemes": typeof shared_graphemes;
   "shared/moderation": typeof shared_moderation;
+  "shared/otp": typeof shared_otp;
   "shared/password": typeof shared_password;
   "shared/random": typeof shared_random;
   "shared/usernames": typeof shared_usernames;

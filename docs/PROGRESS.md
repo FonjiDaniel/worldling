@@ -4,9 +4,38 @@ Where the build stands, phase by phase (SPEC §15). Updated at the end of every 
 
 ## Current status
 
-**Phase 3: Email system** is complete. Typecheck, lint, tests (196) and build pass locally, the functions deploy to the dev deployment, and a real email went out through Gmail SMTP from dev. GitHub Actions is still blocked by the account billing lock (see Phase 0), so run the checks locally before pushing.
+**Phase 4: Authentication and onboarding** is complete, except Google sign-in, which is built but not yet tried end to end because the Google OAuth client doesn't exist yet (see notes). Typecheck, lint, tests (303), build and e2e (16) pass locally against the dev deployment. GitHub Actions is still blocked by the account billing lock (see Phase 0).
 
-**Next:** Phase 4, Authentication and onboarding.
+**Next:** Phase 5, Planet renderer. It extends the minimal `shared/worldParams.ts` from Phase 4 (ADR-017).
+
+## Phase 4: Authentication and onboarding
+
+- [x] Spike (§6.5): rung 1 works. `src/proxy.ts` exports `convexAuthNextjsMiddleware`, with the server provider under Suspense plus `connection()` for Cache Components. ADR-015.
+- [x] §6.2 resolved: `sendVerificationRequest` gets Convex Auth's ActionCtx and enqueues `auth.verify` / `auth.reset` in our outbox. No HTTP hook, `AUTH_EMAIL_HOOK_SECRET` removed.
+- [x] `convex/auth.ts`: Password (8 digit codes, 15 minutes, Web Crypto, NIST-style policy from `shared/password.ts`) with verify + reset, and Google. Closed sign ups (`signups.enabled`) and `deleting` accounts are refused in callbacks.
+- [x] Shared rules: `shared/usernames.ts` (format, reserved list, moderation, display names), `shared/moderation.ts` (`obscenity` + links, emails, phones, spaced letters, admin extra words), `shared/password.ts`, `shared/otp.ts`.
+- [x] Pulled forward (ADR-017): minimal `shared/worldParams.ts`, `shared/galaxy.ts`, `shared/random.ts`, `model/worlds.ts` (`allocateSlot`, `createPrimaryWorld`).
+- [x] `signedInMutation` wrapper (signed in, any profile state, not deleting, maintenance applies).
+- [x] `profiles.me`, `profiles.isUsernameAvailable`, `profiles.completeOnboarding` (profile + world + slot + welcome email in one transaction, optional draft), `sessions.signOutEverywhere`, `system.status`, `admin/system:bootstrapAdmin` (audited).
+- [x] E2E mailbox (ADR-016): `@e2e.worldling.test` mail on non-production deployments goes to the fake provider and the `e2eMailbox` table. Playwright reads it with `npx convex run testing/e2e:takeLatestEmail`.
+- [x] Pages: `/sign-up`, `/sign-in`, `/verify` (8-cell code input, paste anywhere, autofill, resend countdown), `/reset-password` (two steps, same answer for unknown emails), `/onboarding` (live availability, grapheme counter), `/me` (temporary "Your world is born"), `/settings` (sign out of all devices). Header account menu.
+- [x] `AccountGate` picks the screen: loading, signed out, onboarding redirect, suspended (reason + appeal), maintenance (non-admins).
+- [x] Acceptance: Playwright signs up, reads the code from the mailbox, pastes it, onboards, and resets a password. Axe has nothing serious on every auth page. Convex tests cover `bootstrapAdmin` (once only, audit row, unknown, unverified, Google-only, not onboarded, suspended), onboarding, sessions, the OTP path through the real `auth:signIn` (including mixed-case email verification) and the mailbox guard.
+- [x] Real mail: an `auth.verify` and an `auth.reset` to a Gmail address reached `sent` through Gmail SMTP on dev, with Gmail message ids.
+- [ ] Google sign-in end to end. Needs the OAuth client (see notes).
+
+### Phase 4 notes
+
+- **Google setup (to do).** Create an OAuth client (Web application) in Google Cloud Console. Authorized redirect URI: `https://brazen-bat-986.convex.site/api/auth/callback/google` for dev, and the same path on each deployment's `.convex.site`. Then `npx convex env set AUTH_GOOGLE_ID ...` and `AUTH_GOOGLE_SECRET ...`. Until then the Google button shows the generic error.
+- **JWT keys** are set on dev (`JWT_PRIVATE_KEY`, `JWKS`). Preview and production need their own pair. `npx @convex-dev/auth` generates them, or the same Node `generateKeyPairSync("rsa")` approach.
+- **Errors through `/api/auth`** arrive as plain text. `features/auth/errors.ts` recovers our JSON and maps Convex Auth's names. A test pins the format (ADR-015).
+- **Sign out everywhere during maintenance** is blocked like every mutation. Signing out this device still works.
+- **Default email prefs** at onboarding: comet alerts and weekly digest on, product updates off. People change them in settings once that section lands.
+- **`/me`** is a placeholder until Phase 7 makes it redirect to `/w/[username]`.
+- **E2E timing.** After sign-in the Convex websocket authenticates against the remote deployment, which can take a few seconds. The spec gives post-sign-in navigations 20s.
+- **Windows dev.** Stopping a background `next start` from the agent can leave the Node process running. Free the port before Playwright reuses a stale server.
+- **`e2eMailbox` cleanup.** Welcome emails to e2e accounts stay in the table. `jobs.cleanup` (Phase 10) should drop rows older than a day.
+- **Support email.** Optional `NEXT_PUBLIC_SUPPORT_EMAIL` shows an appeal link on the suspended screen. Without it the screen says to reply to our email.
 
 ## Phase 3: Email system
 

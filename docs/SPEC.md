@@ -826,7 +826,7 @@ Every staff/admin mutation MUST call `writeAudit(ctx, {...})` in the same transa
 |---|---|---|---|
 | profiles | `me` | publicQuery | Viewer profile or null, plus `needsOnboarding` |
 | profiles | `isUsernameAvailable` | publicQuery | Normalizes + checks reserved list |
-| profiles | `completeOnboarding` | mutation (signed in, not onboarded) | Creates profile, claims draft world if provided |
+| profiles | `completeOnboarding` | signedInMutation (signed in, not onboarded) | Creates profile, claims draft world if provided |
 | profiles | `updateProfile`, `updateEmailPrefs`, `touchActive` | userMutation | `touchActive` writes at most once per day |
 | worlds | `getByUsername` | publicQuery | Public world + owner public profile, hides hidden worlds |
 | worlds | `mine` | userQuery | |
@@ -844,6 +844,8 @@ Every staff/admin mutation MUST call `writeAudit(ctx, {...})` in the same transa
 | blocks | `block`, `unblock`, `list` | user* | |
 | notifications | `list`, `unreadCount`, `markRead`, `markAllRead` | user* | |
 | account | `requestExport`, `requestDeletion` | userMutation | Deletion is async (§6.7) |
+| sessions | `signOutEverywhere` | signedInMutation | Deletes every session and refresh token (§6.4), works while suspended |
+| system | `status` | publicQuery | Maintenance state for the maintenance screen |
 
 Universe pins are lightweight: `{ id, slot, name, username, colorA, colorB, level, thumbUrl }`. Full params are only sent for the few worlds near the camera.
 
@@ -1372,6 +1374,7 @@ Vercel build command: `npx convex deploy --cmd 'pnpm build'` (uses `CONVEX_DEPLO
 | `NEXT_PUBLIC_CONVEX_URL` | Set by `convex deploy` during build |
 | `NEXT_PUBLIC_SITE_URL` | `https://worldling.app` (or chosen domain) |
 | `NEXT_PUBLIC_SENTRY_DSN`, `SENTRY_AUTH_TOKEN`, `SENTRY_ORG`, `SENTRY_PROJECT` | Error tracking |
+| `NEXT_PUBLIC_SUPPORT_EMAIL` | Optional. Appeal address on the suspended screen (§6.4) |
 
 **Convex**
 
@@ -1386,7 +1389,7 @@ Vercel build command: `npx convex deploy --cmd 'pnpm build'` (uses `CONVEX_DEPLO
 | `EMAIL_FAKE` | `true` sends through the fake provider. Ignored in production (ADR-014) |
 | `EMAIL_FALLBACK_TRANSPORT`, `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASSWORD`, `EMAIL_FROM_NAME`, `EMAIL_FROM_ADDRESS` | Env fallback (§7.5) |
 | `RESEND_API_KEY` | Optional fallback |
-| `APP_ENV` | `development`, `preview`, `production`, `test` |
+| `APP_ENV` | `development`, `preview`, `production`, `test`. The e2e mailbox only works when explicitly non-production (ADR-016) |
 
 ### 13.6 Release and rollback
 
@@ -1510,7 +1513,7 @@ Acceptance: e2e test for sign up -> verify -> onboarding. Verification and reset
 
 ```
 Read CLAUDE.md and docs/SPEC.md (§2.3, §3.8, §8.1-§8.3, §8.8-§8.10). Plan first, then implement Phase 5.
-- convex/shared/worldParams.ts: zod schema matching worldParamsV1, clamps, 6 biome presets, curated palettes (at least 18), randomParams(seed), describeWorld(params) for accessibility.
+- convex/shared/worldParams.ts: zod schema matching worldParamsV1, clamps, 6 biome presets, curated palettes (at least 18), randomParams(seed), describeWorld(params) for accessibility. (A minimal version with the schema, clamps, one palette per biome and randomParams exists since Phase 4, ADR-017. Expand it.)
 - ExperienceRoot (single persistent canvas, drei View), clock.ts single ticker (ADR-003), quality.ts tiers with detect-gpu + PerformanceMonitor.
 - Planet with all layers (surface, ocean, clouds, atmosphere, night lights, orbitals) driven by paramsToUniforms (pure, unit tested). Bloom-level feature toggles.
 - Shader error fallback, 3D error boundary, context-loss handling (§8.9).
@@ -1546,7 +1549,7 @@ Acceptance: convex-test for caps and idempotency, OG image renders for a world w
 
 ```
 Read CLAUDE.md and docs/SPEC.md (§2.5, §8.4, §8.5). Plan first, then implement Phase 8.
-- convex/shared/galaxy.ts (slot -> position, sector keys) with tests. Slot allocation in worlds.create.
+- convex/shared/galaxy.ts (slot -> position, sector keys) with tests. Slot allocation in worlds.create. (slotToPosition, sectorKeyFor and slot allocation exist since Phase 4, ADR-017. Add the streaming helpers.)
 - universe.sectors / universe.renderable / featured / justBorn queries.
 - Galaxy scene: instanced far LOD, mid LOD, near full planets by tier, sector streaming with debounce, picking + hover labels, births animation.
 - CameraRig with GSAP flyTo, interruptible, skip affordance, reduced-motion cut.
