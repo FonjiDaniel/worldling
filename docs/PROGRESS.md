@@ -4,9 +4,30 @@ Where the build stands, phase by phase (SPEC §15). Updated at the end of every 
 
 ## Current status
 
-**Phase 2: Backend core** is complete. Typecheck, lint, tests (88) and build pass locally, and the schema and components deploy cleanly to the dev deployment. GitHub Actions is still blocked by the account billing lock (see Phase 0), so run the checks locally before pushing.
+**Phase 3: Email system** is complete. Typecheck, lint, tests (196) and build pass locally, the functions deploy to the dev deployment, and a real email went out through Gmail SMTP from dev. GitHub Actions is still blocked by the account billing lock (see Phase 0), so run the checks locally before pushing.
 
-**Next:** Phase 3, Email system.
+**Next:** Phase 4, Authentication and onboarding.
+
+## Phase 3: Email system
+
+- [x] Dependencies (pinned): `nodemailer` 10.1.2, `@react-email/render` 2.1.1, `@types/nodemailer` 8.0.2 (dev).
+- [x] ADR-014: Gmail 465 result, retry classes, registry-derived category, over-limit handling, OTP scrubbing, GET-confirm/POST unsubscribe, `EMAIL_FAKE`. SPEC §7 and §13.5 updated.
+- [x] `shared/emailTemplates.ts` (keys, zod schemas, category, scope, subject, `previewData`) and `shared/emailConfig.ts` (admin config input schema).
+- [x] Templates for all eight §7.7 keys in `convex/email/templates/`, with plain-text versions, a dark layout, footer unsubscribe link for non-security mail, and a theme that mirrors the tokens (parity test). Renderer is `"use node"`.
+- [x] Outbox: `model/emailOutbox.ts` `enqueueEmail` (idempotency, zod, suppressions, per-recipient limits, workpool enqueue). `email/outbox.ts` claim/markSent/markFailed/`onComplete`.
+- [x] Dispatch (`email/dispatch.ts`): DB config or env fallback, decrypts in memory, renders, adds `List-Unsubscribe` headers, classifies errors (`email/errors.ts`). Workpool: 5 attempts, 10s base, exponential with jitter.
+- [x] Providers (`email/providers.ts`): `SmtpProvider` (nodemailer), `ResendProvider` (fetch, outbox id as `Idempotency-Key`), `FakeProvider` (`EMAIL_FAKE=true`, never in production).
+- [x] Config lifecycle (`model/emailConfigs.ts`, `admin/email.ts`): create, update (resets to draft), test send (verifies on success, ignores stale results), activate, rollback. Secrets encrypted, safe view only, audited.
+- [x] Unsubscribe (`http.ts`, `email/links.ts`): HMAC tokens, GET confirm page, POST and one-click add the suppression. `publicHttpAction` wrapper.
+- [x] Event names added to `docs/events.md`, plus a test that every logged event name is listed there.
+- [x] Acceptance: convex-test covers enqueue, suppression, idempotency, rate limits, retry vs permanent failure (including a full 5-attempt workpool run), env fallback, DB config decryption, activation rules, audit and unsubscribe. A real `admin.test` email reached `sent` via Gmail SMTP (465) on dev.
+
+### Phase 3 notes
+
+- **Dev email env.** The dev deployment uses the env fallback with Gmail SMTP. `EMAIL_LINK_SECRET` and `SECRETS_ENCRYPTION_KEY` are set there too. Preview and production still need them.
+- **Admin metrics deferred.** "Last successful send" and "failures in 24h" (§7.4 step 5) need rollups, since queries can't filter by `Date.now()`. They come with Phase 10.
+- **Peer warning.** `@auth/core` expects nodemailer 7 or 8. Harmless, since we don't use Auth.js's email provider: Phase 4 sends OTPs through the outbox.
+- **CLI sends.** `npx convex run email/outbox:enqueue '{"to":"...","template":"admin.test","data":{"transport":"smtp","source":"env"},"idempotencyKey":"..."}'` sends a test through the real pipeline.
 
 ## Phase 2: Backend core
 

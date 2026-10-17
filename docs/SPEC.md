@@ -942,10 +942,12 @@ npx convex run --prod admin/system:bootstrapAdmin '{"email":"you@example.com"}'
 
 ```
 domain code (mutation)
-   -> enqueueEmail(ctx, { to, template, data, category, idempotencyKey })
+   -> enqueueEmail(ctx, { to, template, data, idempotencyKey })
+        - category comes from the template registry, never the caller (ADR-014)
         - validates data with the template's zod schema
         - checks suppressions (non-security only) -> status "suppressed"
         - per-recipient rate limit (5 per hour, security emails exempt up to 10)
+             over the limit: security throws RATE_LIMITED, non-security is stored "cancelled" (ADR-014)
         - inserts emailOutbox row (status "queued")
         - workpool.enqueueAction(internal.email.dispatch.send, { outboxId })
    -> dispatch.send ("use node" action)
@@ -955,6 +957,7 @@ domain code (mutation)
         - provider.send() via SmtpProvider (nodemailer) or ResendProvider
         - success -> markSent(providerMessageId)
         - failure -> classify: retryable (network, timeout, 429, 5xx) or permanent (auth, 4xx)
+             (SMTP 4xx counts as retryable, SMTP 5xx as permanent, ADR-014)
              retryable: workpool retries with exponential backoff (max 5 attempts, starting 10s, jitter)
              permanent: markFailed + systemEvent (error) + admin health banner
 ```
@@ -987,7 +990,9 @@ Gmail now: `SMTP_HOST=smtp.gmail.com`, `SMTP_PORT=465`, `SMTP_SECURE=true`, `SMT
 
 > **Gmail limits:** a personal Gmail account allows roughly 500 recipients per day and may throttle bursts. Fine for launch and testing. Switch to Resend with a verified domain (SPF, DKIM, DMARC) before any marketing push.
 
-> **Verify in Phase 3:** outbound SMTP (ports 465/587) from Convex Node actions. If blocked, document it and use Resend from day one with Resend's shared test domain for development.
+> **Verified in Phase 3 (ADR-014):** Gmail SMTP on port 465 works from Convex Node actions.
+
+`EMAIL_FAKE=true` sends through a fake provider for tests and local work. It is ignored when `APP_ENV=production`.
 
 ### 7.6 Encryption
 
@@ -1008,14 +1013,14 @@ Gmail now: `SMTP_HOST=smtp.gmail.com`, `SMTP_PORT=465`, `SMTP_SECURE=true`, `SMT
 | `digest.weekly` | digest | Weekly world summary |
 | `admin.test` | security | Transport test |
 
-Each template exports `{ subject(data), schema (zod), Component, previewData }`. The admin has a template preview page (renders with `previewData` in a sandboxed iframe).
+Each template exports `{ subject(data), schema (zod), Component, previewData }`. Keys, schemas, subjects and `previewData` live in `convex/shared/emailTemplates.ts` so V8 code can validate without React Email (ADR-014). Security emails have their `data` cleared once final. The admin has a template preview page (renders with `previewData` in a sandboxed iframe).
 
 Design: dark, minimal, brand colors, one clear button, plain-text version always included, works in Gmail, Outlook and Apple Mail dark mode.
 
 ### 7.8 Unsubscribe
 
 - Non-security emails include `List-Unsubscribe` and `List-Unsubscribe-Post: List-Unsubscribe=One-Click` headers plus a footer link.
-- Link points to a Convex `httpAction` (`/email/unsubscribe?t=<signed token>`). The token is an HMAC (`EMAIL_LINK_SECRET`) of email + scope + expiry. On success it inserts a suppression and shows a simple confirmation page.
+- Link points to a Convex `httpAction` (`/email/unsubscribe?t=<signed token>`). The token is an HMAC (`EMAIL_LINK_SECRET`) of email + scope + expiry. GET shows a confirm page and never writes, so link scanners can't unsubscribe anyone. POST (the confirm button and RFC 8058 one-click) inserts the suppression and shows a confirmation page (ADR-014).
 
 ---
 
@@ -1377,6 +1382,8 @@ Vercel build command: `npx convex deploy --cmd 'pnpm build'` (uses `CONVEX_DEPLO
 | `AUTH_GOOGLE_ID`, `AUTH_GOOGLE_SECRET` | Google OAuth |
 | `SECRETS_ENCRYPTION_KEY` | 32 bytes base64 (§7.6) |
 | `EMAIL_LINK_SECRET` | HMAC for unsubscribe/export links |
+| `CONVEX_SITE_URL` | Built in. Base URL for http actions (unsubscribe links) |
+| `EMAIL_FAKE` | `true` sends through the fake provider. Ignored in production (ADR-014) |
 | `EMAIL_FALLBACK_TRANSPORT`, `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASSWORD`, `EMAIL_FROM_NAME`, `EMAIL_FROM_ADDRESS` | Env fallback (§7.5) |
 | `RESEND_API_KEY` | Optional fallback |
 | `APP_ENV` | `development`, `preview`, `production`, `test` |
