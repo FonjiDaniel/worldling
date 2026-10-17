@@ -1,0 +1,14 @@
+Use case: stylized-concept
+Asset type: a finished art-direction moodboard for Worldling, a cozy cosmic web app.
+Create one landscape moodboard with exactly six small, living 3D planets in a perfectly regular 3-column by 2-row grid on a continuous deep midnight navy background close to #07071A. No text, no labels, no logo, no frames, no stars outside the planets. Give every planet equal visual size and generous clear space. Each entire round silhouette must be visible with no cropping and no overlap.
+Reading order is mandatory:
+TOP LEFT: Oceanic world. Rich petrol ocean, luminous turquoise shallows, three soft sandy islands with a little green, brushed waves and one small cream cloud.
+TOP CENTER: Verdant world. Moss and jade hills, miniature rounded forest canopies, a winding blue river, a few small pale blossoms, tiny quiet clearings.
+TOP RIGHT: Desert world. Warm ochre dunes, peach sand, rounded sandstone mesas and one tiny turquoise oasis. Calm, no harsh yellow.
+BOTTOM LEFT: Frozen world. Powder blue glaciers, snow-covered rounded mountains, pale cyan frozen lakes, a little soft cloud.
+BOTTOM CENTER: Volcanic world. Warm charcoal rounded basalt, a small dormant crater, restrained glowing coral lava seams and tiny amber lights. Welcoming dusk, not a fiery explosion.
+BOTTOM RIGHT: Crystal world. Lavender stone, a few varied small amethyst and mint mineral clusters, opalescent accents, a quiet teal pool. No neon spikes.
+Style: sophisticated stylized 3D, painterly and tactile, like miniature museum dioramas of tiny planets. Hand-painted mineral-clay surfaces, broad soft brush variation, coherent curved terrain wrapping a solid spherical base, softly rounded silhouettes. Crafted and wondrous, suitable for a beloved consumer app for ages 16 to 35. Not childish, no faces, no mascots.
+Lighting: the same large warm softbox from upper left for all six, gentle cool ambient fill, soft occlusion in terrain creases, restrained highlights. Matte land, satin water with only a few glints. No harsh rim glow, no metallic shine, no photoreal satellite maps.
+Camera: the same almost orthographic three-quarter view at approximately 25 degrees above each equator, with natural visible spherical volume. Planet detail reads at a glance. Avoid tilted cutaway terrain discs or flat floating islands.
+Composition: polished 3:2 landscape artboard. Centers around 1/6, 1/2, 5/6 across and 1/4, 3/4 down. Each planet diameter approximately one quarter of the image width. Leave dark breathing room around each. The background stays quiet and untextured. Absolutely no writing.

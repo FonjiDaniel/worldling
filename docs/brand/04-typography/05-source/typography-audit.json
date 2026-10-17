@@ -1,0 +1,132 @@
+{
+  "status": "passed",
+  "scope": "Font coverage and file equivalence; mathematical type-scale endpoints and CSS property consistency. No browser rendering or app-wide accessibility certification.",
+  "type_scale": [
+    {
+      "style": "display",
+      "status": "passed",
+      "sizes_css_px": {
+        "320": 40.0,
+        "360": 40.0,
+        "768": 52.088884,
+        "1440": 71.999995,
+        "1920": 72.0
+      }
+    },
+    {
+      "style": "h1",
+      "status": "passed",
+      "sizes_css_px": {
+        "320": 36.0,
+        "360": 36.0,
+        "768": 43.555551,
+        "1440": 55.999997,
+        "1920": 56.0
+      }
+    },
+    {
+      "style": "h2",
+      "status": "passed",
+      "sizes_css_px": {
+        "320": 28.0,
+        "360": 28.0,
+        "768": 32.533332,
+        "1440": 39.999998,
+        "1920": 40.0
+      }
+    },
+    {
+      "style": "h3",
+      "status": "passed",
+      "sizes_css_px": {
+        "320": 24.0,
+        "360": 24.000002,
+        "768": 26.26667,
+        "1440": 30.0,
+        "1920": 30.0
+      }
+    },
+    {
+      "style": "h4",
+      "status": "passed",
+      "sizes_css_px": {
+        "320": 20.0,
+        "360": 20.000004,
+        "768": 21.511114,
+        "1440": 24.0,
+        "1920": 24.0
+      }
+    },
+    {
+      "style": "body-lg",
+      "status": "passed",
+      "sizes_css_px": {
+        "320": 18.0,
+        "360": 18.0,
+        "768": 18.755549,
+        "1440": 19.999992,
+        "1920": 20.0
+      }
+    },
+    {
+      "style": "body",
+      "status": "passed",
+      "sizes_css_px": {
+        "320": 16.0,
+        "360": 16.0,
+        "768": 16.755549,
+        "1440": 17.999992,
+        "1920": 18.0
+      }
+    },
+    {
+      "style": "small",
+      "status": "passed",
+      "sizes_css_px": {
+        "320": 14.0,
+        "360": 14.0,
+        "768": 14.755549,
+        "1440": 15.999992,
+        "1920": 16.0
+      }
+    },
+    {
+      "style": "caption",
+      "status": "passed",
+      "sizes_css_px": {
+        "320": 12.0,
+        "360": 12.0,
+        "768": 12.755549,
+        "1440": 13.999992,
+        "1920": 14.0
+      }
+    }
+  ],
+  "fonts": [
+    {
+      "family": "Bricolage Grotesque",
+      "status": "passed",
+      "checked_glyphs": 98,
+      "woff2_cmap_axes_and_names_match_ttf": true,
+      "narrow_no_break_space_U202F_in_cmap": true
+    },
+    {
+      "family": "Geist",
+      "status": "passed",
+      "checked_glyphs": 98,
+      "woff2_cmap_axes_and_names_match_ttf": true,
+      "narrow_no_break_space_U202F_in_cmap": false
+    },
+    {
+      "family": "Geist Mono",
+      "status": "passed",
+      "checked_glyphs": 98,
+      "woff2_cmap_axes_and_names_match_ttf": true,
+      "narrow_no_break_space_U202F_in_cmap": false
+    }
+  ],
+  "browser_checks": {
+    "status": "not_run",
+    "note": "No usable local browser was available. Verify zoom, reflow and user text-spacing behavior when integrating the specimen into the app."
+  }
+}

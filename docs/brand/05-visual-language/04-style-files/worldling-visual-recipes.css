@@ -1,0 +1,52 @@
+/* Worldling Step 5. Visual recipes to combine with the Step 3 and 4 systems. */
+:root {
+  --wl-glass: rgb(17 18 43 / 88%);
+  --wl-blur: 20px;
+  --wl-radius-sm: 8px;
+  --wl-radius-md: 16px;
+  --wl-radius-lg: 24px;
+  --wl-radius-full: 9999px;
+  --wl-ease-out: cubic-bezier(.2, .8, .2, 1);
+  --wl-ease-in-out: cubic-bezier(.45, 0, .55, 1);
+}
+.wl-glass {
+  background: #11122b;
+  border: 1px solid #34365a;
+  border-radius: var(--wl-radius-lg);
+  padding: 20px;
+  box-shadow: 0 16px 48px rgb(0 0 0 / 32%), inset 0 1px 0 rgb(244 241 234 / 4%);
+  color: #f4f1ea;
+}
+@supports ((backdrop-filter: blur(20px)) or (-webkit-backdrop-filter: blur(20px))) {
+  .wl-glass { background: var(--wl-glass); backdrop-filter: blur(var(--wl-blur)); -webkit-backdrop-filter: blur(var(--wl-blur)); }
+}
+@media (min-width: 768px) { .wl-glass { padding: 24px; } }
+.wl-control { background: #07071a; color: #f4f1ea; border: 1px solid #696c91; border-radius: 16px; }
+.wl-glass .wl-control { border-color: #9a9bb8; }
+.wl-focus:focus-visible { outline: 2px solid #3fe0c5; outline-offset: 3px; }
+.wl-warm-action { background: #ff8a5b; color: #07071a; border: 0; border-radius: 9999px; min-height: 48px; padding: 12px 24px; }
+.wl-icon-button { min-inline-size: 44px; min-block-size: 44px; display: inline-grid; place-items: center; }
+.wl-selected-world { box-shadow: 0 0 24px rgb(63 224 197 / 12%); }
+.wl-feedback { transition: background-color 150ms var(--wl-ease-out), border-color 150ms var(--wl-ease-out); }
+.wl-panel-enter { animation: wl-panel-in 240ms var(--wl-ease-out) both; }
+.wl-bloom-reveal { animation: wl-bloom-in 1200ms var(--wl-ease-in-out) both; }
+/* Ambient motion is opt-in: add data-ambient="on" only when enabled. */
+[data-ambient="on"] .wl-ambient-drift { animation: wl-drift 16000ms var(--wl-ease-in-out) infinite; }
+[data-motion-paused="true"] .wl-ambient-drift { animation-play-state: paused; }
+@keyframes wl-panel-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes wl-bloom-in { from { opacity: 0; transform: scale(.96); } to { opacity: 1; transform: scale(1); } }
+@keyframes wl-drift { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+@keyframes wl-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  [data-ambient="on"] .wl-ambient-drift { animation: none; transform: none; }
+  .wl-panel-enter, .wl-bloom-reveal { animation: wl-fade-in 150ms ease-out both; }
+}
+[data-reduced-motion="true"] .wl-ambient-drift { animation: none; transform: none; }
+[data-reduced-motion="true"] .wl-panel-enter,
+[data-reduced-motion="true"] .wl-bloom-reveal { animation: wl-fade-in 150ms ease-out both; }
+/* Apply JS/WebGL camera and orbit motion rules separately. CSS does not stop a render loop.
+   Preserve a user's paused setting after navigation. Stop ambient work when the document
+   is hidden or a world is offscreen. Do not resume after visibility changes if paused.
+   Use separate nested wrappers when more than one transform animation affects a world.
+   Keep required borders and text fully opaque; never lower the whole panel opacity.
+   This is a recipe sheet, not the complete Step 8 Tailwind theme. */

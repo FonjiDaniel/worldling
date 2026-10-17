@@ -134,6 +134,8 @@ Where the build stands, phase by phase (SPEC §15). Updated at the end of every 
 
 ## Notes and decisions
 
+- **Brand kit indexed (2026-10-18).** `docs/brand/README.md` maps all 210 files, extracts every value and records the logo and contrast checks. The kit moved to numbered folders (`02-logo` to `07-voice`). **Pending brand:** `08` (design tokens and one-page summary) and a dark optical favicon for light backgrounds. The README lists where `tokens.css` differs from the brand (radii, 88% glass, focus offset, easings, durations, shadows, type scale) and the light-theme status colors that need darker values. Those changes wait for the tokens step and need an ADR for SPEC §3.2.
+
 - **Pinned versions.** All dependencies are exact (`.npmrc` `save-exact=true`). Only Phase 0 dependencies are installed. Later phases add theirs, also pinned.
 - **TypeScript 6.0.3, not 7.** typescript-eslint 8.71 supports `<6.1.0`, and TS 7 (native port) breaks the compiler API used by Next and ESLint.
 - **ESLint 9.39.5, not 10.** eslint-config-next 16.4.2 bundles eslint-plugin-react, -import and -jsx-a11y, which cap at ESLint 9. npm flags 9.x as deprecated. Move to 10 when those plugins support it.

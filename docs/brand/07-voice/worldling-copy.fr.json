@@ -1,0 +1,78 @@
+{
+  "brand": {
+    "name": "Worldling",
+    "tagline": {
+      "primary": "Fais grandir un monde à ton image.",
+      "secondary": "Découvre les mondes des autres."
+    }
+  },
+  "tagline_alternatives": [
+    "Un petit monde qui te ressemble.",
+    "De petits mondes. Des découvertes à partager.",
+    "Une petite planète où te sentir chez toi.",
+    "Ton coin de cosmos.",
+    "Laisse ton monde s’épanouir.",
+    "Crée-toi un monde.",
+    "À toi de façonner ton monde.",
+    "De petits mondes pour se retrouver.",
+    "Un espace pour créer à ta façon.",
+    "Un monde à faire grandir. Un univers à explorer."
+  ],
+  "errors": {
+    "save_failed": {
+      "message": "Nous n’avons pas pu enregistrer tes modifications. Réessaie.",
+      "action": "Réessayer"
+    },
+    "comet_failed": {
+      "message": "Ta comète n’a pas été envoyée. Réessaie.",
+      "action": "Réessayer"
+    },
+    "world_unavailable": {
+      "message": "Ce monde n’est pas disponible. Tu peux en explorer un autre.",
+      "action": "Explorer des mondes"
+    }
+  },
+  "empty": {
+    "no_world": {
+      "title": "Ton monde commence ici.",
+      "body": "Choisis un paysage et crée un monde à ton image.",
+      "action": "Créer mon monde"
+    },
+    "no_comets": {
+      "title": "Pas encore de comètes.",
+      "body": "Les visiteurs peuvent laisser une comète : un petit message bienveillant.",
+      "action": "Partager mon monde"
+    },
+    "comet_composer": {
+      "title": "Quelques mots pour faire plaisir.",
+      "body": "Dis à cette personne ce que tu as aimé dans son monde.",
+      "field_label": "Ton message",
+      "action": "Envoyer une comète"
+    }
+  },
+  "celebrations": {
+    "world_created": {
+      "message": "Ton monde est là. Installe-toi.",
+      "action": "Voir mon monde"
+    },
+    "first_comet": {
+      "message": "Ta première comète est arrivée. Quelqu’un t’a laissé un message bienveillant.",
+      "action": "Lire la comète"
+    },
+    "new_moon": {
+      "message": "Une nouvelle lune accompagne ton monde. Viens la découvrir.",
+      "action": "Voir mon monde"
+    }
+  },
+  "notifications": {
+    "welcome": {
+      "subject": "Ton petit coin d’univers"
+    },
+    "comet_arrived": {
+      "subject": "Une comète a rejoint ton monde"
+    },
+    "new_moon": {
+      "subject": "Ton monde a une nouvelle lune"
+    }
+  }
+}

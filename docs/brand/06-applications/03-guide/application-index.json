@@ -1,0 +1,174 @@
+{
+  "brand": "Worldling",
+  "step": 6,
+  "assets": [
+    {
+      "name": "Worldling-OG-1200x630",
+      "purpose": "Open Graph share image template",
+      "image": "01-images/social/Worldling-OG-1200x630.png",
+      "svg": "02-svg/Worldling-OG-1200x630.svg",
+      "logical_size": [
+        1200,
+        630
+      ],
+      "png_size": [
+        1200,
+        630
+      ]
+    },
+    {
+      "name": "Worldling-X-Header-1500x500",
+      "purpose": "X profile header",
+      "image": "01-images/social/Worldling-X-Header-1500x500.png",
+      "svg": "02-svg/Worldling-X-Header-1500x500.svg",
+      "logical_size": [
+        1500,
+        500
+      ],
+      "png_size": [
+        1500,
+        500
+      ]
+    },
+    {
+      "name": "Worldling-Instagram-Post-1080x1350",
+      "purpose": "Instagram launch post",
+      "image": "01-images/social/Worldling-Instagram-Post-1080x1350.png",
+      "svg": "02-svg/Worldling-Instagram-Post-1080x1350.svg",
+      "logical_size": [
+        1080,
+        1350
+      ],
+      "png_size": [
+        1080,
+        1350
+      ]
+    },
+    {
+      "name": "Worldling-Instagram-Story-1080x1920",
+      "purpose": "Instagram launch story",
+      "image": "01-images/social/Worldling-Instagram-Story-1080x1920.png",
+      "svg": "02-svg/Worldling-Instagram-Story-1080x1920.svg",
+      "logical_size": [
+        1080,
+        1920
+      ],
+      "png_size": [
+        1080,
+        1920
+      ]
+    },
+    {
+      "name": "Worldling-Mobile-World-1170x2532",
+      "purpose": "Mobile world page at 390 by 844 logical pixels",
+      "image": "01-images/product/Worldling-Mobile-World-1170x2532.png",
+      "svg": "02-svg/Worldling-Mobile-World-1170x2532.svg",
+      "logical_size": [
+        390,
+        844
+      ],
+      "png_size": [
+        1170,
+        2532
+      ]
+    },
+    {
+      "name": "Worldling-Desktop-Creator-1600x1000",
+      "purpose": "Desktop world creator with presets, sliders and swatches",
+      "image": "01-images/product/Worldling-Desktop-Creator-1600x1000.png",
+      "svg": "02-svg/Worldling-Desktop-Creator-1600x1000.svg",
+      "logical_size": [
+        1600,
+        1000
+      ],
+      "png_size": [
+        1600,
+        1000
+      ]
+    },
+    {
+      "name": "Worldling-Email-Header-1200px",
+      "purpose": "Email header at 600px logical width",
+      "image": "01-images/email/Worldling-Email-Header-1200px.png",
+      "svg": "02-svg/Worldling-Email-Header-1200px.svg",
+      "logical_size": [
+        600,
+        208
+      ],
+      "png_size": [
+        1200,
+        416
+      ]
+    },
+    {
+      "name": "Worldling-Email-Footer-1200px",
+      "purpose": "Email footer at 600px logical width",
+      "image": "01-images/email/Worldling-Email-Footer-1200px.png",
+      "svg": "02-svg/Worldling-Email-Footer-1200px.svg",
+      "logical_size": [
+        600,
+        154
+      ],
+      "png_size": [
+        1200,
+        308
+      ]
+    },
+    {
+      "name": "Worldling-Email-Header-720px",
+      "purpose": "Email header at 360px logical width",
+      "image": "01-images/email/Worldling-Email-Header-720px.png",
+      "svg": "02-svg/Worldling-Email-Header-720px.svg",
+      "logical_size": [
+        360,
+        198
+      ],
+      "png_size": [
+        720,
+        396
+      ]
+    },
+    {
+      "name": "Worldling-Email-Footer-720px",
+      "purpose": "Email footer at 360px logical width",
+      "image": "01-images/email/Worldling-Email-Footer-720px.png",
+      "svg": "02-svg/Worldling-Email-Footer-720px.svg",
+      "logical_size": [
+        360,
+        174
+      ],
+      "png_size": [
+        720,
+        348
+      ]
+    },
+    {
+      "name": "Worldling-Email-Preview-1200px",
+      "purpose": "Email layout preview at 600px logical width",
+      "image": "01-images/email/Worldling-Email-Preview-1200px.png",
+      "svg": "02-svg/Worldling-Email-Preview-1200px.svg",
+      "logical_size": [
+        600,
+        659
+      ],
+      "png_size": [
+        1200,
+        1318
+      ]
+    },
+    {
+      "name": "Worldling-Email-Preview-720px",
+      "purpose": "Email layout preview at 360px logical width",
+      "image": "01-images/email/Worldling-Email-Preview-720px.png",
+      "svg": "02-svg/Worldling-Email-Preview-720px.svg",
+      "logical_size": [
+        360,
+        719
+      ],
+      "png_size": [
+        720,
+        1438
+      ]
+    }
+  ]
+}

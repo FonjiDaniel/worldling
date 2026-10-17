@@ -1,0 +1,277 @@
+{
+  "brand": "Worldling",
+  "step": 5,
+  "version": "1.0",
+  "worlds": [
+    {
+      "name": "Oceanic",
+      "fr": "Océanique",
+      "position": "Top left",
+      "colors": [
+        "#245D82",
+        "#69C9C2",
+        "#E4D8B3"
+      ],
+      "form": "Three readable islands and broad shallow-water bands.",
+      "material": "Satin ocean, matte sand, sparse foam."
+    },
+    {
+      "name": "Verdant",
+      "fr": "Verdoyant",
+      "position": "Top center",
+      "colors": [
+        "#63804E",
+        "#9FAF65",
+        "#4DA5AC"
+      ],
+      "form": "Rounded canopies, a winding river and quiet clearings.",
+      "material": "Soft moss, brushed grass, muted stone."
+    },
+    {
+      "name": "Desert",
+      "fr": "Désertique",
+      "position": "Top right",
+      "colors": [
+        "#BD7954",
+        "#E9B682",
+        "#78BDB2"
+      ],
+      "form": "Dune ribbons, rounded mesas and one small oasis.",
+      "material": "Powdery sand, soft terracotta rock."
+    },
+    {
+      "name": "Frozen",
+      "fr": "Gelé",
+      "position": "Bottom left",
+      "colors": [
+        "#729CAF",
+        "#BEDFE4",
+        "#E8EDEF"
+      ],
+      "form": "Broad snow caps, pale lakes and softened ice ridges.",
+      "material": "Powder snow and translucent satin ice."
+    },
+    {
+      "name": "Volcanic",
+      "fr": "Volcanique",
+      "position": "Bottom center",
+      "colors": [
+        "#4B4957",
+        "#A16658",
+        "#F28D60"
+      ],
+      "form": "Rounded basalt, a quiet crater and a few warm seams.",
+      "material": "Matte mineral rock; restrained lava emission."
+    },
+    {
+      "name": "Crystal",
+      "fr": "Cristallin",
+      "position": "Bottom right",
+      "colors": [
+        "#8C7AAF",
+        "#C4B8D8",
+        "#8BCBBB"
+      ],
+      "form": "Few clustered crystals around a shallow teal pool.",
+      "material": "Cloudy mineral translucency; no mirror finish."
+    }
+  ],
+  "art_direction": {
+    "camera": "Near orthographic, 25 degrees above the equator. Keep the same framing and warm upper-left light across world types.",
+    "terrain": "Solid spherical base, gently rounded forms. Large landmarks first, fine detail last.",
+    "land_roughness_start": 0.8,
+    "water_roughness_start": 0.28,
+    "metalness": 0,
+    "lighting": "Large warm key from upper left, cool fill at roughly one third of key energy, soft ambient occlusion. Renderer values are starting points.",
+    "detail_levels": {
+      "hero_480px_plus": "Up to 3 main landmarks; finer paint and vegetation may show.",
+      "card_160_to_479px": "Keep 1 to 2 landmarks and 3 to 5 broad color masses.",
+      "map_48_to_159px": "Keep the silhouette and 2 to 3 color masses; omit tiny flora, veins and glints.",
+      "under_48px": "Use a simple world marker."
+    },
+    "art_colors": "Moodboard triads are illustration suggestions, not new UI tokens or sampled pixel guarantees."
+  },
+  "ui": {
+    "glass_fill": "rgb(17 18 43 / 88%)",
+    "backdrop_blur_px": 20,
+    "opaque_fallback": "#11122B",
+    "radius_px": {
+      "sm": 8,
+      "md": 16,
+      "lg": 24,
+      "full": 9999
+    },
+    "panel_padding_px": {
+      "mobile": 20,
+      "desktop": 24
+    },
+    "decorative_border": "1px solid #34365A",
+    "solid_control_border": "1px solid #696C91",
+    "glass_control_border": "1px solid #9A9BB8",
+    "focus": "2px solid #3FE0C5, 3px offset",
+    "panel_shadow": "0 16px 48px rgb(0 0 0 / 32%), inset 0 1px 0 rgb(244 241 234 / 4%)",
+    "dialog_shadow": "0 24px 80px rgb(0 0 0 / 45%)",
+    "selection_glow": "0 0 24px rgb(63 224 197 / 12%)",
+    "button_height_px": 48,
+    "icon_hit_area_px": 44,
+    "spacing_grid_px": 4
+  },
+  "iconography": {
+    "grid": 24,
+    "stroke_px": 1.75,
+    "caps": "round",
+    "joins": "round",
+    "live_bounds": "Generally 2 to 22 on each axis, with optical exceptions.",
+    "sizes_px": [
+      16,
+      20,
+      24,
+      32
+    ],
+    "optical_16_stroke_px": 1.5,
+    "rule": "Use the supplied 16px optical variants at 16px. Do not reduce the 24px master further.",
+    "names": {
+      "world": [
+        "World",
+        "Monde"
+      ],
+      "comet": [
+        "Comet",
+        "Comète"
+      ],
+      "visit": [
+        "Visit",
+        "Visiter"
+      ],
+      "bloom": [
+        "Bloom",
+        "Épanouissement"
+      ],
+      "universe": [
+        "Universe",
+        "Univers"
+      ],
+      "share": [
+        "Share",
+        "Partager"
+      ],
+      "settings": [
+        "Settings",
+        "Réglages"
+      ],
+      "notification": [
+        "Notification",
+        "Notification"
+      ]
+    }
+  },
+  "background": {
+    "base": "#07071A",
+    "star_density_per_megapixel": [
+      24,
+      40
+    ],
+    "star_radius_px": [
+      0.6,
+      1.5
+    ],
+    "star_opacity": [
+      0.24,
+      0.55
+    ],
+    "nebula_opacity_max": 0.08,
+    "grain_opacity_max": 0.015,
+    "grain": "Static monochrome texture behind content only. Remove it at small sizes or on low-power views.",
+    "copy_rule": "Preserve a calm area under copy. No bright dust bands or visible grain behind words."
+  },
+  "motion": [
+    {
+      "name": "Hover or focus color",
+      "duration_ms": 150,
+      "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+      "change": "Color or border only. Focus appears immediately.",
+      "reduced": "Keep color change, 100ms or instant."
+    },
+    {
+      "name": "Press feedback",
+      "duration_ms": 100,
+      "easing": "cubic-bezier(0.4, 0, 1, 1)",
+      "change": "Scale 1 to 0.985. Release in 150ms.",
+      "reduced": "Color change only; no scaling."
+    },
+    {
+      "name": "Panel entrance",
+      "duration_ms": 240,
+      "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+      "change": "Opacity 0 to 1; move up 8px. Exit: 180ms.",
+      "reduced": "150ms opacity only."
+    },
+    {
+      "name": "World focus",
+      "duration_ms": 600,
+      "easing": "cubic-bezier(0.45, 0, 0.55, 1)",
+      "change": "Camera shift at most 8% of viewport. No roll.",
+      "reduced": "150ms crossfade between stationary views."
+    },
+    {
+      "name": "Comet arrival",
+      "duration_ms": 900,
+      "easing": "cubic-bezier(0.22, 0.61, 0.36, 1)",
+      "change": "One short curved path, up to 140px in the UI.",
+      "reduced": "150ms arrival fade; no trail or travel."
+    },
+    {
+      "name": "Bloom reveal",
+      "duration_ms": 1200,
+      "easing": "cubic-bezier(0.45, 0, 0.55, 1)",
+      "change": "Opacity 0 to 1; new detail scales 0.96 to 1.",
+      "reduced": "150ms fade of the completed detail."
+    },
+    {
+      "name": "Ambient drift",
+      "duration_ms": 16000,
+      "easing": "cubic-bezier(0.45, 0, 0.55, 1)",
+      "change": "Full cycle: 0px to -4px to 0px. One featured world.",
+      "reduced": "Static position; no ambient animation."
+    },
+    {
+      "name": "Planet rotation",
+      "duration_ms": 120000,
+      "easing": "linear",
+      "change": "One full turn around its own axis. Optional.",
+      "reduced": "Static view, with manual step controls."
+    },
+    {
+      "name": "Moon orbit",
+      "duration_ms": 90000,
+      "easing": "linear",
+      "change": "One full orbit. Small, constant speed. Optional.",
+      "reduced": "Moon remains at its resting position."
+    }
+  ],
+  "motion_principles": [
+    "Give feedback immediately; never delay a successful action for an effect.",
+    "Use short, calm interface transitions and slow ambient movement.",
+    "No bounce, spring overshoot, camera roll, flashing stars or shaking errors.",
+    "Use one featured ambient animation per view; pause it when hidden or offscreen.",
+    "Respect reduced motion and provide a persistent Pause motion control for continuous ambient movement."
+  ],
+  "sources": [
+    {
+      "title": "WCAG 2.2: Animation from Interactions",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html"
+    },
+    {
+      "title": "WCAG 2.2: Pause, Stop, Hide",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html"
+    },
+    {
+      "title": "MDN: prefers-reduced-motion",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion"
+    },
+    {
+      "title": "MDN: backdrop-filter",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter"
+    }
+  ]
+}

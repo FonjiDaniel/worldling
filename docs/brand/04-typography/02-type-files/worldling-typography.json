@@ -1,0 +1,355 @@
+{
+  "brand": "Worldling",
+  "step": 4,
+  "version": "1.0",
+  "viewport_anchors_css_px": {
+    "mobile": 360,
+    "desktop": 1440
+  },
+  "reference_root_px": 16,
+  "fonts": {
+    "display": {
+      "name": "Bricolage Grotesque",
+      "source": "BricolageGrotesque-variable.ttf",
+      "license": "Bricolage-OFL.txt",
+      "weight_range": [
+        200,
+        800
+      ],
+      "axis_ranges": {
+        "wght": [
+          200,
+          800
+        ],
+        "wdth": [
+          75,
+          100
+        ],
+        "opsz": [
+          12,
+          96
+        ]
+      },
+      "use": "Expressive display text and h1 to h3.",
+      "reason": "Its distinctive shapes add warmth and curiosity. Large headings give it room to feel crafted without making everyday controls playful.",
+      "stack": "\"Bricolage Grotesque\", \"Trebuchet MS\", Arial, sans-serif",
+      "woff2": "BricolageGrotesque-variable.woff2"
+    },
+    "sans": {
+      "name": "Geist",
+      "source": "Geist-variable.ttf",
+      "license": "Geist-OFL.txt",
+      "weight_range": [
+        100,
+        900
+      ],
+      "axis_ranges": {
+        "wght": [
+          100,
+          900
+        ]
+      },
+      "use": "Body text, h4, buttons, inputs and supporting labels.",
+      "reason": "Its restrained shapes keep reading and controls calm. It gives the expressive headings a clear, practical companion.",
+      "stack": "\"Geist\", system-ui, -apple-system, \"Segoe UI\", Arial, sans-serif",
+      "woff2": "Geist-variable.woff2"
+    },
+    "mono": {
+      "name": "Geist Mono",
+      "source": "GeistMono-variable.ttf",
+      "license": "GeistMono-OFL.txt",
+      "weight_range": [
+        100,
+        900
+      ],
+      "axis_ranges": {
+        "wght": [
+          100,
+          900
+        ]
+      },
+      "use": "Bloom levels, standalone counts, timestamps and coordinates.",
+      "reason": "Even character widths stabilize changing numbers. Reserving it for data keeps the wider experience warm rather than technical.",
+      "stack": "\"Geist Mono\", ui-monospace, \"SFMono-Regular\", Consolas, \"Liberation Mono\", monospace",
+      "woff2": "GeistMono-variable.woff2"
+    }
+  },
+  "type_scale": [
+    {
+      "id": "display",
+      "name": "Display",
+      "family_role": "display",
+      "family": "Bricolage Grotesque",
+      "mobile_px": 40,
+      "desktop_px": 72,
+      "font_weight": 650,
+      "line_height": 1.05,
+      "line_height_mobile_px": 42.0,
+      "line_height_desktop_px": 75.6,
+      "letter_spacing_em": -0.035,
+      "fluid_css": "clamp(2.5rem, calc(1.833333rem + 2.962963vw), 4.5rem)",
+      "use": "Hero statement. Use once per view."
+    },
+    {
+      "id": "h1",
+      "name": "H1",
+      "family_role": "display",
+      "family": "Bricolage Grotesque",
+      "mobile_px": 36,
+      "desktop_px": 56,
+      "font_weight": 650,
+      "line_height": 1.1,
+      "line_height_mobile_px": 39.6,
+      "line_height_desktop_px": 61.6,
+      "letter_spacing_em": -0.03,
+      "fluid_css": "clamp(2.25rem, calc(1.833333rem + 1.851852vw), 3.5rem)",
+      "use": "World title or main page heading."
+    },
+    {
+      "id": "h2",
+      "name": "H2",
+      "family_role": "display",
+      "family": "Bricolage Grotesque",
+      "mobile_px": 28,
+      "desktop_px": 40,
+      "font_weight": 650,
+      "line_height": 1.15,
+      "line_height_mobile_px": 32.2,
+      "line_height_desktop_px": 46.0,
+      "letter_spacing_em": -0.025,
+      "fluid_css": "clamp(1.75rem, calc(1.500000rem + 1.111111vw), 2.5rem)",
+      "use": "Major section heading."
+    },
+    {
+      "id": "h3",
+      "name": "H3",
+      "family_role": "display",
+      "family": "Bricolage Grotesque",
+      "mobile_px": 24,
+      "desktop_px": 30,
+      "font_weight": 600,
+      "line_height": 1.2,
+      "line_height_mobile_px": 28.8,
+      "line_height_desktop_px": 36.0,
+      "letter_spacing_em": -0.02,
+      "fluid_css": "clamp(1.5rem, calc(1.375000rem + 0.555556vw), 1.875rem)",
+      "use": "Section or feature heading."
+    },
+    {
+      "id": "h4",
+      "name": "H4",
+      "family_role": "sans",
+      "family": "Geist",
+      "mobile_px": 20,
+      "desktop_px": 24,
+      "font_weight": 600,
+      "line_height": 1.3,
+      "line_height_mobile_px": 26.0,
+      "line_height_desktop_px": 31.2,
+      "letter_spacing_em": -0.01,
+      "fluid_css": "clamp(1.25rem, calc(1.166667rem + 0.370370vw), 1.5rem)",
+      "use": "Compact section and panel heading."
+    },
+    {
+      "id": "body-lg",
+      "name": "Body large",
+      "family_role": "sans",
+      "family": "Geist",
+      "mobile_px": 18,
+      "desktop_px": 20,
+      "font_weight": 400,
+      "line_height": 1.6,
+      "line_height_mobile_px": 28.8,
+      "line_height_desktop_px": 32.0,
+      "letter_spacing_em": 0,
+      "fluid_css": "clamp(1.125rem, calc(1.083333rem + 0.185185vw), 1.25rem)",
+      "use": "Short introductions and lead paragraphs."
+    },
+    {
+      "id": "body",
+      "name": "Body",
+      "family_role": "sans",
+      "family": "Geist",
+      "mobile_px": 16,
+      "desktop_px": 18,
+      "font_weight": 400,
+      "line_height": 1.6,
+      "line_height_mobile_px": 25.6,
+      "line_height_desktop_px": 28.8,
+      "letter_spacing_em": 0,
+      "fluid_css": "clamp(1rem, calc(0.958333rem + 0.185185vw), 1.125rem)",
+      "use": "Default reading text and descriptions."
+    },
+    {
+      "id": "small",
+      "name": "Small",
+      "family_role": "sans",
+      "family": "Geist",
+      "mobile_px": 14,
+      "desktop_px": 16,
+      "font_weight": 400,
+      "line_height": 1.5,
+      "line_height_mobile_px": 21.0,
+      "line_height_desktop_px": 24.0,
+      "letter_spacing_em": 0,
+      "fluid_css": "clamp(0.875rem, calc(0.833333rem + 0.185185vw), 1rem)",
+      "use": "Supporting copy and metadata."
+    },
+    {
+      "id": "caption",
+      "name": "Caption",
+      "family_role": "sans",
+      "family": "Geist",
+      "mobile_px": 12,
+      "desktop_px": 14,
+      "font_weight": 500,
+      "line_height": 1.45,
+      "line_height_mobile_px": 17.4,
+      "line_height_desktop_px": 20.3,
+      "letter_spacing_em": 0.01,
+      "fluid_css": "clamp(0.75rem, calc(0.708333rem + 0.185185vw), 0.875rem)",
+      "use": "Short, nonessential captions only."
+    }
+  ],
+  "utility_styles": [
+    {
+      "id": "button",
+      "family_role": "sans",
+      "family": "Geist",
+      "font_size": "1rem",
+      "font_weight": 600,
+      "line_height": 1.25,
+      "letter_spacing_em": 0,
+      "use": "Visible action labels. Keep sentence case and allow wrapping."
+    },
+    {
+      "id": "label",
+      "family_role": "sans",
+      "family": "Geist",
+      "font_size": ".875rem",
+      "font_weight": 500,
+      "line_height": 1.4,
+      "letter_spacing_em": 0,
+      "use": "Short form labels, always visible and separate from placeholders."
+    },
+    {
+      "id": "input",
+      "family_role": "sans",
+      "family": "Geist",
+      "font_size": "1rem",
+      "font_weight": 400,
+      "line_height": 1.5,
+      "letter_spacing_em": 0,
+      "use": "Input content. Use at least the default 16px equivalent."
+    },
+    {
+      "id": "data",
+      "family_role": "mono",
+      "family": "Geist Mono",
+      "font_size": "clamp(1.5rem, calc(1.333333rem + 0.740741vw), 2rem)",
+      "font_weight": 500,
+      "line_height": 1.15,
+      "letter_spacing_em": 0,
+      "use": "Standalone counters, bloom levels and numeric highlights."
+    },
+    {
+      "id": "timestamp",
+      "family_role": "mono",
+      "family": "Geist Mono",
+      "font_size": "clamp(0.75rem, calc(0.708333rem + 0.185185vw), 0.875rem)",
+      "font_weight": 500,
+      "line_height": 1.4,
+      "letter_spacing_em": 0,
+      "use": "Compact timestamps. Keep important time instructions in body size."
+    }
+  ],
+  "examples": {
+    "en": {
+      "heading": "Grow a world of your own.",
+      "secondary": "Visit everyone else's.",
+      "body": "Choose a landscape, add a little color, and let your world bloom. Every visit brings a little more life.",
+      "cta": "Create my world",
+      "world": "A quiet corner of the cosmos",
+      "owner": "by @mira",
+      "status": "Your world is blooming.",
+      "comet": "Send a comet",
+      "level": "Bloom level",
+      "visits": "Visits",
+      "comets": "Comets",
+      "numbers": [
+        "07",
+        "1,248",
+        "32"
+      ]
+    },
+    "fr": {
+      "heading": "Fais grandir ton propre monde.",
+      "secondary": "Explore celui des autres.",
+      "body": "Choisis un paysage, ajoute une touche de couleur et laisse ton monde s’épanouir. Chaque visite lui donne un peu plus de vie.",
+      "cta": "Créer mon monde",
+      "world": "Éclats d’aurore",
+      "owner": "par @mira",
+      "status": "Ton monde s’épanouit.",
+      "comet": "Envoyer une comète",
+      "level": "Niveau",
+      "visits": "Visites",
+      "comets": "Comètes",
+      "numbers": [
+        "07",
+        "1 248",
+        "32"
+      ]
+    }
+  },
+  "rules": {
+    "capitalization": "Sentence case for headings and controls; lowercase is reserved for the supplied logo wordmark.",
+    "display_width_percent": 100,
+    "optical_sizing": "auto in browsers; do not condense headings to force a fit.",
+    "paragraph_measure": "50 to 65ch on wide layouts; let mobile copy use the available width.",
+    "display_measure": "About 12 to 16ch; allow natural wrapping.",
+    "title_wrapping": "Allow long world names to wrap, including unbroken user text.",
+    "body_numbers": "Keep numbers inside normal sentences in Geist; use Geist Mono for separate data.",
+    "caption_limit": "Do not use captions for main instructions, errors or actions.",
+    "logo": "Use the approved Step 2 outlined logo. Do not rebuild the wordmark with a live text style.",
+    "locale": "English and French examples are type specimens. French copy is a proposed tu-form treatment, not finalized Step 7 voice guidance.",
+    "scope": "Type specification and specimen checks, not full application accessibility certification."
+  },
+  "font_coverage": {
+    "Bricolage Grotesque": {
+      "checked_characters": "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789ÀÂÆÇÉÈÊËÎÏÔŒÙÛÜŸàâæçéèêëîïôœùûüÿ’«» ",
+      "missing_checked_characters": [],
+      "narrow_no_break_space_U202F_in_cmap": true,
+      "ttf_sha256": "413e7357809ddd12fd80a96a8a396de0e401638d4acd3cb3e37532f0472ac682"
+    },
+    "Geist": {
+      "checked_characters": "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789ÀÂÆÇÉÈÊËÎÏÔŒÙÛÜŸàâæçéèêëîïôœùûüÿ’«» ",
+      "missing_checked_characters": [],
+      "narrow_no_break_space_U202F_in_cmap": false,
+      "ttf_sha256": "73894e0448cae90a92b6c2f8732b7bb9acb7b94c418bff559dad4a18e1de9659"
+    },
+    "Geist Mono": {
+      "checked_characters": "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789ÀÂÆÇÉÈÊËÎÏÔŒÙÛÜŸàâæçéèêëîïôœùûüÿ’«» ",
+      "missing_checked_characters": [],
+      "narrow_no_break_space_U202F_in_cmap": false,
+      "ttf_sha256": "d00e590b8eb3a59acc329b2d044fd143ae935090b7da33199ebee27cc7de8196"
+    }
+  },
+  "sources": [
+    {
+      "title": "Bricolage Grotesque, official project",
+      "url": "https://github.com/ateliertriay/bricolage"
+    },
+    {
+      "title": "Geist, official family page",
+      "url": "https://vercel.com/font"
+    },
+    {
+      "title": "WCAG 2.2, Resize Text",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/resize-text.html"
+    },
+    {
+      "title": "WCAG 2.2, Text Spacing",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/text-spacing.html"
+    }
+  ]
+}

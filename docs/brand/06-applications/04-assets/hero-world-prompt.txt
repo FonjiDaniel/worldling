@@ -1,0 +1,8 @@
+Use case: stylized-concept
+Asset type: a transparent hero planet cutout used consistently across Worldling launch graphics and app mockups.
+Reference image: the supplied six-world moodboard establishes the style only. Create one new world that combines the verdant world's tactile miniature landscape with the oceanic world's calm water.
+Subject: exactly one fully round living planet, richly green but calm, with a winding turquoise river connecting a quiet lake to deep petrol sea, rounded mossy hills, small clusters of soft rounded trees, three readable landscape regions, tiny pale blossoms, one small warm cream cloud near the upper-right edge. A few very restrained warm lights tucked into the landscape. No buildings, no houses, no faces.
+Style: sophisticated painterly 3D museum diorama, softly carved mineral-clay terrain, matte painted vegetation and rock, satin water with two or three gentle glints. Not photoreal satellite texture, not low-poly, not plastic. Cozy cosmic, wondrous and crafted for adults and young adults.
+Camera: almost orthographic, 25 degrees above the equator; show a solid spherical body, no cutaway, no floating terrain disc. Soft large warm light from upper left, cool ambient fill, gentle contact shadows. No hard rim light.
+Composition: square, one planet centered, entire planet and cloud visible, silhouette about 80 percent of the image width with a clean transparent margin all around. Transparent alpha background, no background color, no stars, no cast shadow below the object, no ring, no moon, no lettering, no symbols or logo. Strong readable silhouette and larger terrain shapes than the reference, so it works on mobile.
+Create a high-quality cutout around 2048 by 2048 pixels.

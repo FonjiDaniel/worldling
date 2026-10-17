@@ -54,6 +54,21 @@ pnpm build
 - Copy voice: warm, short, plain language. Words: world, visit, comet, tend, bloom.
 - No em dashes in UI copy.
 
+
+
+## Brand rules (MUST)
+- Brand input lives in docs/brand/. Start with docs/brand/README.md, it maps every file.
+- Which source wins:
+  1. docs/SPEC.md decides structure, behavior, token NAMES and accessibility.
+  2. docs/brand/ decides visual VALUES: colors, fonts, radii, shadows, motion feel, art direction, copy tone.
+  3. If they conflict on anything beyond values, stop and ask.
+- WCAG 2.2 AA beats brand colors. If a brand pair fails contrast, adjust lightness and note it in docs/brand/README.md.
+- Brand images are references, not assets. Match their mood, layout and color feel. Never ship a mockup image as product UI.
+- Text inside brand images may be misspelled. Copy text from 07-voice/ or SPEC, never from images.
+- Only the logo, app icon and favicon files from 02-logo/ ship in the product.
+- If a brand folder a task needs is missing, use the SPEC defaults, mark it "pending brand" in docs/PROGRESS.md, and keep going.
+- Brand values only enter code through src/styles/tokens.css (and src/lib/motion.ts). Never hardcode them in components.
+
 ## Code style
 - TypeScript strict, no any (use unknown + narrowing). Named exports. Functions < ~50 lines, files < ~300 lines.
 - Feature folders in src/features/*. Shared UI in src/components/*.
