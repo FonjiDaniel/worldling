@@ -28,11 +28,17 @@
     "*.{json,md,css,yml,yaml}": "prettier --write"
   },
   "dependencies": {
+    "@auth/core": "0.41.3",
+    "@convex-dev/auth": "0.0.96",
+    "@convex-dev/rate-limiter": "0.4.2",
+    "@convex-dev/sharded-counter": "0.2.3",
+    "@convex-dev/workpool": "0.4.14",
     "@t3-oss/env-nextjs": "0.13.11",
     "@tanstack/react-table": "9.3.1",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
     "convex": "1.47.0",
+    "convex-helpers": "0.1.128",
     "gsap": "3.15.0",
     "lucide-react": "1.58.0",
     "next": "16.4.2",
