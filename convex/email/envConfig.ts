@@ -44,3 +44,16 @@ export function envTransportSummary(): { transport: string; host?: string } | nu
 export function isFakeEmail(): boolean {
   return optionalEnv("EMAIL_FAKE") === "true" && optionalEnv("APP_ENV") !== "production";
 }
+
+/** Recipients on this domain go to the e2e mailbox (ADR-016). */
+export const E2E_EMAIL_DOMAIN = "e2e.worldling.test";
+
+/** True only on an explicitly non-production deployment, so production never fakes real mail. */
+export function isE2eMailboxEnabled(): boolean {
+  const env = optionalEnv("APP_ENV");
+  return env === "development" || env === "preview" || env === "test";
+}
+
+export function isE2eRecipient(to: string): boolean {
+  return isE2eMailboxEnabled() && to.toLowerCase().endsWith(`@${E2E_EMAIL_DOMAIN}`);
+}

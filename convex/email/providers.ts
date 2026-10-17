@@ -8,7 +8,7 @@ import type {
   ResolvedConfig,
   SmtpTransport,
 } from "./types";
-import { isFakeEmail } from "./envConfig";
+import { isE2eRecipient, isFakeEmail } from "./envConfig";
 
 // Provider adapters (SPEC §7.3). Secrets arrive decrypted and stay in this process.
 
@@ -101,8 +101,9 @@ export class FakeProvider implements EmailProvider {
   }
 }
 
-export function createProvider(config: ResolvedConfig): EmailProvider {
-  if (isFakeEmail()) return new FakeProvider();
+/** The provider for one message. The fake one for EMAIL_FAKE and e2e recipients (ADR-016). */
+export function createProvider(config: ResolvedConfig, to?: string): EmailProvider {
+  if (isFakeEmail() || (to !== undefined && isE2eRecipient(to))) return new FakeProvider();
   return config.transport.kind === "smtp"
     ? new SmtpProvider(config.transport)
     : new ResendProvider(config.transport);

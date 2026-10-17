@@ -308,6 +308,13 @@ export default defineSchema({
     emailsFailed: v.number(),
   }).index("by_day", ["day"]),
 
+  // Mail sent to @e2e.worldling.test on non-production deployments, read by Playwright (ADR-016).
+  e2eMailbox: defineTable({
+    to: v.string(),
+    template: v.string(),
+    data: v.any(),
+  }).index("by_to", ["to"]),
+
   // Ready for §14, unused in v1.0
   entitlements: defineTable({
     userId: v.id("users"),

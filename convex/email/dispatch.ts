@@ -7,6 +7,7 @@ import { internalJobAction } from "../lib/functions";
 import { isEmailTemplateKey } from "../shared/emailTemplates";
 import { composeEmail, loadActiveConfig } from "./compose";
 import { classifySendError, EmailSendError } from "./errors";
+import { isE2eRecipient } from "./envConfig";
 import { createProvider } from "./providers";
 
 // Sends one outbox row (SPEC §7.2). Run by the email workpool.
@@ -35,9 +36,16 @@ export const send = internalJobAction({
         data: job.data,
         idempotencyKey: outboxId,
       });
-      const sender = createProvider(config);
+      const sender = createProvider(config, job.to);
       provider = sender.name;
       const { messageId } = await sender.send(message);
+      if (isE2eRecipient(job.to)) {
+        await ctx.runMutation(internal.testing.e2e.record, {
+          to: job.to,
+          template,
+          data: job.data,
+        });
+      }
       await ctx.runMutation(internal.email.outbox.markSent, {
         outboxId,
         provider,

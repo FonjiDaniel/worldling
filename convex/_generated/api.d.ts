@@ -9,6 +9,7 @@
  */
 
 import type * as admin_email from "../admin/email.js";
+import type * as admin_system from "../admin/system.js";
 import type * as auth from "../auth.js";
 import type * as email_compose from "../email/compose.js";
 import type * as email_config from "../email/config.js";
@@ -49,14 +50,27 @@ import type * as lib_rateLimits from "../lib/rateLimits.js";
 import type * as lib_settings from "../lib/settings.js";
 import type * as lib_systemEvents from "../lib/systemEvents.js";
 import type * as lib_time from "../lib/time.js";
+import type * as model_admin from "../model/admin.js";
 import type * as model_emailConfigs from "../model/emailConfigs.js";
 import type * as model_emailOutbox from "../model/emailOutbox.js";
+import type * as model_profiles from "../model/profiles.js";
+import type * as model_sessions from "../model/sessions.js";
+import type * as model_worlds from "../model/worlds.js";
+import type * as profiles from "../profiles.js";
+import type * as sessions from "../sessions.js";
 import type * as shared_commonPasswords from "../shared/commonPasswords.js";
 import type * as shared_emailConfig from "../shared/emailConfig.js";
 import type * as shared_emailTemplates from "../shared/emailTemplates.js";
 import type * as shared_errors from "../shared/errors.js";
+import type * as shared_galaxy from "../shared/galaxy.js";
 import type * as shared_graphemes from "../shared/graphemes.js";
+import type * as shared_moderation from "../shared/moderation.js";
 import type * as shared_password from "../shared/password.js";
+import type * as shared_random from "../shared/random.js";
+import type * as shared_usernames from "../shared/usernames.js";
+import type * as shared_worldParams from "../shared/worldParams.js";
+import type * as system from "../system.js";
+import type * as testing_e2e from "../testing/e2e.js";
 
 import type {
   ApiFromModules,
@@ -66,6 +80,7 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   "admin/email": typeof admin_email;
+  "admin/system": typeof admin_system;
   auth: typeof auth;
   "email/compose": typeof email_compose;
   "email/config": typeof email_config;
@@ -106,14 +121,27 @@ declare const fullApi: ApiFromModules<{
   "lib/settings": typeof lib_settings;
   "lib/systemEvents": typeof lib_systemEvents;
   "lib/time": typeof lib_time;
+  "model/admin": typeof model_admin;
   "model/emailConfigs": typeof model_emailConfigs;
   "model/emailOutbox": typeof model_emailOutbox;
+  "model/profiles": typeof model_profiles;
+  "model/sessions": typeof model_sessions;
+  "model/worlds": typeof model_worlds;
+  profiles: typeof profiles;
+  sessions: typeof sessions;
   "shared/commonPasswords": typeof shared_commonPasswords;
   "shared/emailConfig": typeof shared_emailConfig;
   "shared/emailTemplates": typeof shared_emailTemplates;
   "shared/errors": typeof shared_errors;
+  "shared/galaxy": typeof shared_galaxy;
   "shared/graphemes": typeof shared_graphemes;
+  "shared/moderation": typeof shared_moderation;
   "shared/password": typeof shared_password;
+  "shared/random": typeof shared_random;
+  "shared/usernames": typeof shared_usernames;
+  "shared/worldParams": typeof shared_worldParams;
+  system: typeof system;
+  "testing/e2e": typeof testing_e2e;
 }>;
 
 /**
