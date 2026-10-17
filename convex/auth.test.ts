@@ -1,7 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { api } from "./_generated/api";
-import { generateOtp, OTP_LENGTH } from "./lib/authEmail";
+import { generateOtp } from "./lib/authEmail";
+import { OTP_LENGTH } from "./shared/otp";
 import { makeTest, stubEmailEnv, type TestConvex } from "./test.helpers";
 
 let t: TestConvex;

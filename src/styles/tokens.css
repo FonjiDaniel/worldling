@@ -44,6 +44,12 @@
   --color-danger-surface: #2e1f37;
   --color-info-surface: #202544;
 
+  /* Third-party marks that must keep their own colors (Google sign-in guidelines). */
+  --color-google-blue: #4285f4;
+  --color-google-green: #34a853;
+  --color-google-yellow: #fbbc05;
+  --color-google-red: #ea4335;
+
   /* Scales */
   --color-nebula-50: #f3f1ff;
   --color-nebula-100: #e8e3ff;

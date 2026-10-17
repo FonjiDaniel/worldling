@@ -3,12 +3,10 @@ import { Email } from "@convex-dev/auth/providers/Email";
 import { internal } from "../_generated/api";
 import type { ActionCtx } from "../_generated/server";
 import type { EmailTemplateKey } from "../shared/emailTemplates";
+import { OTP_LENGTH, OTP_MINUTES } from "../shared/otp";
 
 // OTP email providers for the Password flows (SPEC §6.1, §6.2, ADR-015). Codes never leave
 // through SMTP or Resend here: they go into our outbox like every other email.
-
-export const OTP_LENGTH = 8;
-export const OTP_MINUTES = 15;
 
 /** Uniform random digits from Web Crypto. Bytes >= 250 are rejected so every digit is equally likely. */
 export function generateOtp(length = OTP_LENGTH): string {

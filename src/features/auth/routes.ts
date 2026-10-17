@@ -1,7 +1,9 @@
+import type { Route } from "next";
+
 // Route groups for the auth redirects in src/proxy.ts (SPEC §6.5). UX only: Convex enforces access.
 
 export const SIGN_IN_PATH = "/sign-in";
-export const AFTER_SIGN_IN_PATH = "/me";
+export const AFTER_SIGN_IN_PATH: Route = "/me";
 
 /** Signed-out visitors are sent to sign in from these. */
 export const SIGNED_IN_ONLY = ["/settings", "/notifications", "/onboarding", "/admin", "/me"];
@@ -19,11 +21,12 @@ export function matchesAny(pathname: string, prefixes: readonly string[]): boole
  */
 export function safeNextPath(
   raw: string | null | undefined,
-  fallback = AFTER_SIGN_IN_PATH,
-): string {
+  fallback: Route = AFTER_SIGN_IN_PATH,
+): Route {
   if (raw === null || raw === undefined || raw === "") return fallback;
   if (!raw.startsWith("/") || raw.startsWith("//") || raw.includes("\\")) return fallback;
   if (/[\u0000-\u001f]/.test(raw)) return fallback;
   if (matchesAny(raw.split(/[?#]/)[0] ?? "", GUEST_ONLY)) return fallback;
-  return raw;
+  // Checked above to be a same-origin path, which is all a Route is at runtime.
+  return raw as Route;
 }
