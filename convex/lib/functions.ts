@@ -10,6 +10,7 @@ import { internal } from "../_generated/api";
 import type { Doc, Id } from "../_generated/dataModel";
 import {
   type ActionCtx,
+  httpAction,
   internalAction,
   mutation,
   type MutationCtx,
@@ -204,3 +205,14 @@ export const internalJobAction = customAction(
     return { rid: request.rid, log };
   }),
 );
+
+export type HttpCtx = ActionCtx & { rid: string; log: Logger };
+
+/** HTTP endpoint (convex/http.ts) with a request id and a logger. Callers check auth themselves. */
+export function publicHttpAction(handler: (ctx: HttpCtx, request: Request) => Promise<Response>) {
+  return httpAction(async (ctx, request) => {
+    const rid = crypto.randomUUID();
+    const log = createLogger({ rid, fn: `http:${new URL(request.url).pathname}` });
+    return await handler({ ...ctx, rid, log }, request);
+  });
+}
