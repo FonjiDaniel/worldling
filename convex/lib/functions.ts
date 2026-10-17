@@ -133,12 +133,26 @@ async function viewerCtx(ctx: QueryCtx, minRole: Role) {
   return { ...(await requestCtx(ctx, viewer.userId)), viewer };
 }
 
+async function assertNoMaintenance(ctx: MutationCtx, log: Logger, role: Role | undefined) {
+  if (role === "admin") return;
+  const maintenance = await getSetting({ db: ctx.db, log }, "maintenance");
+  if (maintenance.enabled) throw appError("MAINTENANCE", "Maintenance mode is on");
+}
+
 async function mutationCtx(ctx: MutationCtx, minRole: Role) {
   const custom = await viewerCtx(ctx, minRole);
-  if (custom.viewer.profile.role !== "admin") {
-    const maintenance = await getSetting({ db: ctx.db, log: custom.log }, "maintenance");
-    if (maintenance.enabled) throw appError("MAINTENANCE", "Maintenance mode is on");
+  await assertNoMaintenance(ctx, custom.log, custom.viewer.profile.role);
+  return custom;
+}
+
+/** Signed in, any profile state (none yet, active or suspended), never `deleting`. */
+async function signedInCtx(ctx: MutationCtx) {
+  const viewer = await loadViewer(ctx);
+  if (viewer === null || viewer.profile?.status === "deleting") {
+    throw appError("UNAUTHENTICATED", "Sign in required");
   }
+  const custom = { ...(await requestCtx(ctx, viewer.userId)), viewer };
+  await assertNoMaintenance(ctx, custom.log, viewer.profile?.role);
   return custom;
 }
 
@@ -160,6 +174,12 @@ export const adminQuery = customQuery(
   trackedQuery,
   customCtx((ctx: QueryCtx) => viewerCtx(ctx, "admin")),
 );
+
+/**
+ * For the few account actions that must work before onboarding or while suspended:
+ * `completeOnboarding` and `signOutEverywhere`. `ctx.viewer.profile` may be null.
+ */
+export const signedInMutation = customMutation(trackedMutation, customCtx(signedInCtx));
 
 export const userMutation = customMutation(
   trackedMutation,

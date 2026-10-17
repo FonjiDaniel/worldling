@@ -8,6 +8,7 @@ import {
   adminMutation,
   adminQuery,
   publicQuery,
+  signedInMutation,
   staffMutation,
   staffQuery,
   userMutation,
@@ -35,6 +36,13 @@ const probe = {
   userWrite: userMutation({ args: {}, handler: writeSlot }),
   staffWrite: staffMutation({ args: {}, handler: writeSlot }),
   adminWrite: adminMutation({ args: {}, handler: writeSlot }),
+  signedInWrite: signedInMutation({
+    args: {},
+    handler: async (ctx) => {
+      await writeSlot(ctx);
+      return ctx.viewer.profile?.status ?? null;
+    },
+  }),
   failsExpected: userQuery({
     args: {},
     handler: () => {
@@ -61,6 +69,7 @@ const ref = {
   userWrite: makeFunctionReference<"mutation">("probe:userWrite"),
   staffWrite: makeFunctionReference<"mutation">("probe:staffWrite"),
   adminWrite: makeFunctionReference<"mutation">("probe:adminWrite"),
+  signedInWrite: makeFunctionReference<"mutation">("probe:signedInWrite"),
   failsExpected: makeFunctionReference<"query">("probe:failsExpected"),
   failsUnexpected: makeFunctionReference<"query">("probe:failsUnexpected"),
 };
@@ -127,6 +136,33 @@ describe("userQuery and userMutation", () => {
     const { client } = await seedViewer(t);
     expect(await client.query(ref.userWho, {})).toBe("user");
     expect(await client.mutation(ref.userWrite, {})).toBeNull();
+  });
+});
+
+describe("signedInMutation", () => {
+  it("allows a viewer before onboarding and a suspended viewer", async () => {
+    const fresh = await seedViewer(t, { onboarded: false });
+    expect(await fresh.client.mutation(ref.signedInWrite, {})).toBeNull();
+    const suspended = await seedViewer(t, { status: "suspended" });
+    expect(await suspended.client.mutation(ref.signedInWrite, {})).toBe("suspended");
+  });
+
+  it("rejects signed-out and deleting callers", async () => {
+    await expect(t.mutation(ref.signedInWrite, {})).rejects.toMatchObject(code("UNAUTHENTICATED"));
+    const { client } = await seedViewer(t, { status: "deleting" });
+    await expect(client.mutation(ref.signedInWrite, {})).rejects.toMatchObject(
+      code("UNAUTHENTICATED"),
+    );
+  });
+
+  it("respects maintenance for everyone but admins", async () => {
+    await setMaintenance(t, true);
+    const fresh = await seedViewer(t, { onboarded: false });
+    await expect(fresh.client.mutation(ref.signedInWrite, {})).rejects.toMatchObject(
+      code("MAINTENANCE"),
+    );
+    const admin = await seedViewer(t, { role: "admin" });
+    expect(await admin.client.mutation(ref.signedInWrite, {})).toBe("active");
   });
 });
 
