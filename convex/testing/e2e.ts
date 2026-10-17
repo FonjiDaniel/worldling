@@ -21,18 +21,24 @@ export const record = internalMutation({
   },
 });
 
-/** Returns and deletes the newest email for `to`, or null when nothing has arrived yet. */
+const MAX_SCAN = 20;
+
+/**
+ * Returns and deletes the newest email for `to` (optionally of one template), or null when
+ * nothing has arrived yet.
+ */
 export const takeLatestEmail = internalMutation({
-  args: { to: v.string() },
+  args: { to: v.string(), template: v.optional(v.string()) },
   returns: v.union(v.null(), v.object({ template: v.string(), data: v.any() })),
-  handler: async (ctx, { to }) => {
+  handler: async (ctx, { to, template }) => {
     assertEnabled();
-    const row = await ctx.db
+    const rows = await ctx.db
       .query("e2eMailbox")
       .withIndex("by_to", (q) => q.eq("to", to.toLowerCase()))
       .order("desc")
-      .first();
-    if (row === null) return null;
+      .take(MAX_SCAN);
+    const row = rows.find((candidate) => template === undefined || candidate.template === template);
+    if (row === undefined) return null;
     await ctx.db.delete("e2eMailbox", row._id);
     const data: unknown = row.data;
     return { template: row.template, data };
