@@ -3,6 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { internal } from "../_generated/api";
 import type { Doc, Id } from "../_generated/dataModel";
+import { encryptSecret } from "../lib/crypto";
 import { makeTest, stubEmailEnv, type TestConvex } from "../test.helpers";
 
 const WELCOME = {
@@ -52,6 +53,23 @@ async function row(id: Id<"emailOutbox">): Promise<Doc<"emailOutbox">> {
   const found = await t.run(async (ctx) => await ctx.db.get("emailOutbox", id));
   if (found === null) throw new Error("missing row");
   return found;
+}
+
+async function activeDbConfig(tamper = false): Promise<void> {
+  const secret = await encryptSecret("abcd efgh ijkl mnop");
+  const flipped = secret.ct.startsWith("A") ? "B" : "A";
+  const password = tamper ? { ...secret, ct: `${flipped}${secret.ct.slice(1)}` } : secret;
+  await t.run(async (ctx) => {
+    const createdBy = await ctx.db.insert("users", { email: "admin@worldling.test" });
+    await ctx.db.insert("emailConfigs", {
+      status: "active",
+      transport: "smtp",
+      fromName: "Worldling",
+      fromAddress: "hello@worldling.test",
+      smtp: { host: "smtp.gmail.com", port: 465, secure: true, user: "hello", password },
+      createdBy,
+    });
+  });
 }
 
 async function systemEvents() {
@@ -105,6 +123,21 @@ describe("dispatch.send", () => {
     const id = await queued("kai@worldling.test");
     await t.action(internal.email.dispatch.send, { outboxId: id });
     expect(await row(id)).toMatchObject({ status: "failed", lastError: "no_transport" });
+  });
+
+  it("uses the active DB config over the env fallback", async () => {
+    vi.stubEnv("EMAIL_FALLBACK_TRANSPORT", "");
+    await activeDbConfig();
+    const id = await queued("kai@worldling.test");
+    await t.action(internal.email.dispatch.send, { outboxId: id });
+    expect(await row(id)).toMatchObject({ status: "sent" });
+  });
+
+  it("fails permanently when the stored secret can't be decrypted", async () => {
+    await activeDbConfig(true);
+    const id = await queued("kai@worldling.test");
+    await t.action(internal.email.dispatch.send, { outboxId: id });
+    expect(await row(id)).toMatchObject({ status: "failed", lastError: "decrypt_failed" });
   });
 
   it("refuses non-security mail without a link secret", async () => {

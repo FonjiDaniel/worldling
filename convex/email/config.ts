@@ -1,9 +1,10 @@
 import { v } from "convex/values";
 
 import type { Doc } from "../_generated/dataModel";
-import { internalQuery } from "../_generated/server";
+import { internalMutation, internalQuery } from "../_generated/server";
 import schema from "../schema";
 import { decryptSecret } from "../lib/crypto";
+import { recordTestResult } from "../model/emailConfigs";
 import { EmailSendError } from "./errors";
 import type { ResolvedConfig } from "./types";
 
@@ -30,6 +31,18 @@ export const configById = internalQuery({
   handler: async (ctx, { configId }) => {
     return await ctx.db.get("emailConfigs", configId);
   },
+});
+
+/** Test send result from email/testSend. Ignored when the config changed since the request. */
+export const recordTest = internalMutation({
+  args: {
+    configId: v.id("emailConfigs"),
+    fingerprint: v.string(),
+    ok: v.boolean(),
+    error: v.optional(v.string()),
+  },
+  returns: v.boolean(),
+  handler: async (ctx, args) => await recordTestResult(ctx, args),
 });
 
 /** Decrypts a stored config in memory. Missing or unreadable secrets are permanent failures. */
