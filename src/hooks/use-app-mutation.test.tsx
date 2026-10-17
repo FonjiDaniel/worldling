@@ -56,6 +56,22 @@ describe("useAppMutation", () => {
     expect(toastError).not.toHaveBeenCalled();
   });
 
+  it("leaves other errors with field errors inline too", async () => {
+    mutate.mockRejectedValue(
+      new ConvexError({
+        code: "CONFLICT",
+        message: "taken",
+        details: { fieldErrors: { username: ["taken"] } },
+      }),
+    );
+    const { result } = renderHook(() => useAppMutation(ref));
+    await act(async () => {
+      await result.current.run({ name: "Vela" });
+    });
+    expect(result.current.fieldErrors).toEqual({ username: ["taken"] });
+    expect(toastError).not.toHaveBeenCalled();
+  });
+
   it("toasts friendly copy for app errors", async () => {
     mutate.mockRejectedValue(
       new ConvexError({ code: "RATE_LIMITED", message: "x", details: { retryAfterMs: 12_000 } }),

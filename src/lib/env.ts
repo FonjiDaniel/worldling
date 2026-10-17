@@ -13,11 +13,14 @@ export const env = createEnv({
     NEXT_PUBLIC_CONVEX_URL: z.url(),
     NEXT_PUBLIC_SITE_URL: z.url(),
     NEXT_PUBLIC_SENTRY_DSN: z.url().optional(),
+    // Where suspended people send an appeal (SPEC §6.4).
+    NEXT_PUBLIC_SUPPORT_EMAIL: z.email().optional(),
   },
   experimental__runtimeEnv: {
     NEXT_PUBLIC_CONVEX_URL: process.env.NEXT_PUBLIC_CONVEX_URL,
     NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
     NEXT_PUBLIC_SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN,
+    NEXT_PUBLIC_SUPPORT_EMAIL: process.env.NEXT_PUBLIC_SUPPORT_EMAIL,
   },
   emptyStringAsUndefined: true,
 });

@@ -16,8 +16,9 @@ import { reportError } from "@/lib/logger";
 export type MutationResult<T> = { ok: true; value: T } | { ok: false; error: AppErrorData };
 
 /**
- * `useMutation` with our error handling (SPEC §10.2). VALIDATION fills `fieldErrors` for the
- * form, other app errors show a toast, unexpected errors also go to error reporting.
+ * `useMutation` with our error handling (SPEC §10.2). VALIDATION, and any error that carries
+ * `fieldErrors` (e.g. a taken username), is left for the form to show inline. Other app errors
+ * show a toast, and unexpected errors also go to error reporting.
  * `run` never throws.
  */
 export function useAppMutation<F extends FunctionReference<"mutation">>(fn: F) {
@@ -37,7 +38,7 @@ export function useAppMutation<F extends FunctionReference<"mutation">>(fn: F) {
       if (appError.code === "INTERNAL") {
         reportError(thrown, { fn: getFunctionName(fn) });
       }
-      if (appError.code !== "VALIDATION") {
+      if (appError.code !== "VALIDATION" && appError.details?.fieldErrors === undefined) {
         toast.error(userMessageFor(appError.code, appError.details));
       }
       return { ok: false, error: appError };
