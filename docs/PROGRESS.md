@@ -4,9 +4,34 @@ Where the build stands, phase by phase (SPEC §15). Updated at the end of every 
 
 ## Current status
 
-**Phase 1: Design system and shell** is complete. Typecheck, lint, unit tests, build and e2e (smoke, axe, keyboard) pass locally. GitHub Actions is still blocked by the account billing lock (see Phase 0), so run the checks locally before pushing.
+**Phase 2: Backend core** is complete. Typecheck, lint, tests (88) and build pass locally, and the schema and components deploy cleanly to the dev deployment. GitHub Actions is still blocked by the account billing lock (see Phase 0), so run the checks locally before pushing.
 
-**Next:** Phase 2, Backend core.
+**Next:** Phase 3, Email system.
+
+## Phase 2: Backend core
+
+- [x] Dependencies (pinned): `@convex-dev/auth` 0.0.96 (+ `@auth/core` 0.41.3), `convex-helpers` 0.1.128, `@convex-dev/rate-limiter` 0.4.2, `@convex-dev/workpool` 0.4.14, `@convex-dev/sharded-counter` 0.2.3.
+- [x] `convex/schema.ts` per §5.2 with `authTables`. The encrypted secret object is a shared validator (same shape).
+- [x] `convex.config.ts`: `rateLimiter`, `workpool` as `emailWorkpool`, `shardedCounter`.
+- [x] `shared/errors.ts`: `ErrorCode`, `AppErrorData`, `isAppErrorData`, `userMessageFor` (friendly countdown for `RATE_LIMITED`).
+- [x] `lib/errors.ts`: `appError`, `isAppError`, `withRid`.
+- [x] `lib/logger.ts`: JSON lines `{level, event, ts, rid, fn, uid, ...}`, recursive redaction, email masking anywhere in strings, errors reduced to name + message, sink for warn/error. Event list in `docs/events.md` (names checked by a test).
+- [x] `lib/functions.ts`: `publicQuery`, `userQuery`/`userMutation`, `staffQuery`/`staffMutation`, `adminQuery`/`adminMutation`, `internalJobAction`. Each call gets `ctx.rid`, `ctx.viewer`, `ctx.log`. `fn` comes from `ctx.meta.getFunctionMetadata()`.
+- [x] `lib/rateLimits.ts` (§11.4), `lib/settings.ts` (typed registry, flags, maintenance, audited `setSetting`), `lib/audit.ts` (`writeAudit`, redacted before/after), `lib/time.ts`, `lib/crypto.ts` (AES-256-GCM, key versions).
+- [x] `lib/jobRuns.ts` (`withJobRun` for actions, `withJobRunInMutation`) and `lib/systemEvents.ts` (`record`, flushed by `internalJobAction`).
+- [x] Client: `src/lib/errors.ts` (`toAppError`, re-exports `userMessageFor`), `src/lib/logger.ts` (`reportError`, console until Sentry), `src/hooks/use-app-mutation.ts`.
+- [x] Tests: wrappers (signed out, deleting, suspended, not onboarded, role matrix, maintenance, rid on errors, unexpected errors untouched), crypto round trip and rotation, rate limits, logger redaction, settings, audit, time, job runs + systemEvents flush, `useAppMutation`, and a static check that only `lib/functions.ts` imports raw `query`/`mutation`/`action`.
+
+### Phase 2 notes
+
+- **publicQuery and account status.** A suspended viewer passes through (so `profiles.me` can show the suspended screen). A deleting account is treated as signed out. Every other wrapper rejects both.
+- **Not onboarded** is `PRECONDITION` with `details.reason = "needs_onboarding"`. The "signed in, not onboarded" wrapper for `completeOnboarding` comes in Phase 4 with its only user.
+- **Request ids on errors.** convex-helpers has no error hook, so `tracked()` in `functions.ts` wraps the raw builder: it creates the rid, hands it to the customization as `ctx.request`, and rethrows app errors with `rid` attached. Unexpected errors pass through untouched.
+- **Rate limit keys.** `comet.send` is split into `comet.send` (5/min token bucket) and `comet.sendDaily` (30/day). The security per-recipient limit is its own key, `email.perRecipientSecurity`. Callers enforce both where a rule has two parts.
+- **Redaction and `code`.** The §10.3 regex redacts any key containing `code` (OTP codes). Log error codes under `errorCode`.
+- **Mutation jobs.** `withJobRunInMutation` writes its row in the job's transaction, so a failed mutation job leaves no row and shows up as late. Action jobs record failures.
+- **Key rotation.** `SECRETS_ENCRYPTION_KEY` is v1, `SECRETS_ENCRYPTION_KEY_V{n}` is vn. The highest configured version encrypts. The re-encrypt action lands with the email admin phase.
+- **Test probes.** Wrapper and job tests build probe functions in the test file and mount them as a virtual `./probe.ts` module. `convex/test.helpers.ts` has a dotted name, so Convex never bundles it.
 
 ## Phase 1: Design system and shell
 
