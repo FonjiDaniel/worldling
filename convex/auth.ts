@@ -39,7 +39,12 @@ function typed(ctx: GenericMutationCtx<AnyDataModel>): MutationCtx {
 export const { auth, signIn, signOut, store, isAuthenticated } = convexAuth({
   providers: [
     Password({
-      profile: (params) => ({ email: normalizedEmail(params) }),
+      profile: (params) => {
+        // Convex Auth reads params.email again for the OTP step, so normalize it in place too.
+        const email = normalizedEmail(params);
+        params.email = email;
+        return { email };
+      },
       validatePasswordRequirements: validatePassword,
       verify: verifyEmailProvider,
       reset: resetEmailProvider,
