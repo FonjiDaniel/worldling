@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { AuthProviders } from "@/components/shared/auth-providers";
 import { OfflineBanner } from "@/components/shared/offline-banner";
 import { SkipLink } from "@/components/shared/skip-link";
 import { Toaster } from "@/components/ui/toaster";
@@ -18,7 +19,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="flex min-h-full flex-col">
         <SkipLink />
         <OfflineBanner />
-        {children}
+        <AuthProviders>{children}</AuthProviders>
         <Toaster />
       </body>
     </html>

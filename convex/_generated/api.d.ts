@@ -9,6 +9,7 @@
  */
 
 import type * as admin_email from "../admin/email.js";
+import type * as auth from "../auth.js";
 import type * as email_compose from "../email/compose.js";
 import type * as email_config from "../email/config.js";
 import type * as email_dispatch from "../email/dispatch.js";
@@ -37,6 +38,7 @@ import type * as email_unsubscribePage from "../email/unsubscribePage.js";
 import type * as email_workpool from "../email/workpool.js";
 import type * as http from "../http.js";
 import type * as lib_audit from "../lib/audit.js";
+import type * as lib_authEmail from "../lib/authEmail.js";
 import type * as lib_crypto from "../lib/crypto.js";
 import type * as lib_env from "../lib/env.js";
 import type * as lib_errors from "../lib/errors.js";
@@ -49,10 +51,12 @@ import type * as lib_systemEvents from "../lib/systemEvents.js";
 import type * as lib_time from "../lib/time.js";
 import type * as model_emailConfigs from "../model/emailConfigs.js";
 import type * as model_emailOutbox from "../model/emailOutbox.js";
+import type * as shared_commonPasswords from "../shared/commonPasswords.js";
 import type * as shared_emailConfig from "../shared/emailConfig.js";
 import type * as shared_emailTemplates from "../shared/emailTemplates.js";
 import type * as shared_errors from "../shared/errors.js";
 import type * as shared_graphemes from "../shared/graphemes.js";
+import type * as shared_password from "../shared/password.js";
 
 import type {
   ApiFromModules,
@@ -62,6 +66,7 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   "admin/email": typeof admin_email;
+  auth: typeof auth;
   "email/compose": typeof email_compose;
   "email/config": typeof email_config;
   "email/dispatch": typeof email_dispatch;
@@ -90,6 +95,7 @@ declare const fullApi: ApiFromModules<{
   "email/workpool": typeof email_workpool;
   http: typeof http;
   "lib/audit": typeof lib_audit;
+  "lib/authEmail": typeof lib_authEmail;
   "lib/crypto": typeof lib_crypto;
   "lib/env": typeof lib_env;
   "lib/errors": typeof lib_errors;
@@ -102,10 +108,12 @@ declare const fullApi: ApiFromModules<{
   "lib/time": typeof lib_time;
   "model/emailConfigs": typeof model_emailConfigs;
   "model/emailOutbox": typeof model_emailOutbox;
+  "shared/commonPasswords": typeof shared_commonPasswords;
   "shared/emailConfig": typeof shared_emailConfig;
   "shared/emailTemplates": typeof shared_emailTemplates;
   "shared/errors": typeof shared_errors;
   "shared/graphemes": typeof shared_graphemes;
+  "shared/password": typeof shared_password;
 }>;
 
 /**

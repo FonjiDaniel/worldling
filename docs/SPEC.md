@@ -880,13 +880,13 @@ Every job writes a `jobRuns` row (start, finish, ok, processed, error). The admi
    - Password policy: minimum 10 characters, checked against a small common-password list, no other composition rules (NIST guidance).
 2. **Google OAuth** (fastest path on mobile).
 
-Both providers live in `convex/auth.ts`. OTP tokens are generated with a cryptographically secure generator (`@oslojs/crypto` as in Convex Auth docs).
+Both providers live in `convex/auth.ts`. OTP tokens are generated with a cryptographically secure generator (Web Crypto `getRandomValues` with rejection sampling, ADR-015).
 
 ### 6.2 OTP emails through our email system
 
 The Convex Auth email provider's `sendVerificationRequest` MUST NOT talk to SMTP or Resend directly. It enqueues an email into our outbox (template `auth.verify` or `auth.reset`, category `security`) so every auth email gets the same config, logging, retries and admin visibility.
 
-> **Verify in Phase 4:** confirm how `sendVerificationRequest` can reach the database in the installed `@convex-dev/auth` version (it receives a Convex context as its second argument in current versions). If it does not, fall back to an `httpAction` endpoint on the Convex site URL protected by an internal shared secret (`AUTH_EMAIL_HOOK_SECRET`). Record the outcome in an ADR.
+> **Resolved in Phase 4 (ADR-015):** `sendVerificationRequest` receives Convex Auth's ActionCtx as its second argument and calls `internal.email.outbox.enqueue` directly. No HTTP hook or shared secret is needed.
 
 ### 6.3 Onboarding
 
@@ -1387,7 +1387,6 @@ Vercel build command: `npx convex deploy --cmd 'pnpm build'` (uses `CONVEX_DEPLO
 | `EMAIL_FALLBACK_TRANSPORT`, `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASSWORD`, `EMAIL_FROM_NAME`, `EMAIL_FROM_ADDRESS` | Env fallback (§7.5) |
 | `RESEND_API_KEY` | Optional fallback |
 | `APP_ENV` | `development`, `preview`, `production`, `test` |
-| `AUTH_EMAIL_HOOK_SECRET` | Only if the §6.2 fallback is needed |
 
 ### 13.6 Release and rollback
 

@@ -1,11 +1,15 @@
 import { httpRouter } from "convex/server";
 
 import { internal } from "./_generated/api";
+import { auth } from "./auth";
 import { UNSUBSCRIBE_PATH, verifyLinkToken } from "./email/links";
 import { confirmPage, donePage, invalidPage } from "./email/unsubscribePage";
 import { publicHttpAction } from "./lib/functions";
 
 const http = httpRouter();
+
+// Convex Auth: OAuth callbacks and JWKS (SPEC §6).
+auth.addHttpRoutes(http);
 
 // SPEC §7.8. GET shows a confirm page; POST (its button, and RFC 8058 one-click from the
 // List-Unsubscribe-Post header) adds the suppression.
