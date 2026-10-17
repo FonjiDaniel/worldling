@@ -4,7 +4,15 @@ Every `ctx.log` event name (SPEC §10.3). Format: `domain.action[.outcome]`, low
 
 Fields named like `password`, `secret`, `token`, `apiKey`, `authorization` or `code` are redacted, so put error codes under `errorCode`.
 
-| Event                        | Level | Where                                                 | Fields               |
-| ---------------------------- | ----- | ----------------------------------------------------- | -------------------- |
-| `settings.read.invalid`      | warn  | `lib/settings.ts` `getSetting`                        | `key`                |
-| `system_events.flush.failed` | error | `lib/functions.ts` `internalJobAction` (console only) | `error` (error name) |
+| Event                        | Level | Where                                                                                                                        | Fields                                                   |
+| ---------------------------- | ----- | ---------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| `settings.read.invalid`      | warn  | `lib/settings.ts` `getSetting`                                                                                               | `key`                                                    |
+| `system_events.flush.failed` | error | `lib/functions.ts` `internalJobAction` (console only)                                                                        | `error` (error name)                                     |
+| `email.enqueue.queued`       | info  | `model/emailOutbox.ts` `enqueueEmail`                                                                                        | `outboxId`, `template`                                   |
+| `email.enqueue.deduped`      | info  | `model/emailOutbox.ts` `enqueueEmail` (idempotency key seen)                                                                 | `outboxId`, `template`                                   |
+| `email.enqueue.suppressed`   | info  | `model/emailOutbox.ts` `enqueueEmail`                                                                                        | `outboxId`, `template`                                   |
+| `email.enqueue.rate_limited` | warn  | `model/emailOutbox.ts` `enqueueEmail` (non-security, row cancelled)                                                          | `outboxId`, `template`                                   |
+| `email.dispatch.sent`        | info  | `email/dispatch.ts` `send`                                                                                                   | `outboxId`, `template`, `provider`, `source`             |
+| `email.dispatch.retry`       | info  | `email/dispatch.ts` `send` (retryable, workpool retries)                                                                     | `outboxId`, `template`, `provider`, `reason`, `attempts` |
+| `email.dispatch.failed`      | error | `email/dispatch.ts` `send` (permanent), `email/outbox.ts` `onComplete` (retries used up, written to `systemEvents` directly) | `outboxId`, `template`, `provider`, `reason`, `attempts` |
+| `email.dispatch.skipped`     | info  | `email/dispatch.ts` `send` (row already final)                                                                               | `outboxId`                                               |

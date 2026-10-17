@@ -18,6 +18,8 @@ export const CONVEX_ENV_NAMES = [
   "EMAIL_FROM_NAME",
   "EMAIL_FROM_ADDRESS",
   "RESEND_API_KEY",
+  "EMAIL_FAKE",
+  "CONVEX_SITE_URL", // built in, set by Convex on every deployment
 ] as const;
 
 export type ConvexEnvName = (typeof CONVEX_ENV_NAMES)[number];

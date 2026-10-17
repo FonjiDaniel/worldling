@@ -8,6 +8,14 @@
  * @module
  */
 
+import type * as email_compose from "../email/compose.js";
+import type * as email_config from "../email/config.js";
+import type * as email_dispatch from "../email/dispatch.js";
+import type * as email_envConfig from "../email/envConfig.js";
+import type * as email_errors from "../email/errors.js";
+import type * as email_links from "../email/links.js";
+import type * as email_outbox from "../email/outbox.js";
+import type * as email_providers from "../email/providers.js";
 import type * as email_templates_Layout from "../email/templates/Layout.js";
 import type * as email_templates_accountDeleted from "../email/templates/accountDeleted.js";
 import type * as email_templates_accountExport from "../email/templates/accountExport.js";
@@ -21,6 +29,8 @@ import type * as email_templates_index from "../email/templates/index.js";
 import type * as email_templates_render from "../email/templates/render.js";
 import type * as email_templates_theme from "../email/templates/theme.js";
 import type * as email_templates_types from "../email/templates/types.js";
+import type * as email_types from "../email/types.js";
+import type * as email_workpool from "../email/workpool.js";
 import type * as lib_audit from "../lib/audit.js";
 import type * as lib_crypto from "../lib/crypto.js";
 import type * as lib_env from "../lib/env.js";
@@ -32,6 +42,7 @@ import type * as lib_rateLimits from "../lib/rateLimits.js";
 import type * as lib_settings from "../lib/settings.js";
 import type * as lib_systemEvents from "../lib/systemEvents.js";
 import type * as lib_time from "../lib/time.js";
+import type * as model_emailOutbox from "../model/emailOutbox.js";
 import type * as shared_emailTemplates from "../shared/emailTemplates.js";
 import type * as shared_errors from "../shared/errors.js";
 import type * as shared_graphemes from "../shared/graphemes.js";
@@ -43,6 +54,14 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  "email/compose": typeof email_compose;
+  "email/config": typeof email_config;
+  "email/dispatch": typeof email_dispatch;
+  "email/envConfig": typeof email_envConfig;
+  "email/errors": typeof email_errors;
+  "email/links": typeof email_links;
+  "email/outbox": typeof email_outbox;
+  "email/providers": typeof email_providers;
   "email/templates/Layout": typeof email_templates_Layout;
   "email/templates/accountDeleted": typeof email_templates_accountDeleted;
   "email/templates/accountExport": typeof email_templates_accountExport;
@@ -56,6 +75,8 @@ declare const fullApi: ApiFromModules<{
   "email/templates/render": typeof email_templates_render;
   "email/templates/theme": typeof email_templates_theme;
   "email/templates/types": typeof email_templates_types;
+  "email/types": typeof email_types;
+  "email/workpool": typeof email_workpool;
   "lib/audit": typeof lib_audit;
   "lib/crypto": typeof lib_crypto;
   "lib/env": typeof lib_env;
@@ -67,6 +88,7 @@ declare const fullApi: ApiFromModules<{
   "lib/settings": typeof lib_settings;
   "lib/systemEvents": typeof lib_systemEvents;
   "lib/time": typeof lib_time;
+  "model/emailOutbox": typeof model_emailOutbox;
   "shared/emailTemplates": typeof shared_emailTemplates;
   "shared/errors": typeof shared_errors;
   "shared/graphemes": typeof shared_graphemes;

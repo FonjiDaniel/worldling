@@ -1,4 +1,6 @@
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
+import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 
 import { afterEach, describe, expect, it, vi } from "vitest";
 
@@ -108,5 +110,24 @@ describe("event names", () => {
     const names = [...doc.matchAll(/^\| `([^`]+)`\s+\|/gm)].map((match) => match[1] ?? "");
     expect(names).toContain("settings.read.invalid");
     for (const name of names) expect(isEventName(name), name).toBe(true);
+  });
+
+  it("lists every event the Convex code logs", () => {
+    const doc = readFileSync(new URL("../../docs/events.md", import.meta.url), "utf8");
+    const listed = new Set([...doc.matchAll(/^\| `([^`]+)`\s+\|/gm)].map((match) => match[1]));
+    const root = fileURLToPath(new URL("..", import.meta.url));
+    const sources = (dir: string): string[] =>
+      readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+        const path = join(dir, entry.name);
+        if (entry.isDirectory()) return entry.name === "_generated" ? [] : sources(path);
+        return /\.tsx?$/.test(entry.name) && !entry.name.includes(".test") ? [path] : [];
+      });
+    const logged = sources(root).flatMap((path) =>
+      [...readFileSync(path, "utf8").matchAll(/log\.(?:info|warn|error)\(\s*"([^"]+)"/g)].map(
+        (match) => match[1] ?? "",
+      ),
+    );
+    expect(logged.length).toBeGreaterThan(0);
+    expect(logged.filter((name) => !listed.has(name))).toEqual([]);
   });
 });

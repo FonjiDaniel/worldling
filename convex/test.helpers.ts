@@ -1,7 +1,9 @@
 /// <reference types="vite/client" />
 // Test-only helpers. The dotted file name keeps it out of Convex deploys.
 import rateLimiterTest from "@convex-dev/rate-limiter/test";
+import workpoolTest from "@convex-dev/workpool/test";
 import { convexTest } from "convex-test";
+import { expect, vi } from "vitest";
 
 import type { Doc, Id } from "./_generated/dataModel";
 import schema from "./schema";
@@ -13,6 +15,7 @@ type ModuleLoaders = Record<string, () => Promise<unknown>>;
 export function makeTest(extra: ModuleLoaders = {}) {
   const t = convexTest(schema, { ...modules, ...extra });
   rateLimiterTest.register(t);
+  workpoolTest.register(t, "emailWorkpool");
   return t;
 }
 
@@ -54,3 +57,25 @@ export async function setMaintenance(t: TestConvex, enabled: boolean): Promise<v
     });
   });
 }
+
+/** Env for email tests: fake provider, SMTP env fallback, link secret and site origin. */
+export function stubEmailEnv(): void {
+  vi.stubEnv("EMAIL_FAKE", "true");
+  vi.stubEnv("APP_ENV", "test");
+  vi.stubEnv("EMAIL_FALLBACK_TRANSPORT", "smtp");
+  vi.stubEnv("SMTP_HOST", "smtp.gmail.com");
+  vi.stubEnv("SMTP_PORT", "465");
+  vi.stubEnv("SMTP_SECURE", "true");
+  vi.stubEnv("SMTP_USER", "sender@worldling.test");
+  vi.stubEnv("SMTP_PASSWORD", "app-password-1234");
+  vi.stubEnv("EMAIL_FROM_NAME", "Worldling");
+  vi.stubEnv("EMAIL_FROM_ADDRESS", "sender@worldling.test");
+  vi.stubEnv("EMAIL_LINK_SECRET", "link-secret-for-tests-only");
+  vi.stubEnv("CONVEX_SITE_URL", "https://worldling-test.convex.site");
+  vi.stubEnv("SECRETS_ENCRYPTION_KEY", "MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY=");
+}
+
+/** Matches an app error with `code`, for `rejects.toMatchObject`. */
+export const appErrorCode = (value: string) => ({
+  data: expect.objectContaining({ code: value }) as unknown,
+});
