@@ -41,6 +41,17 @@ export function requireEnv(name: ConvexEnvName): string {
   return value;
 }
 
+/** Env var holding encryption key `version` (SPEC §7.6): v1 is unsuffixed, v2+ is `_V{n}`. */
+export function secretsKeyEnvName(version: number): string {
+  return version === 1 ? "SECRETS_ENCRYPTION_KEY" : `SECRETS_ENCRYPTION_KEY_V${version}`;
+}
+
+/** Encryption key `version`, or undefined when it is unset or empty. */
+export function secretsKeyEnv(version: number): string | undefined {
+  const value = process.env[secretsKeyEnvName(version)];
+  return value === undefined || value === "" ? undefined : value;
+}
+
 /** The deployment's APP_ENV, validated against the allowed values. */
 export function appEnv(): AppEnv {
   const value = requireEnv("APP_ENV");
