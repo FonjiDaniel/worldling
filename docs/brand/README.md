@@ -215,6 +215,8 @@ Source: `05-visual-language/04-style-files/worldling-visual-language.json`. Thes
 | Volcanic | `#4B4957` `#A16658` `#F28D60` |
 | Crystal | `#8C7AAF` `#C4B8D8` `#8BCBBB` |
 
+**In code (Phase 5):** `convex/shared/worldPalettes.ts` has 24 curated palettes, 4 per biome. The first of each biome expands its triad into 5 stops, and the other 18 are derived from the moodboard. **Pending brand:** the kit has no full palette file, so the derived palettes should get a brand review.
+
 3D starting values, from the same source:
 
 - **Camera:** near orthographic, 25° above the equator, warm key light from the upper left.
@@ -320,6 +322,19 @@ Source: `05-visual-language/01-guide/Worldling-Visual-Language.md` (Motion).
 | Ambient drift | 16000ms cycle | `cubic-bezier(0.45, 0, 0.55, 1)` | 0 to -4px to 0, one world | None |
 | Planet rotation | 120000ms per turn | `linear` | Optional | Static, manual step controls |
 | Moon orbit | 90000ms per orbit | `linear` | Optional | Moon at rest |
+
+**Deviation (ADR-019):** for reduced motion the brand table says planets and moons stop. The product follows SPEC §3.5 instead: ambient motion keeps going at 35% speed, with a persistent Pause motion control.
+
+**3D art colors** come from `--art-*` aliases in the hand-written part of `src/styles/tokens.css`:
+
+- Key light: Sunrise 50
+- Fill light: Nebula 200
+- Night lights: Sunrise 300
+- Fireflies: Sunrise 200
+- Aurora: Aurora
+- Halo: Nebula 300 (link)
+- Moons: Dust
+- Space: Void, with Nebula and Aurora tints and Starlight stars
 
 Named easings in the recipes:
 

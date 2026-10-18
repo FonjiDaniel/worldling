@@ -4,11 +4,64 @@ Where the build stands, phase by phase (SPEC §15). Updated at the end of every 
 
 ## Current status
 
-**Phase 4: Authentication and onboarding** is complete, except Google sign-in, which is built but not yet tried end to end because the Google OAuth client doesn't exist yet (see notes). Typecheck, lint, tests (303), build and e2e (16) pass locally against the dev deployment. GitHub Actions is still blocked by the account billing lock (see Phase 0).
+**Phase 5: Planet renderer** is complete. Typecheck, lint, tests (380), build and e2e (26) pass locally. One acceptance item still needs a real phone: the 60fps check at tier 2 (see Phase 5 notes). GitHub Actions is still blocked by the account billing lock (see Phase 0).
 
-**Brand pass (2026-10-18):** the full brand kit (03 to 08) is applied to everything from phases 1 to 4 (ADR-018). Every "pending brand" item for those phases is done, except the dark optical favicon, which the kit doesn't include yet. The real Gmail check of the restyled email waits for deploy (see below).
+Phase 4 is complete, except Google sign-in, which is built but not yet tried end to end (see Phase 4 notes).
 
-**Next:** Phase 5, Planet renderer. It extends the minimal `shared/worldParams.ts` from Phase 4 (ADR-017).
+**Next:** Phase 6, World creator. It builds on `PlanetView`, `presetParams`, `PALETTES` and `clampColor`.
+
+## Phase 5: Planet renderer
+
+- [x] `convex/shared/worldParams.ts`:
+  - The zod schema (unchanged shape, matches `worldParamsV1`). It clamps every color by chroma and lightness (`clampColor`, ADR-009).
+  - Tuned `PRESETS` per biome, `presetParams(biome, seed)` and `randomParams(seed)`. A seed picks a biome, then a palette within it, then a jittered preset.
+  - `describeWorld` is re-exported. It lives in `worldDescription.ts`, for example "A frozen world with turquoise seas, wisps of cloud and two moons."
+- [x] `convex/shared/worldPalettes.ts`: 24 curated palettes, 4 per biome. **Pending brand:** the kit has only one triad per biome, so 18 palettes are derived from the moodboard (noted in `docs/brand/README.md`).
+- [x] `convex/shared/color.ts` (hex, HSL, linear), plus `convex/shared/bloom.ts`: levels from XP and `unlocksFor(level)`. Caps arrive in Phase 7.
+- [x] Experience shell (ADR-019):
+  - `ExperienceMount` sits in the root layout and lazy-loads `ExperienceRoot` on the first `ThreeView`.
+  - One `<Canvas>`: `frameloop="never"`, flat, `alpha: false`.
+  - `clock.ts`: `gsap.ticker` drives R3F, and world time is separate from render time.
+  - `quality.ts` and the zustand `experience` store: detect-gpu with self-hosted benchmarks (`scripts/copy-gpu-benchmarks.mjs`, never a CDN). PerformanceMonitor drops at most two tiers. The user override is kept in `worldling:quality:v1`.
+  - `SpaceBackdrop`: Void, 8% tints and static stars, matching the CSS backdrop.
+- [x] Planet (`src/three/planet/*`, `src/three/shaders/*`):
+  - Surface: a smooth low-frequency displaced shape with per-pixel FBM height for color and bump. Biome touches: dune ribbons and mesas, polar caps, lava seams, crystal sparkle, verdant rivers.
+  - Ocean and inland water share one water shader: shallows, foam, gloss, glints and lava seas.
+  - Clouds, with their shadow faked on the surface. Atmosphere, aurora and halo shells. Night lights. Seeded moons and GPU fireflies.
+  - Simplex noise keeps its MIT header.
+  - `paramsToUniforms` is pure and unit tested. One uniform bag per planet; updates mutate `.value` only.
+- [x] Bloom toggles: clouds drift from level 2 (clouds show from level 1, ADR-019), glints 3, vegetation 4, night lights 5, moons 6 and 9, fireflies 7, aurora 8, halo 10.
+- [x] Resilience (§8.9):
+  - `ThreeErrorBoundary` wraps the canvas and every view.
+  - `gl.debug.onShaderError` reports the program log and GPU, then swaps to `FallbackPlanet` (MeshStandardMaterial).
+  - Context loss shows "Re-awakening the universe…" and goes to tier 0 after 2 losses or a 5s non-restore.
+  - Tier 0 and no WebGL: `PlanetDisc`, a CSS disc in the world's colors.
+- [x] Motion: the persistent Pause motion control (`aria-pressed`). Reduced motion keeps ambient motion at 35% speed (the SPEC wins over the brand table, ADR-019).
+- [x] `/dev/planet`:
+  - All 6 presets, each next to its moodboard tile. The tile is cropped from the PNG and served by a dev-only route at request time, so it never ships.
+  - leva: biome, every param, palette, level, tier, pause, perf, and "Copy params".
+  - `?freeze=1`, `?tier=`, `?focus=`, `?level=`, `?perf=1`.
+- [x] Tests: `uniforms.test.ts`, `quality.test.ts`, `experience.test.ts`, `art.test.ts`, `bloom.test.ts`, `color.test.ts`, plus palettes and `describeWorld` in `worldParams.test.ts`. The no-raw-values check now covers `src/three`.
+- [x] e2e `planet.spec.ts`:
+  - 6 described worlds with no console or shader errors
+  - pixel-identical frozen renders, so the same params give the same world
+  - the pause control works
+  - axe is clean
+  - without WebGL, flat discs show and no canvas is created
+- [ ] **60fps on a real mid-range phone.** Open `/dev/planet?focus=oceanic&perf=1` from the LAN on a phone and confirm. Measured here instead:
+  - Intel UHD 620 (headless Chrome, D3D11), phone viewport at DPR 2.6, one planet at tier 2: p50, p75 and p95 all 16.7ms, also with 4x CPU throttling.
+  - Same machine at tier 3, level 10: p95 50ms. PerformanceMonitor would step it down; pinning a tier disables that.
+  - Six planets at tier 2 (dev page only): p75 33ms.
+
+### Phase 5 notes
+
+- **No bloom pass, no r3f-perf (ADR-020).** EffectComposer can't wrap scissored `<View>`s, so tier 3 uses a shader glow term and MSAA. `r3f-perf@7.2.3` pulls drei 9 and zustand 4 (R3F v8), so the overlay is drei `StatsGl`.
+- **Sizes.** The 3D chunk is about 241KB gzipped (budget 450KB) and loads only with a view.
+- **Pre-existing budget miss (not from this phase):** the landing's initial JS is about 270KB gzipped against the 170KB budget. Phase 5 adds about 1KB to it. Most of it is the root providers (Convex, auth). Worth a look before Lighthouse CI lands.
+- **`body` is `isolate`** so the fixed canvas at `z-index: -1` paints above the body background.
+- **Art colors** enter the renderer only through `--art-*` tokens (`src/three/art.ts`). Palettes are world data in `convex/shared`, not UI tokens.
+- **The presets match the moodboard in mood and color, not in detail.** They have no trees, crystal spires or waterfalls; those need meshes, which ADR-001 rules out for v1. Fine-tune them in `/dev/planet` with leva, then use "Copy params" and paste into `PRESETS`.
+- **SwiftShader is slow:** the e2e planet tests use tier 1 and longer timeouts. Run the full e2e serially or against a production build; the keyboard spec fails on dev only because of the Next dev overlay.
 
 ## Brand pass: phases 1 to 4
 

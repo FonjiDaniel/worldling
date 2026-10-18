@@ -204,7 +204,7 @@ Worlds earn Bloom XP from care. Levels unlock visual features. Earned unlocks ca
 | Level | XP | Unlock |
 |---|---|---|
 | 1 | 0 | Base world |
-| 2 | 50 | Drifting clouds |
+| 2 | 50 | Drifting clouds (clouds show from level 1 and start drifting here, ADR-019) |
 | 3 | 140 | Ocean glints |
 | 4 | 260 | Vegetation spreads across lowlands |
 | 5 | 420 | Night lights on the dark side |
@@ -348,7 +348,7 @@ Built on shadcn/ui (Radix primitives), restyled with our tokens. Required set: B
 - Purposeful: motion explains where things came from and where they went.
 - UI transitions 100 to 240ms (press, color, panels). World moments 600 to 1200ms (focus, comet, bloom). Camera flights 1.2 to 2.0s. No bounce or overshoot. Nothing blocks input longer than 2s, and every flight can be interrupted by user input.
 - Ease out for things entering, ease in-out for things moving.
-- `prefers-reduced-motion`: no camera flights (cut with a quick fade instead), no parallax, no scrubbed scroll, planets still rotate slowly (it's ambient, not disorienting) but can be paused with a visible control.
+- `prefers-reduced-motion`: no camera flights (cut with a quick fade instead), no parallax, no scrubbed scroll, planets still rotate slowly (35% speed, it's ambient, not disorienting) but can be paused with a visible control (ADR-019).
 
 ### 3.6 Responsive
 
@@ -367,7 +367,7 @@ Breakpoints: `sm 640`, `md 768`, `lg 1024`, `xl 1280`. Mobile-first. On mobile t
 - Stylized realism: soft, painterly color, not photoreal. Think "museum diorama of a tiny planet".
 - Palettes are curated so every combination looks good. Advanced mode allows custom colors but clamps saturation and lightness to safe ranges.
 - Space background: deep gradient, sparse twinkling stars, faint nebula dust. Never busy. The worlds are the stars of the show.
-- Bloom post-processing only on high tier devices, tuned subtly.
+- Glow only on high tier devices, tuned subtly. It is a shader term, not a post-processing pass (ADR-020).
 
 ---
 
@@ -417,7 +417,7 @@ Breakpoints: `sm 640`, `md 768`, `lg 1024`, `xl 1280`. Mobile-first. On mobile t
 | Convex helpers | `convex-helpers` (>= 0.1.127, security fix), `@convex-dev/rate-limiter`, `@convex-dev/workpool`, `@convex-dev/sharded-counter` | Battle-tested building blocks |
 | Moderation | `obscenity` | Handles leetspeak and variants |
 | Device tiering | `detect-gpu` | Choose quality tier before first frame |
-| Debug | `leva` (dev only), `r3f-perf` (dev only) | Live tuning and performance overlay |
+| Debug | `leva` (dev only), drei `StatsGl` (dev only, ADR-020) | Live tuning and performance overlay |
 | Errors | Sentry (`@sentry/nextjs`) | Client + server error tracking |
 | Analytics | Vercel Analytics + Speed Insights | Privacy friendly, zero config |
 | Testing | Vitest, `convex-test`, Testing Library, Playwright, axe | Full pyramid |
@@ -443,6 +443,8 @@ Pin exact versions in `package.json` at Phase 0. Upgrade deliberately, never wit
 | ADR-011 | No admin impersonation | "Log in as user" | Large security and trust risk, read-only detail views cover support needs |
 | ADR-012 | Universe data streamed by sector | Subscribing to all worlds | Scales to 100k+ worlds with bounded bandwidth and memory |
 | ADR-013 | Brand color tokens replace §3.2 values | Two parallel palettes | One semantic palette from the brand kit, light theme deferred |
+| ADR-019 | Canvas mounted once in the root layout, lazy-loaded on the first view; flat color; space backdrop pass; clouds from level 1 | Canvas per route group | Truly persistent context, no 3D cost on pages without 3D |
+| ADR-020 | Shader glow instead of a bloom pass; StatsGl instead of r3f-perf | EffectComposer, r3f-perf | Composer breaks scissored `View`s; r3f-perf targets R3F v8 |
 
 ### 4.4 Repository structure
 
@@ -1042,7 +1044,7 @@ Design: dark, minimal, brand colors, one clear button, plain-text version always
 
 ### 8.1 Experience root (single canvas)
 
-- `src/three/ExperienceRoot.tsx` is mounted once in `(marketing)` and `(app)` layouts. It renders a fixed, full-viewport `<Canvas>` behind the DOM with `eventSource` set to the document root so DOM and 3D share pointer events.
+- `src/three/ExperienceRoot.tsx` is mounted once in the root layout through `ExperienceMount`, and loaded only after a page registers a view (ADR-019). It renders a fixed, full-viewport `<Canvas>` behind the DOM with `eventSource` set to the document root so DOM and 3D share pointer events.
 - Pages place scenes using drei `<View>` tracking a DOM element, so layout stays in normal HTML/CSS.
 - Global scene state (current route scene, camera targets, quality tier, reduced motion) lives in a Zustand store.
 - Canvas settings: `dpr` from quality tier, `gl={{ antialias: tier >= 2, powerPreference: "high-performance", alpha: false }}`, `flat` color handling decided once and documented, `shadows` off (stylized lighting doesn't need them).
@@ -1056,7 +1058,7 @@ Detected before first frame with `detect-gpu`, refined at runtime by drei `Perfo
 | 0 | No WebGL / blocklisted | n/a | static thumbnails + list mode | none | 0 |
 | 1 | Low-end phones | 1 | icosahedron detail 24 | none | 4 |
 | 2 | Mid-range phones, laptops | 1.5 | detail 48 | none | 8 |
-| 3 | Desktop GPUs, flagship phones | min(devicePixelRatio, 2) | detail 80 | subtle bloom, SMAA | 12 |
+| 3 | Desktop GPUs, flagship phones | min(devicePixelRatio, 2) | detail 80 | subtle shader glow, MSAA (ADR-020) | 12 |
 
 Users can override quality in a small settings popover. Choice is remembered in `localStorage`.
 
@@ -1147,7 +1149,7 @@ Thumbnails power OG images, the far-LOD fallback on tier 0, list mode and admin 
 | GPU memory | < 250MB on tier 1 |
 | Time to interactive creator | < 3s on mid phone |
 
-`r3f-perf` overlay in development. Lighthouse CI on landing and world pages in CI with budgets that fail the build.
+drei `StatsGl` overlay in development (ADR-020). Lighthouse CI on landing and world pages in CI with budgets that fail the build.
 
 ### 8.9 Resilience
 
@@ -1529,7 +1531,7 @@ Read CLAUDE.md and docs/SPEC.md (§2.3, §3.8, §8.1-§8.3, §8.8-§8.10). Plan 
 - ExperienceRoot (single persistent canvas, drei View), clock.ts single ticker (ADR-003), quality.ts tiers with detect-gpu + PerformanceMonitor.
 - Planet with all layers (surface, ocean, clouds, atmosphere, night lights, orbitals) driven by paramsToUniforms (pure, unit tested). Bloom-level feature toggles.
 - Shader error fallback, 3D error boundary, context-loss handling (§8.9).
-- /dev/planet playground (dev only) with leva controls and r3f-perf, showing all presets side by side.
+- /dev/planet playground (dev only) with leva controls and a perf overlay, showing all presets side by side.
 Acceptance: 60fps on a mid-range phone (tier 2) for a single planet, same params render the same world, all presets look beautiful, unit tests for uniforms and describeWorld.
 ```
 
