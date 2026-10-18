@@ -1,5 +1,6 @@
 "use client";
 
+import type { OptimisticUpdate } from "convex/browser";
 import { useMutation } from "convex/react";
 import {
   type FunctionArgs,
@@ -19,10 +20,18 @@ export type MutationResult<T> = { ok: true; value: T } | { ok: false; error: App
  * `useMutation` with our error handling (SPEC §10.2). VALIDATION, and any error that carries
  * `fieldErrors` (e.g. a taken username), is left for the form to show inline. Other app errors
  * show a toast, and unexpected errors also go to error reporting.
- * `run` never throws.
+ * `run` never throws. `optimisticUpdate` patches local query results until the server answers.
  */
-export function useAppMutation<F extends FunctionReference<"mutation">>(fn: F) {
-  const mutate = useMutation(fn);
+export function useAppMutation<F extends FunctionReference<"mutation">>(
+  fn: F,
+  options: { optimisticUpdate?: OptimisticUpdate<FunctionArgs<F>> } = {},
+) {
+  const base = useMutation(fn);
+  // On failure Convex drops the optimistic change, so the screen returns to the server state.
+  const mutate =
+    options.optimisticUpdate === undefined
+      ? base
+      : base.withOptimisticUpdate(options.optimisticUpdate);
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState<AppErrorData | null>(null);
 

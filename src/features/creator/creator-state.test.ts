@@ -11,6 +11,7 @@ import {
   freshWorld,
   fromPercent,
   randomize,
+  sameWorld,
   SLIDERS,
   sliderPercent,
 } from "./edits";
@@ -170,5 +171,19 @@ describe("shortcuts", () => {
     expect(isTextEntry(document.createElement("textarea"))).toBe(true);
     expect(isTextEntry(radio)).toBe(false);
     expect(isTextEntry(document.createElement("button"))).toBe(false);
+  });
+});
+
+describe("sameWorld", () => {
+  it("ignores key order and name spacing", () => {
+    const { params } = world();
+    const { version, ...rest } = params;
+    const reordered = { ...rest, version };
+    expect(
+      sameWorld({ name: " Tide  haven", params }, { name: "Tide haven", params: reordered }),
+    ).toBe(true);
+    expect(
+      sameWorld({ name: "Tide", params }, { name: "Tide", params: SLIDERS.spin.set(params, 0.9) }),
+    ).toBe(false);
   });
 });

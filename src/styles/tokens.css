@@ -398,6 +398,8 @@
   --spacing-panel-pad-lg: var(--layout-panel-padding-desktop);
   --container-prose: var(--measure-body);
   --container-panel: 28rem;
+  /* The creator's side panel (06 desktop creator). */
+  --container-creator: 35rem;
   --container-page: 72rem;
 
   /* Animations. Radix waits for animationend on exit. */

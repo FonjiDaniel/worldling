@@ -30,6 +30,20 @@ beforeEach(() => {
 });
 
 describe("useAppMutation", () => {
+  it("sends through withOptimisticUpdate when given an optimistic update", async () => {
+    const optimistic = vi.fn<(args: unknown) => Promise<unknown>>().mockResolvedValue("w1");
+    const withOptimisticUpdate = vi.fn(() => optimistic);
+    Object.assign(mutate, { withOptimisticUpdate });
+    const update = vi.fn();
+    const { result } = renderHook(() => useAppMutation(ref, { optimisticUpdate: update }));
+    await act(async () => {
+      await result.current.run({ name: "Vela" });
+    });
+    expect(withOptimisticUpdate).toHaveBeenCalledWith(update);
+    expect(optimistic).toHaveBeenCalledWith({ name: "Vela" });
+    expect(mutate).not.toHaveBeenCalled();
+  });
+
   it("returns the value on success", async () => {
     mutate.mockResolvedValue("w1");
     const { result } = renderHook(() => useAppMutation(ref));

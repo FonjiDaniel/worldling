@@ -69,6 +69,13 @@
   }
 }
 
+/* useBreakpoint (src/hooks/use-media-query.ts) reads the breakpoints at runtime. Referencing
+   them here keeps Tailwind from dropping the unused theme variables. */
+:root {
+  --runtime-breakpoints: var(--breakpoint-sm) var(--breakpoint-md) var(--breakpoint-lg)
+    var(--breakpoint-xl);
+}
+
 /* One glass layer per region. Opaque Deep Space where blur isn't supported. */
 @utility glass {
   --control-edge: var(--color-glass-control-line);

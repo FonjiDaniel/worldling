@@ -204,3 +204,26 @@ export function freshWorld(seed = randomSeed()): CreatorWorld {
     nameEdited: false,
   };
 }
+
+function deepEqual(a: unknown, b: unknown): boolean {
+  if (Object.is(a, b)) return true;
+  if (typeof a !== "object" || typeof b !== "object" || a === null || b === null) return false;
+  if (Array.isArray(a) !== Array.isArray(b)) return false;
+  const keysA = Object.keys(a);
+  const keysB = Object.keys(b);
+  if (keysA.length !== keysB.length) return false;
+  return keysA.every((key) => deepEqual(Reflect.get(a, key), Reflect.get(b, key)));
+}
+
+/** Names as the server stores them: whitespace collapsed and trimmed. */
+export function normalizeName(name: string): string {
+  return name.replace(/\s+/g, " ").trim();
+}
+
+/** True when saving `local` would change nothing on `saved`. Key order doesn't matter. */
+export function sameWorld(
+  local: { name: string; params: WorldParams },
+  saved: { name: string; params: WorldParams },
+): boolean {
+  return normalizeName(local.name) === saved.name && deepEqual(local.params, saved.params);
+}

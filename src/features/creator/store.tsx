@@ -3,14 +3,28 @@
 import { createContext, type ReactNode, useContext, useState } from "react";
 import { createStore, type StoreApi, useStore } from "zustand";
 
+import type { WorldParams } from "@convex/shared/worldParams";
+
+import { createPlanetHandle, type PlanetHandle } from "@/three/planet/handle";
+
 import type { CreatorWorld } from "./edits";
+import type { Snap } from "./sheet-snaps";
 import { createHistory, type History, preview, record, redo, undo } from "./history";
 
 // One creator store per /create mount. Gestures (slider drags, typing the name) preview live
 // and become a single undo step when they end.
 
+export type CreatorTab = "landscape" | "atmosphere" | "details";
+
 export interface CreatorState {
   history: History<CreatorWorld>;
+  /** Params the planet keeps showing until the re-form swaps the new world in. */
+  held: WorldParams | null;
+  tab: CreatorTab;
+  /** The mobile sheet's snap point. */
+  snap: Snap;
+  /** The preview planet's handle: re-form and drag to turn write it, never React state. */
+  handle: PlanetHandle;
   /** Where the current gesture started, or null outside a gesture. */
   gestureFrom: CreatorWorld | null;
   /** Live change during a gesture. No history step yet. */
@@ -24,12 +38,19 @@ export interface CreatorState {
   redo: () => string | null;
   /** Starts over from `world`, with empty history. */
   load: (world: CreatorWorld) => void;
+  hold: (params: WorldParams | null) => void;
+  setTab: (tab: CreatorTab) => void;
+  setSnap: (snap: Snap) => void;
 }
 
 export function createCreatorStore(initial: CreatorWorld): StoreApi<CreatorState> {
   return createStore<CreatorState>()((set, get) => ({
     history: createHistory(initial),
     gestureFrom: null,
+    held: null,
+    tab: "landscape",
+    snap: "half",
+    handle: createPlanetHandle(),
     preview: (next) => {
       const { history, gestureFrom } = get();
       set({ history: preview(history, next), gestureFrom: gestureFrom ?? history.present });
@@ -65,6 +86,15 @@ export function createCreatorStore(initial: CreatorWorld): StoreApi<CreatorState
     load: (world) => {
       set({ history: createHistory(world), gestureFrom: null });
     },
+    hold: (held) => {
+      set({ held });
+    },
+    setTab: (tab) => {
+      set({ tab });
+    },
+    setSnap: (snap) => {
+      set({ snap });
+    },
   }));
 }
 
@@ -89,6 +119,11 @@ export function useCreatorStore(): StoreApi<CreatorState> {
 
 export function useCreator<T>(selector: (state: CreatorState) => T): T {
   return useStore(useCreatorStore(), selector);
+}
+
+/** The params the preview planet shows: the held world during a re-form, else the present. */
+export function useShownParams(): WorldParams {
+  return useCreator((state) => state.held ?? state.history.present.params);
 }
 
 /** The world as it looks right now, including a gesture in progress. */
