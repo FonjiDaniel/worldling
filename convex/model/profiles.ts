@@ -5,7 +5,6 @@ import { requireEnv } from "../lib/env";
 import type { Viewer } from "../lib/functions";
 import type { Logger } from "../lib/logger";
 import { getSetting } from "../lib/settings";
-import { checkText } from "../shared/moderation";
 import {
   checkDisplayName,
   checkUsername,
@@ -13,15 +12,9 @@ import {
   type UsernameProblem,
 } from "../shared/usernames";
 import { randomSeed } from "../shared/random";
-import {
-  randomParams,
-  randomWorldName,
-  type WorldParams,
-  worldNameSchema,
-  worldParamsSchema,
-} from "../shared/worldParams";
+import { randomParams, randomWorldName, type WorldParams } from "../shared/worldParams";
 import { enqueueEmail } from "./emailOutbox";
-import { createPrimaryWorld } from "./worlds";
+import { createPrimaryWorld, parseWorldName, parseWorldParams } from "./worlds";
 
 // Profiles and onboarding (SPEC §6.3).
 
@@ -113,12 +106,10 @@ function draftWorld(
     const seed = randomSeed();
     return { name: randomWorldName(seed), params: randomParams(seed) };
   }
-  const params = worldParamsSchema.safeParse(input.draft.params);
-  if (!params.success) invalid("draft", "params");
-  const name = worldNameSchema.safeParse(input.draft.name);
-  if (!name.success) invalid("draft", "name");
-  if (!checkText(name.data, rules.extraWords).ok) invalid("draft", "moderation");
-  return { name: name.data, params: params.data };
+  return {
+    name: parseWorldName(input.draft.name, rules.extraWords, "draft"),
+    params: parseWorldParams(input.draft.params, "draft"),
+  };
 }
 
 export async function completeOnboarding(ctx: WriteCtx, input: OnboardingInput) {

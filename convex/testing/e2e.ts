@@ -1,7 +1,8 @@
 import { v } from "convex/values";
 
-import { internalMutation } from "../_generated/server";
+import { internalMutation, internalQuery } from "../_generated/server";
 import { isE2eMailboxEnabled, isE2eRecipient } from "../email/envConfig";
+import { primaryWorld } from "../model/worlds";
 
 // The e2e mailbox (ADR-016). Internal, so only the CLI with deploy access can read it, and
 // both functions refuse on production even then.
@@ -42,5 +43,39 @@ export const takeLatestEmail = internalMutation({
     await ctx.db.delete("e2eMailbox", row._id);
     const data: unknown = row.data;
     return { template: row.template, data };
+  },
+});
+
+/** The primary world of an e2e account, with its thumbnail file's metadata (Phase 6 e2e). */
+export const worldFor = internalQuery({
+  args: { email: v.string() },
+  returns: v.union(
+    v.null(),
+    v.object({
+      name: v.string(),
+      params: v.any(),
+      thumbnail: v.union(v.null(), v.object({ contentType: v.string(), size: v.number() })),
+    }),
+  ),
+  handler: async (ctx, { email }) => {
+    assertEnabled();
+    if (!isE2eRecipient(email)) throw new Error("Not an e2e recipient");
+    const user = await ctx.db
+      .query("users")
+      .withIndex("email", (q) => q.eq("email", email.toLowerCase()))
+      .first();
+    if (user === null) return null;
+    const world = await primaryWorld(ctx, user._id);
+    if (world === null) return null;
+    const file =
+      world.thumbnailId === undefined
+        ? null
+        : await ctx.db.system.get("_storage", world.thumbnailId);
+    const params: unknown = world.params;
+    return {
+      name: world.name,
+      params,
+      thumbnail: file === null ? null : { contentType: file.contentType ?? "", size: file.size },
+    };
   },
 });

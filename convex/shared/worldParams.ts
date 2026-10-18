@@ -15,6 +15,11 @@ export type Biome = (typeof BIOMES)[number];
 
 export const WORLD_NAME_MAX = 32;
 
+/** Thumbnail rules (SPEC §8.7), checked by `worlds.setThumbnail`. */
+export const THUMBNAIL_TYPE = "image/webp";
+export const THUMBNAIL_MAX_BYTES = 300 * 1024;
+export const THUMBNAIL_SIZE = 512;
+
 /** A hex color, lowercased and clamped into the safe ranges (ADR-009). */
 const hex = z
   .string()
