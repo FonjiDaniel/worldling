@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { DRAFT_SAVE_DELAY_MS, saveDraft } from "./draft";
 import { useCreatorStore } from "./store";
 
-/** Saves the guest draft 300ms after every change, and right away when the page is hidden. */
+/** Saves the guest draft shortly (DRAFT_SAVE_DELAY_MS) after every change, and right away when the page is hidden. */
 export function useDraftAutosave(enabled: boolean): void {
   const store = useCreatorStore();
   useEffect(() => {

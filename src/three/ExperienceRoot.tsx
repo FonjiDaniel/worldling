@@ -12,6 +12,7 @@ import { REDUCED_MOTION_RATE, setMotionRate, subscribeFrame } from "./clock";
 import { dprFor, MAX_TIER_CHANGES, type RenderTier, TIERS } from "./quality";
 import { SpaceBackdrop } from "./SpaceBackdrop";
 import { ThreeErrorBoundary } from "./ThreeErrorBoundary";
+import { ThumbnailStudio } from "./ThumbnailStudio";
 import { watchContextLoss } from "./utils/contextLoss";
 
 // The single persistent canvas (SPEC §8.1, ADR-002, ADR-019). Fixed behind the DOM, events from
@@ -88,6 +89,9 @@ export default function ExperienceRoot({ tier }: { tier: RenderTier }) {
         <PerformanceMonitor flipflops={MAX_TIER_CHANGES} onDecline={declineTier} />
         <SpaceBackdrop />
         <View.Port />
+        <ThreeErrorBoundary scope="thumbnail">
+          <ThumbnailStudio />
+        </ThreeErrorBoundary>
         {perfOverlay ? <StatsGl /> : null}
       </Canvas>
     </ThreeErrorBoundary>

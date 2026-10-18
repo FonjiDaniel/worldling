@@ -1,18 +1,15 @@
 "use client";
 
-import { unlocksFor } from "@convex/shared/bloom";
 import { describeWorld, type WorldParams } from "@convex/shared/worldParams";
 
 import { useEffectiveTier } from "@/stores/experience";
 
-import { PlanetCamera } from "../camera/PlanetCamera";
+import { frameRadius, PlanetCamera } from "../camera/PlanetCamera";
 import { isRenderTier } from "../quality";
 import { ThreeView } from "../ThreeView";
+import type { PlanetHandle } from "./handle";
 import { Planet } from "./Planet";
 import { PlanetDisc } from "./PlanetDisc";
-
-const PLANET_FRAME = 1.2;
-const MOON_FRAME = 2.1;
 
 export interface PlanetViewProps {
   params: WorldParams;
@@ -21,12 +18,14 @@ export interface PlanetViewProps {
   className?: string;
   /** World radius the camera frames. Defaults leave room for moons once they appear. */
   frame?: number;
+  /** Lets the page re-form or turn the world without re-rendering. */
+  handle?: Readonly<PlanetHandle>;
 }
 
 /** A world in a DOM box, with its text description and a non-WebGL fallback. */
-export function PlanetView({ params, level, className, frame }: PlanetViewProps) {
+export function PlanetView({ params, level, className, frame, handle }: PlanetViewProps) {
   const tier = useEffectiveTier();
-  const radius = frame ?? (unlocksFor(level).moons > 0 ? MOON_FRAME : PLANET_FRAME);
+  const radius = frame ?? frameRadius(level);
   return (
     <ThreeView
       label={describeWorld(params, level)}
@@ -34,7 +33,9 @@ export function PlanetView({ params, level, className, frame }: PlanetViewProps)
       className={className}
     >
       <PlanetCamera radius={radius} />
-      {isRenderTier(tier) ? <Planet params={params} level={level} tier={tier} /> : null}
+      {isRenderTier(tier) ? (
+        <Planet params={params} level={level} tier={tier} {...(handle && { handle })} />
+      ) : null}
     </ThreeView>
   );
 }

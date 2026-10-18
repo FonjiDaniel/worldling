@@ -109,10 +109,19 @@ export function applyUniforms(
   u.uPixelRatio.value = pixelRatio;
 }
 
-/** Per-frame update: world time drives clouds, lava, glints, aurora and fireflies. */
-export function tickUniforms(u: PlanetUniforms, time: number, cloudDrift: number): void {
+/**
+ * Per-frame update: world time drives clouds, lava, glints, aurora and fireflies. `amplitude`
+ * is the terrain height this frame, lowered while the world re-forms.
+ */
+export function tickUniforms(
+  u: PlanetUniforms,
+  time: number,
+  cloudDrift: number,
+  amplitude: number,
+): void {
   u.uTime.value = time;
   u.uCloudAngle.value = time * cloudDrift;
+  u.uAmplitude.value = amplitude;
 }
 
 export interface PlanetMaterials {

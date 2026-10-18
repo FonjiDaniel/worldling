@@ -13,6 +13,7 @@ import { worldTime } from "../clock";
 import { type RenderTier, TIERS } from "../quality";
 import { ATMOSPHERE_RADIUS } from "../shaders/sky";
 import { FallbackPlanet } from "./FallbackPlanet";
+import { type PlanetHandle, REFORM_SHRINK, RESTING_HANDLE } from "./handle";
 import {
   applyUniforms,
   createPlanetMaterials,
@@ -28,6 +29,8 @@ export interface PlanetProps {
   params: WorldParams;
   level: number;
   tier: RenderTier;
+  /** Re-form, drag-to-turn and pinned time, read every frame. */
+  handle?: Readonly<PlanetHandle>;
 }
 
 const CLOUD_LIFT = 0.035;
@@ -42,7 +45,7 @@ export function Planet(props: PlanetProps) {
   return <ShaderPlanet {...props} />;
 }
 
-function ShaderPlanet({ params, level, tier }: PlanetProps) {
+function ShaderPlanet({ params, level, tier, handle = RESTING_HANDLE }: PlanetProps) {
   const dpr = useThree((state) => state.viewport.dpr);
   const data = useMemo(
     () => paramsToUniforms(params, tier, level, readArtColors()),
@@ -55,6 +58,7 @@ function ShaderPlanet({ params, level, tier }: PlanetProps) {
   );
   const fireflies = useMemo(() => createFireflyGeometry(params.seed), [params.seed]);
   const orbits = useMemo(() => moonOrbits(params.seed), [params.seed]);
+  const root = useRef<Group>(null);
   const spin = useRef<Group>(null);
   const moonA = useRef<Mesh>(null);
   const moonB = useRef<Mesh>(null);
@@ -76,9 +80,10 @@ function ShaderPlanet({ params, level, tier }: PlanetProps) {
   );
 
   useFrame(() => {
-    const time = worldTime();
-    tickUniforms(uniforms, time, data.cloudDrift);
-    if (spin.current) spin.current.rotation.y = time * data.spinRate;
+    const time = handle.time ?? worldTime();
+    tickUniforms(uniforms, time, data.cloudDrift, data.amplitude * (1 - handle.reform));
+    root.current?.scale.setScalar(1 - handle.reform * REFORM_SHRINK);
+    if (spin.current) spin.current.rotation.y = time * data.spinRate + handle.yaw;
     const orbitAngle = time * data.orbitRate;
     if (moonA.current) placeMoon(moonA.current, orbits[0], orbitAngle);
     if (moonB.current) placeMoon(moonB.current, orbits[1], orbitAngle);
@@ -90,7 +95,7 @@ function ShaderPlanet({ params, level, tier }: PlanetProps) {
   const cloudRadius = 1 + data.amplitude * 0.75 + CLOUD_LIFT;
 
   return (
-    <group rotation-z={data.tilt}>
+    <group ref={root} rotation-z={data.tilt}>
       <group ref={spin}>
         <mesh geometry={sphere} material={materials.surface} />
         {data.seaLevel > 0 ? (
