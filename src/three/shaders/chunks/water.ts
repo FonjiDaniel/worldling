@@ -11,17 +11,16 @@ uniform float uGlints;
 uniform float uGlow;
 uniform float uTime;
 
-// Color and opacity of water over terrain height h. Volcanic seas are glowing lava.
-vec4 shadeWater(vec3 dir, float h, vec3 n, vec3 viewDir) {
-  float depth = clamp((uSeaLevel - h) / 0.28, 0.0, 1.0);
-  if (uOceanEmissive > 0.5) {
-    float flow = snoise(dir * 7.0 + vec3(0.0, uTime * 0.02, 0.0));
-    vec3 crust = uOcean * 0.18;
-    vec3 core = uOcean * uOcean * (1.6 + uGlow * 0.4);
-    vec3 lava = mix(crust, core, smoothstep(-0.4, 0.5, flow) * (0.5 + depth * 0.5));
-    return vec4(lava + crust * softLight(n) * 0.5, 1.0);
-  }
+// Volcanic seas: glowing lava under a dark crust.
+vec4 shadeLava(vec3 dir, float depth, vec3 n) {
+  float flow = snoise(dir * 7.0 + vec3(0.0, uTime * 0.02, 0.0));
+  vec3 crust = uOcean * 0.18;
+  vec3 core = uOcean * uOcean * (1.6 + uGlow * 0.4);
+  vec3 lava = mix(crust, core, smoothstep(-0.4, 0.5, flow) * (0.5 + depth * 0.5));
+  return vec4(lava + crust * softLight(n) * 0.5, 1.0);
+}
 
+vec4 shadeSea(vec3 dir, float depth, vec3 n, vec3 viewDir) {
   #if OCTAVES > 3
   vec3 q = dir * 22.0 + vec3(uTime * 0.03);
   n = normalize(n + 0.025 * vec3(snoise(q), snoise(q + 17.0), snoise(q + 31.0)));
@@ -43,5 +42,18 @@ vec4 shadeWater(vec3 dir, float h, vec3 n, vec3 viewDir) {
   vec3 color = water * softLight(n) + uKey * spec;
   color = mix(color, uAtmosphere * softLight(n), fresnel * 0.25);
   return vec4(color, mix(0.72, 1.0, smoothstep(0.0, 0.5, depth)));
+}
+
+// Color and opacity of water over terrain height h. One return path: the Windows (ANGLE/HLSL)
+// compiler warns about "potentially uninitialized" results after early returns.
+vec4 shadeWater(vec3 dir, float h, vec3 n, vec3 viewDir) {
+  float depth = clamp((uSeaLevel - h) / 0.28, 0.0, 1.0);
+  vec4 result;
+  if (uOceanEmissive > 0.5) {
+    result = shadeLava(dir, depth, n);
+  } else {
+    result = shadeSea(dir, depth, n, viewDir);
+  }
+  return result;
 }
 `;
