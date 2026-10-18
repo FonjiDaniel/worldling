@@ -1,56 +1,29 @@
-import AxeBuilder from "@axe-core/playwright";
 import { expect, type Page, test } from "@playwright/test";
 
+import {
+  completeSignUp,
+  expectNoAxeViolations,
+  pasteCode,
+  randomUsername,
+  SIGNED_IN,
+} from "./support/flows";
 import { e2eEmail, waitForCode } from "./support/mailbox";
 
 // Phase 4 acceptance (SPEC §15): sign up -> verify -> onboarding, against the dev deployment
 // with the e2e mailbox (ADR-016). Run `npx convex dev` (or be logged in to it) first.
 
-const PASSWORD = "mossy river stones 42";
-// After signing in, the Convex websocket has to authenticate against the remote deployment.
-const SIGNED_IN = { timeout: 20_000 };
-
 test.use({ permissions: ["clipboard-read", "clipboard-write"] });
-
-async function expectNoAxeViolations(page: Page) {
-  const results = await new AxeBuilder({ page })
-    .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
-    .analyze();
-  const blocking = results.violations
-    .filter((violation) => violation.impact === "serious" || violation.impact === "critical")
-    .map((violation) => ({
-      id: violation.id,
-      targets: violation.nodes.map((node) => node.target.join(" ")),
-    }));
-  expect(blocking).toEqual([]);
-}
-
-async function pasteCode(page: Page, code: string) {
-  await page.evaluate(async (text) => {
-    await navigator.clipboard.writeText(text);
-  }, code);
-  // Paste into the middle cell: the whole code should still fill every cell.
-  await page.getByRole("textbox", { name: "Digit 4 of 8" }).focus();
-  await page.keyboard.press("ControlOrMeta+V");
-}
 
 async function signUpAndVerify(page: Page, email: string) {
   await page.goto("/sign-up");
-  await page.getByLabel("Email").fill(email);
-  await page.getByLabel("Password", { exact: true }).fill(PASSWORD);
-  await page.getByRole("button", { name: "Create my world" }).click();
-  await expect(page).toHaveURL(/\/verify$/);
-  await expect(page.getByText(email)).toBeVisible();
-  await pasteCode(page, await waitForCode(email, "auth.verify"));
+  await completeSignUp(page, email);
 }
 
 test("sign up, verify with a pasted code, then onboard", async ({ page }) => {
+  // Ends on the new world page, which renders 3D in software WebGL.
+  test.setTimeout(90_000);
   const email = e2eEmail();
-  // Letters only: runs of random digits can read as a phone number to the moderation filter.
-  const suffix = Array.from(crypto.getRandomValues(new Uint8Array(10)), (byte) =>
-    String.fromCharCode(97 + (byte % 26)),
-  ).join("");
-  const username = `e2e_${suffix}`;
+  const username = randomUsername();
 
   await signUpAndVerify(page, email);
 
@@ -65,16 +38,17 @@ test("sign up, verify with a pasted code, then onboard", async ({ page }) => {
   await page.getByLabel("Display name").fill("E2E Explorer");
   await page.getByRole("button", { name: "Bring my world to life" }).click();
 
-  await expect(page).toHaveURL(/\/me$/, SIGNED_IN);
-  await expect(page.getByRole("heading", { name: "Your world is born" })).toBeVisible(SIGNED_IN);
-  await expect(page.getByText(`/w/${username}`)).toBeVisible();
+  await expect(page).toHaveURL(new RegExp(`/w/${username}$`), SIGNED_IN);
+  await expect(page.getByText("Your world is here. Make yourself at home.")).toBeVisible(SIGNED_IN);
+  await expect(page.getByText(`@${username}`, { exact: true })).toBeVisible();
 
-  // Signed in now, so the guest-only pages send us onwards.
+  // Signed in now, so the guest-only pages send us onwards, to our own world.
   await page.goto("/sign-in");
-  await expect(page).toHaveURL(/\/me$/, SIGNED_IN);
+  await expect(page).toHaveURL(new RegExp(`/w/${username}$`), SIGNED_IN);
 });
 
 test("reset a forgotten password with an emailed code", async ({ page }) => {
+  test.setTimeout(90_000);
   const email = e2eEmail();
   await signUpAndVerify(page, email);
   await expect(page).toHaveURL(/\/onboarding/, SIGNED_IN);

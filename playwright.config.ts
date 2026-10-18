@@ -4,6 +4,7 @@ import { defineConfig, devices } from "@playwright/test";
 const port = process.env.PLAYWRIGHT_PORT ?? "3000";
 const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? `http://localhost:${port}`;
 const isCI = process.env.CI !== undefined;
+const SWIFTSHADER = { args: ["--use-angle=swiftshader", "--enable-unsafe-swiftshader"] };
 
 export default defineConfig({
   testDir: "./tests/e2e",
@@ -15,7 +16,20 @@ export default defineConfig({
     baseURL,
     trace: "on-first-retry",
   },
-  projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
+  projects: [
+    // Chromium draws WebGL with SwiftShader, so 3D works in headless runs.
+    { name: "chromium", use: { ...devices["Desktop Chrome"], launchOptions: SWIFTSHADER } },
+    // Phones run the creator only (Phase 6).
+    {
+      name: "mobile-chrome",
+      testMatch: /creator\.spec\.ts/,
+      use: {
+        ...devices["Pixel 7"],
+        launchOptions: SWIFTSHADER,
+      },
+    },
+    { name: "mobile-safari", testMatch: /creator\.spec\.ts/, use: { ...devices["iPhone 14"] } },
+  ],
   webServer: process.env.PLAYWRIGHT_BASE_URL
     ? undefined
     : {

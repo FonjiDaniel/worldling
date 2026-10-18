@@ -54,7 +54,10 @@ export const worldFor = internalQuery({
     v.object({
       name: v.string(),
       params: v.any(),
-      thumbnail: v.union(v.null(), v.object({ contentType: v.string(), size: v.number() })),
+      thumbnail: v.union(
+        v.null(),
+        v.object({ id: v.id("_storage"), contentType: v.string(), size: v.number() }),
+      ),
     }),
   ),
   handler: async (ctx, { email }) => {
@@ -75,7 +78,10 @@ export const worldFor = internalQuery({
     return {
       name: world.name,
       params,
-      thumbnail: file === null ? null : { contentType: file.contentType ?? "", size: file.size },
+      thumbnail:
+        file === null
+          ? null
+          : { id: file._id, contentType: file.contentType ?? "", size: file.size },
     };
   },
 });

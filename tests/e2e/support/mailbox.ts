@@ -1,13 +1,6 @@
-import { execFile } from "node:child_process";
-import { fileURLToPath } from "node:url";
-import { promisify } from "node:util";
+import { convexRun } from "./convex";
 
 // Reads the e2e mailbox on the Convex deployment the CLI is logged in to (ADR-016).
-
-const run = promisify(execFile);
-const CONVEX_CLI = fileURLToPath(
-  new URL("../../../node_modules/convex/bin/main.js", import.meta.url),
-);
 const POLL_MS = 1000;
 const TIMEOUT_MS = 45_000;
 
@@ -23,16 +16,7 @@ interface Mail {
 }
 
 async function takeLatest(to: string, template: string): Promise<Mail | null> {
-  const args = JSON.stringify({ to, template });
-  // The CLI's JS entry through node, so no shell has to quote the JSON (cmd.exe can't).
-  const { stdout } = await run(process.execPath, [
-    CONVEX_CLI,
-    "run",
-    "testing/e2e:takeLatestEmail",
-    args,
-  ]);
-  const text = stdout.trim();
-  return text === "" || text === "null" ? null : (JSON.parse(text) as Mail);
+  return (await convexRun("testing/e2e:takeLatestEmail", { to, template })) as Mail | null;
 }
 
 /** Waits for the code in the newest `template` email to `to`. */
