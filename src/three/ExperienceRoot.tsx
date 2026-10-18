@@ -2,7 +2,7 @@
 
 import { PerformanceMonitor, StatsGl, View } from "@react-three/drei";
 import { Canvas, type RootState, useThree } from "@react-three/fiber";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { NoToneMapping, type WebGLRenderer } from "three";
 
 import { reportError } from "@/lib/logger";
@@ -20,6 +20,8 @@ import { watchContextLoss } from "./utils/contextLoss";
 // Color: `flat` (no tone mapping) keeps curated palettes true; output stays sRGB.
 
 const CANVAS_STYLE = { position: "fixed", inset: 0, zIndex: -1, pointerEvents: "none" } as const;
+/** Pages without 3D show the CSS backdrop, not the canvas's last frame. */
+const HIDDEN_STYLE = { ...CANVAS_STYLE, visibility: "hidden" } as const;
 
 /** Drives R3F from the single ticker and keeps ambient speed in sync with the motion setting. */
 function ClockDriver() {
@@ -34,7 +36,8 @@ function ClockDriver() {
   useEffect(
     () =>
       subscribeFrame((timeMs) => {
-        advance(timeMs);
+        // The canvas outlives 3D pages; with no view on screen there is nothing to draw.
+        if (useExperience.getState().views > 0) advance(timeMs);
       }),
     [advance],
   );
@@ -61,7 +64,16 @@ export default function ExperienceRoot({ tier }: { tier: RenderTier }) {
   const setWebgl = useExperience((state) => state.setWebgl);
   const declineTier = useExperience((state) => state.declineTier);
   const perfOverlay = useExperience((state) => state.perfOverlay);
+  const showing = useExperience((state) => state.views > 0);
   const settings = TIERS[tier];
+  // Disposing the renderer (unmount, tier change) fires webglcontextlost; that's no real loss.
+  const stopWatching = useRef<(() => void) | null>(null);
+  useEffect(
+    () => () => {
+      stopWatching.current?.();
+    },
+    [],
+  );
 
   return (
     <ThreeErrorBoundary
@@ -72,7 +84,7 @@ export default function ExperienceRoot({ tier }: { tier: RenderTier }) {
     >
       <Canvas
         key={settings.antialias ? "aa" : "no-aa"}
-        style={CANVAS_STYLE}
+        style={showing ? CANVAS_STYLE : HIDDEN_STYLE}
         eventSource={document.body}
         eventPrefix="client"
         frameloop="never"
@@ -81,7 +93,8 @@ export default function ExperienceRoot({ tier }: { tier: RenderTier }) {
         gl={{ antialias: settings.antialias, powerPreference: "high-performance", alpha: false }}
         onCreated={(state) => {
           configure(state);
-          watchContextLoss(state.gl.domElement);
+          stopWatching.current?.();
+          stopWatching.current = watchContextLoss(state.gl.domElement);
         }}
         aria-hidden
       >

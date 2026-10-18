@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { useEffectiveTier, useExperience } from "@/stores/experience";
 
@@ -43,8 +43,19 @@ function useTierDetection(wanted: boolean): void {
   }, [wanted, detected, setDetected]);
 }
 
+/**
+ * True from the first registered view on. The canvas then stays for the session (ADR-002,
+ * ADR-019): unmounting it would dispose the context and cost a new one on the next 3D page.
+ */
+function useCanvasWanted(views: number): boolean {
+  const [wanted, setWanted] = useState(false);
+  if (views > 0 && !wanted) setWanted(true);
+  return wanted;
+}
+
 export function ExperienceMount() {
   const views = useExperience((state) => state.views);
+  const canvasWanted = useCanvasWanted(views);
   const webgl = useExperience((state) => state.webgl);
   const tier = useEffectiveTier();
   useMotionPreference();
@@ -52,7 +63,7 @@ export function ExperienceMount() {
 
   return (
     <>
-      {views > 0 && isRenderTier(tier) ? <ExperienceRoot tier={tier} /> : null}
+      {canvasWanted && isRenderTier(tier) ? <ExperienceRoot tier={tier} /> : null}
       {webgl === "lost" ? (
         <p
           role="status"

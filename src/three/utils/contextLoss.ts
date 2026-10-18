@@ -23,6 +23,8 @@ export function watchContextLoss(canvas: HTMLCanvasElement): () => void {
   };
 
   const onLost = (event: Event) => {
+    // A disposed canvas (unmount, tier change) is already out of the page: not a real loss.
+    if (!canvas.isConnected) return;
     event.preventDefault();
     losses += 1;
     if (losses >= MAX_CONTEXT_LOSSES) {
