@@ -32,3 +32,6 @@ next-env.d.ts
 
 # local screenshots
 /screenshots/
+
+# detect-gpu benchmarks, copied by scripts/copy-gpu-benchmarks.mjs
+/public/gpu-benchmarks/
