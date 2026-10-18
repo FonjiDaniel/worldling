@@ -15,8 +15,9 @@ export default function MarketingLayout({ children }: { children: ReactNode }) {
       <main id={MAIN_ID} tabIndex={-1} className="flex flex-1 flex-col focus:outline-none">
         {children}
       </main>
-      <footer className="mx-auto w-full max-w-page border-t border-line px-4 py-6 text-sm text-text-muted sm:px-6">
-        <p>Worldling. Grow a world of your own.</p>
+      <footer className="mx-auto w-full max-w-page border-t border-line px-4 py-6 sm:px-6">
+        <p className="wl-label text-text">Grow a world of your own.</p>
+        <p className="wl-small text-text-muted">Visit everyone else&apos;s.</p>
       </footer>
     </>
   );

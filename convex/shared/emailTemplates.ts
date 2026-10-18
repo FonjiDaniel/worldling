@@ -42,7 +42,7 @@ export const EMAIL_TEMPLATES = {
   "account.welcome": define({
     category: "transactional",
     schema: z.object({ displayName: name, worldName: name, worldUrl: url }),
-    subject: (data) => `Welcome to Worldling, ${data.displayName}`,
+    subject: () => "Your little corner of the universe",
     previewData: {
       displayName: "Kai",
       worldName: "Mossbright",
@@ -76,8 +76,8 @@ export const EMAIL_TEMPLATES = {
     }),
     subject: (data) =>
       data.count === 1
-        ? `A comet landed on ${data.worldName}`
-        : `${data.count} comets landed on ${data.worldName}`,
+        ? "A comet landed on your world"
+        : `${data.count} comets landed on your world`,
     previewData: {
       displayName: "Kai",
       worldName: "Mossbright",

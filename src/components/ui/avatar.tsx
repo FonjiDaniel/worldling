@@ -9,7 +9,7 @@ const avatarVariants = cva(
   "relative inline-flex shrink-0 overflow-hidden rounded-full border border-line bg-surface-raised",
   {
     variants: {
-      size: { sm: "size-8 text-xs", md: "size-10 text-sm", lg: "size-16 text-lg" },
+      size: { sm: "size-8 text-caption", md: "size-10 text-small", lg: "size-16 text-h4" },
     },
     defaultVariants: { size: "md" },
   },

@@ -2,6 +2,7 @@
 
 import type { ActionCtx } from "../_generated/server";
 import { internal } from "../_generated/api";
+import { optionalEnv } from "../lib/env";
 import {
   type EmailTemplateKey,
   templateCategory,
@@ -42,7 +43,10 @@ export async function composeEmail(
   if (templateCategory(template) !== "security") {
     link = await unsubscribeLink(to, template);
   }
-  const rendered = await renderEmail(template, input.data, link);
+  const rendered = await renderEmail(template, input.data, {
+    siteUrl: siteUrl(),
+    ...(link !== undefined && { unsubscribeUrl: link }),
+  });
   return {
     from: formatFrom(config.fromName, config.fromAddress),
     to,
@@ -58,6 +62,13 @@ export async function composeEmail(
       },
     }),
   };
+}
+
+/** The logo and preference links need an absolute origin, so mail never goes out without one. */
+function siteUrl(): string {
+  const value = optionalEnv("SITE_URL");
+  if (value === undefined) throw new EmailSendError("permanent", "missing_site_url");
+  return value;
 }
 
 async function unsubscribeLink(to: string, template: EmailTemplateKey): Promise<string> {

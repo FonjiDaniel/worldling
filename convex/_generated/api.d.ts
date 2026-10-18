@@ -29,9 +29,10 @@ import type * as email_templates_authReset from "../email/templates/authReset.js
 import type * as email_templates_authVerify from "../email/templates/authVerify.js";
 import type * as email_templates_cometsAlert from "../email/templates/cometsAlert.js";
 import type * as email_templates_digestWeekly from "../email/templates/digestWeekly.js";
+import type * as email_templates_emailLayout from "../email/templates/emailLayout.js";
+import type * as email_templates_emailTheme from "../email/templates/emailTheme.js";
 import type * as email_templates_index from "../email/templates/index.js";
 import type * as email_templates_render from "../email/templates/render.js";
-import type * as email_templates_theme from "../email/templates/theme.js";
 import type * as email_templates_types from "../email/templates/types.js";
 import type * as email_testSend from "../email/testSend.js";
 import type * as email_types from "../email/types.js";
@@ -101,9 +102,10 @@ declare const fullApi: ApiFromModules<{
   "email/templates/authVerify": typeof email_templates_authVerify;
   "email/templates/cometsAlert": typeof email_templates_cometsAlert;
   "email/templates/digestWeekly": typeof email_templates_digestWeekly;
+  "email/templates/emailLayout": typeof email_templates_emailLayout;
+  "email/templates/emailTheme": typeof email_templates_emailTheme;
   "email/templates/index": typeof email_templates_index;
   "email/templates/render": typeof email_templates_render;
-  "email/templates/theme": typeof email_templates_theme;
   "email/templates/types": typeof email_templates_types;
   "email/testSend": typeof email_testSend;
   "email/types": typeof email_types;

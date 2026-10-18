@@ -58,7 +58,7 @@ const KNOWN: KnownError[] = [
   },
   {
     test: /Failed to fetch|NetworkError|fetch failed|Load failed/,
-    message: "We can't reach the universe right now. Check your connection.",
+    message: "We can't connect right now. Check your connection and try again.",
   },
 ];
 

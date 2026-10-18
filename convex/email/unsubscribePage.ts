@@ -1,8 +1,10 @@
 import type { SuppressionScope } from "../shared/emailTemplates";
-import { emailColors as c, emailFont } from "./templates/theme";
+import { optionalEnv } from "../lib/env";
+import { emailLayout as l, logoUrl } from "./templates/emailLayout";
+import { emailColors as c, emailFonts as f, emailRadius as r } from "./templates/emailTheme";
 
 // The small HTML pages behind unsubscribe links (SPEC §7.8). Served from Convex, so they
-// can't use the app's CSS; colors come from the email theme, which mirrors the tokens.
+// can't use the app's CSS; values come from the generated email theme (same source as tokens).
 
 const SCOPE_COPY: Record<SuppressionScope, string> = {
   all_non_security: "emails like this one",
@@ -11,14 +13,16 @@ const SCOPE_COPY: Record<SuppressionScope, string> = {
   product: "product news",
 };
 
-const HEADERS = {
-  "Content-Type": "text/html; charset=utf-8",
-  "Cache-Control": "no-store",
-  "Referrer-Policy": "no-referrer",
-  "X-Robots-Tag": "noindex",
-  "Content-Security-Policy":
-    "default-src 'none'; style-src 'unsafe-inline'; form-action 'self'; frame-ancestors 'none'",
-};
+function headers(siteUrl: string | undefined): Record<string, string> {
+  const img = siteUrl === undefined ? "" : `; img-src ${new URL(siteUrl).origin}`;
+  return {
+    "Content-Type": "text/html; charset=utf-8",
+    "Cache-Control": "no-store",
+    "Referrer-Policy": "no-referrer",
+    "X-Robots-Tag": "noindex",
+    "Content-Security-Policy": `default-src 'none'; style-src 'unsafe-inline'; form-action 'self'; frame-ancestors 'none'${img}`,
+  };
+}
 
 function escapeHtml(value: string): string {
   return value
@@ -29,20 +33,25 @@ function escapeHtml(value: string): string {
 }
 
 function page(status: number, title: string, body: string): Response {
+  const siteUrl = optionalEnv("SITE_URL");
+  const brand =
+    siteUrl === undefined
+      ? `<p class="brand">Worldling</p>`
+      : `<img class="brand" src="${escapeHtml(logoUrl(siteUrl))}" width="${l.mobileLogoWidth}" alt="Worldling">`;
   const html = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="dark"><title>${title} | Worldling</title>
+<meta name="color-scheme" content="dark"><title>${title} · Worldling</title>
 <style>
-body{margin:0;min-height:100vh;display:grid;place-items:center;background:${c.void};color:${c.text};font-family:${emailFont};line-height:1.6}
-main{max-width:28rem;margin:1rem;padding:2rem;background:${c.surface};border:1px solid ${c.line};border-radius:1.375rem}
-.brand{margin:0 0 1.5rem;color:${c.accent};font-size:.8125rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase}
-h1{margin:0 0 .75rem;font-size:1.5rem;line-height:1.25}
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:${c.void};color:${c.text};font-family:${f.sans};line-height:1.6}
+main{max-width:28rem;margin:1rem;padding:1.5rem;background:${c.surface};border:1px solid ${c.line};border-radius:${r.lg}px}
+.brand{display:block;height:auto;margin:0 0 1.5rem;font-weight:600}
+h1{margin:0 0 .75rem;font-family:${f.display};font-size:1.75rem;font-weight:650;line-height:1.15;letter-spacing:-0.025em}
 p{margin:0 0 1rem}.muted{color:${c["text-muted"]};font-size:.875rem}
-button{min-height:2.75rem;padding:.75rem 1.5rem;border:0;border-radius:.875rem;background:${c.primary};color:${c["on-primary"]};font:inherit;font-weight:700;cursor:pointer}
-button:focus-visible{outline:2px solid ${c.accent};outline-offset:2px}
+button{min-height:3rem;padding:.75rem 1.5rem;border:0;border-radius:${r.full}px;background:${c.warm};color:${c["on-warm"]};font:inherit;font-weight:600;cursor:pointer}
+button:focus-visible{outline:2px solid ${c.accent};outline-offset:3px}
 </style></head>
-<body><main><p class="brand">Worldling</p>${body}</main></body></html>`;
-  return new Response(html, { status, headers: HEADERS });
+<body><main>${brand}${body}</main></body></html>`;
+  return new Response(html, { status, headers: headers(siteUrl) });
 }
 
 /** GET: asks before changing anything, so link scanners can't unsubscribe anyone. */
@@ -70,7 +79,7 @@ export function invalidPage(): Response {
   return page(
     400,
     "Link expired",
-    `<h1>This link has drifted away</h1>
+    `<h1>This link has expired</h1>
 <p>It may be old or incomplete. You can turn emails on or off anytime in your Worldling settings.</p>`,
   );
 }

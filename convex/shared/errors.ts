@@ -64,8 +64,8 @@ function waitPhrase(retryAfterMs: number | undefined): string {
 
 const MESSAGES: Record<Exclude<ErrorCode, "RATE_LIMITED">, string> = {
   UNAUTHENTICATED: "Please sign in to keep going.",
-  FORBIDDEN: "You can't do that here.",
-  NOT_FOUND: "We couldn't find that. It may have drifted away.",
+  FORBIDDEN: "You don't have access to that.",
+  NOT_FOUND: "We couldn't find that. It may have moved.",
   VALIDATION: "Something doesn't look right. Check the highlighted fields.",
   CONFLICT: "That's already taken. Try something else.",
   PRECONDITION: "That isn't available right now.",
@@ -77,7 +77,7 @@ const MESSAGES: Record<Exclude<ErrorCode, "RATE_LIMITED">, string> = {
 /** Warm, plain copy for an error code. Never shows server internals. */
 export function userMessageFor(code: ErrorCode, details?: AppErrorDetails): string {
   if (code === "RATE_LIMITED") {
-    return `Easy there. Try again ${waitPhrase(details?.retryAfterMs)}.`;
+    return `Too many tries for now. Try again ${waitPhrase(details?.retryAfterMs)}.`;
   }
   return MESSAGES[code];
 }

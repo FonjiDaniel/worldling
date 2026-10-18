@@ -72,6 +72,7 @@ export function stubEmailEnv(): void {
   vi.stubEnv("EMAIL_FROM_ADDRESS", "sender@worldling.test");
   vi.stubEnv("EMAIL_LINK_SECRET", "link-secret-for-tests-only");
   vi.stubEnv("CONVEX_SITE_URL", "https://worldling-test.convex.site");
+  vi.stubEnv("SITE_URL", "https://worldling.test");
   vi.stubEnv("SECRETS_ENCRYPTION_KEY", "MDEyMzQ1Njc4OWFiY2RlZjAxMjM0NTY3ODlhYmNkZWY=");
 }
 

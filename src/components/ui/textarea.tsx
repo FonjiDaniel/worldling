@@ -39,7 +39,7 @@ export function Textarea({
   return (
     <div className="flex flex-col gap-1.5">
       <textarea
-        className={cn(controlClasses, "min-h-24 resize-y py-2.5", className)}
+        className={cn(controlClasses, "min-h-24 resize-y py-3", className)}
         value={value}
         defaultValue={defaultValue}
         onChange={handleChange}
@@ -67,10 +67,7 @@ function Counter({ id, count, max }: { id: string; count: number; max: number })
     <>
       <p
         id={id}
-        className={cn(
-          "self-end font-mono text-xs tabular-nums",
-          remaining < 0 ? "text-danger" : "text-text-muted",
-        )}
+        className={cn("self-end wl-timestamp", remaining < 0 ? "text-danger" : "text-text-muted")}
       >
         {count} / {max}
         <span className="sr-only">. {message}</span>

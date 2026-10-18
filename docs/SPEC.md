@@ -270,17 +270,20 @@ Warm, curious, short. Speak like a friendly guide, never like a corporation.
 - **Glass over space.** Panels float above the 3D scene with blur and a subtle border. Text contrast MUST pass WCAG AA against the worst-case background behind the glass (use a darker scrim behind text when needed).
 - **Tokens are the only source of values.** No raw hex, px or ms values in components. Everything comes from tokens defined in `src/styles/tokens.css` via Tailwind v4 `@theme`.
 
-### 3.2 Tokens (brand kit values, ADR-013)
+### 3.2 Tokens (brand kit values, ADR-013, ADR-018)
+
+Values come from `docs/brand/08-handoff/worldling.tokens.json`. `pnpm tokens` generates the brand block of `src/styles/tokens.css` and the email theme from it. The names below are fixed; values are illustrative of the 08 handoff.
 
 ```css
 @theme {
-  /* Color: semantic names only in components. Values from docs/brand (ADR-013). */
+  /* Color: semantic names only in components. */
   --color-void: #07071a;          /* Void: app background, ink on bright fills */
   --color-surface: #11122b;       /* Deep Space: panels base */
   --color-surface-raised: #1a1b3a; /* Orbit */
-  --color-glass: rgb(17 18 43 / 0.62);
+  --color-glass: rgb(17 18 43 / 88%); /* with 20px blur; opaque surface fallback */
   --color-line: #34365a;          /* decorative separators only */
   --color-control-line: #696c91;  /* required control boundaries */
+  --color-glass-control-line: #9a9bb8; /* control boundaries inside glass */
   --color-text: #f4f1ea;          /* Starlight */
   --color-text-muted: #9a9bb8;    /* Dust */
   --color-link: #a99fff;          /* Nebula 300 */
@@ -294,38 +297,47 @@ Warm, curious, short. Speak like a friendly guide, never like a corporation.
   /* Plus: on-* (Void), *-surface status backgrounds, warm-hover/active,
      nebula/aurora/sunrise 50..950 scales, gradient-brand. See tokens.css. */
 
-  /* Type */
-  --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui;
-  --font-sans: "Geist", ui-sans-serif, system-ui;
-  --font-mono: "Geist Mono", ui-monospace;
+  /* Type (families load through next/font, src/styles/fonts.ts) */
+  --font-display: "Bricolage Grotesque", "Trebuchet MS", Arial, sans-serif;
+  --font-sans: "Geist", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
 
   /* Radius */
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 22px;
+  --radius-sm: 0.5rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
   --radius-full: 9999px;
 
+  /* Shadows */
+  --shadow-panel: 0 16px 48px rgb(0 0 0 / 32%), inset 0 1px 0 rgb(244 241 234 / 4%);
+  --shadow-dialog: 0 24px 80px rgb(0 0 0 / 45%);
+  --shadow-selection: 0 0 24px rgb(63 224 197 / 12%);
+
   /* Motion */
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-  --duration-fast: 160ms;
-  --duration-base: 260ms;
-  --duration-slow: 480ms;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.45, 0, 0.55, 1);
+  --ease-press: cubic-bezier(0.4, 0, 1, 1);
+  --duration-press: 100ms;
+  --duration-fast: 150ms;        /* hover and focus color */
+  --duration-base: 240ms;        /* panel entrance (exit 180ms) */
+  --duration-slow: 600ms;        /* world focus */
+  --duration-bloom: 1200ms;
+  --duration-reduced: 150ms;     /* the reduced-motion fade */
 }
 ```
 
-Motion tokens are mirrored in `src/lib/motion.ts` for GSAP so CSS and GSAP feel identical:
+Motion tokens are mirrored in `src/lib/motion.ts` for GSAP, as cubic-bezier control points registered as `CustomEase`s, so CSS and GSAP feel identical:
 
 ```ts
 export const motion = {
-  ease: { out: "expo.out", inOut: "power3.inOut", soft: "sine.inOut" },
-  duration: { fast: 0.16, base: 0.26, slow: 0.48, flight: 1.6 },
+  duration: { fast: 0.15, base: 0.24, slow: 0.6, press: 0.1, bloom: 1.2, flight: 1.6 /* ... */ },
+  ease: { out: [0.2, 0.8, 0.2, 1], "in-out": [0.45, 0, 0.55, 1] /* ... */ },
 } as const;
 ```
 
 ### 3.3 Type scale
 
-Fluid sizes with `clamp()`. Display font only for headings and the world name. Body text minimum 16px on mobile. Line length 45 to 75 characters for reading text.
+Fluid sizes with `clamp()` between 360px and 1440px viewports: `display`, `h1` to `h4`, `body-lg`, `body`, `small`, `caption`, plus UI styles `button`, `label`, `input`, `data`, `timestamp` (ADR-018). Display font only for `display` to `h3` and the world name. Body text minimum 16px on mobile. Line length 50 to 65 characters for reading text.
 
 ### 3.4 Components
 
@@ -334,7 +346,7 @@ Built on shadcn/ui (Radix primitives), restyled with our tokens. Required set: B
 ### 3.5 Motion principles
 
 - Purposeful: motion explains where things came from and where they went.
-- UI transitions 160 to 480ms. Camera flights 1.2 to 2.0s. Nothing blocks input longer than 2s, and every flight can be interrupted by user input.
+- UI transitions 100 to 240ms (press, color, panels). World moments 600 to 1200ms (focus, comet, bloom). Camera flights 1.2 to 2.0s. No bounce or overshoot. Nothing blocks input longer than 2s, and every flight can be interrupted by user input.
 - Ease out for things entering, ease in-out for things moving.
 - `prefers-reduced-motion`: no camera flights (cut with a quick fade instead), no parallax, no scrubbed scroll, planets still rotate slowly (it's ambient, not disorienting) but can be paused with a visible control.
 
@@ -344,7 +356,7 @@ Breakpoints: `sm 640`, `md 768`, `lg 1024`, `xl 1280`. Mobile-first. On mobile t
 
 ### 3.7 Accessibility (WCAG 2.2 AA)
 
-- All interactive elements keyboard reachable, visible focus ring (accent color, 2px offset).
+- All interactive elements keyboard reachable, visible focus ring (accent color, 2px wide, 3px offset).
 - Every world has a generated text description from its parameters, for example "A frozen world with pale blue oceans, thick clouds and two moons." Used as the canvas `aria-label` and in list mode.
 - Live regions announce comet sent, level up, errors.
 - Color is never the only signal.

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img"><title>Worldling logo</title><defs>
+      <linearGradient id="mdark-transparent-gradient" gradientUnits="userSpaceOnUse" x1="160" y1="790" x2="864" y2="250"><stop offset="0" stop-color="#7C6CFF"/><stop offset="1" stop-color="#3FE0C5"/></linearGradient>
+      <mask id="mdark-transparent-rear" maskUnits="userSpaceOnUse" x="0" y="0" width="1024" height="1024" style="mask-type:luminance"><rect width="1024" height="1024" fill="white"/><circle cx="512" cy="590" r="226" fill="black"/></mask>
+      <mask id="mdark-transparent-body" maskUnits="userSpaceOnUse" x="0" y="0" width="1024" height="1024" style="mask-type:luminance"><rect width="1024" height="1024" fill="white"/><path d="M 906,590 A 394,100 0 0 1 118,590" transform="rotate(-19 512 590)" fill="none" stroke="black" stroke-width="46"/></mask>
+    </defs><g fill="#07071A">
+      <ellipse cx="512" cy="590" rx="394" ry="100" transform="rotate(-19 512 590)" fill="none" stroke="#07071A" stroke-width="22" mask="url(#mdark-transparent-rear)"/>
+      <g mask="url(#mdark-transparent-body)"><circle cx="512" cy="590" r="216"/><g transform=""><path d="M 501,384 C 504,356 499,339 487,326 L 507,317 Q 516,328 525,315 L 537,323 C 520,341 521,361 523,384 Z"/><path d="M 512,334 C 460,340 414,308 400,260 C 451,251 497,279 512,334 Z"/><path d="M 516,329 C 572.1,330.6 618.3,292.1 628.8,239.4 C 573.4,234.6 526.9,268.8 516,329 Z"/></g></g>
+      <path d="M 906,590 A 394,100 0 0 1 118,590" transform="rotate(-19 512 590)" fill="none" stroke="#07071A" stroke-width="22"/>
+    </g></svg>

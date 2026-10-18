@@ -1,0 +1,7 @@
+/* Example entry for an application that already has Tailwind v4 installed. */
+@import "tailwindcss";
+@import "../worldling.theme.css";
+@import "../worldling.fonts.css";
+@import "../worldling.base.css";
+@import "../worldling.components.css";
+@source "./world-card.html";

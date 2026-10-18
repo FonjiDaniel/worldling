@@ -20,7 +20,7 @@ export function DialogOverlay({
   return (
     <DialogPrimitive.Overlay
       className={cn(
-        "fixed inset-0 z-50 bg-scrim backdrop-blur-sm",
+        "fixed inset-0 z-50 bg-scrim",
         "data-[state=closed]:animate-fade-out data-[state=open]:animate-fade-in",
         className,
       )}
@@ -45,8 +45,8 @@ export function DialogContent({
       <DialogPrimitive.Content
         className={cn(
           "fixed top-1/2 left-1/2 z-50 flex w-[calc(100%-2rem)] max-w-panel -translate-x-1/2 -translate-y-1/2 flex-col gap-5",
-          "rounded-lg border border-line bg-surface p-6 shadow-raised",
-          "data-[state=closed]:animate-pop-out data-[state=open]:animate-pop-in",
+          "rounded-lg border border-line bg-surface p-panel-pad shadow-dialog md:p-panel-pad-lg",
+          "data-[state=closed]:animate-panel-out data-[state=open]:animate-panel-in",
           className,
         )}
         {...props}
@@ -74,12 +74,7 @@ export function DialogFooter({ className, ...props }: ComponentProps<"div">) {
 }
 
 export function DialogTitle({ className, ...props }: ComponentProps<typeof DialogPrimitive.Title>) {
-  return (
-    <DialogPrimitive.Title
-      className={cn("font-display text-xl font-semibold text-text", className)}
-      {...props}
-    />
-  );
+  return <DialogPrimitive.Title className={cn("wl-h4 text-text", className)} {...props} />;
 }
 
 export function DialogDescription({
@@ -87,9 +82,6 @@ export function DialogDescription({
   ...props
 }: ComponentProps<typeof DialogPrimitive.Description>) {
   return (
-    <DialogPrimitive.Description
-      className={cn("text-base text-text-muted", className)}
-      {...props}
-    />
+    <DialogPrimitive.Description className={cn("wl-body text-text-muted", className)} {...props} />
   );
 }

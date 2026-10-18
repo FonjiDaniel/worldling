@@ -46,7 +46,11 @@ async function signUpAndVerify(page: Page, email: string) {
 
 test("sign up, verify with a pasted code, then onboard", async ({ page }) => {
   const email = e2eEmail();
-  const username = `e2e_${crypto.randomUUID().replace(/-/g, "").slice(0, 10)}`;
+  // Letters only: runs of random digits can read as a phone number to the moderation filter.
+  const suffix = Array.from(crypto.getRandomValues(new Uint8Array(10)), (byte) =>
+    String.fromCharCode(97 + (byte % 26)),
+  ).join("");
+  const username = `e2e_${suffix}`;
 
   await signUpAndVerify(page, email);
 
@@ -96,6 +100,13 @@ test("signed-out visitors are sent to sign in, with the way back kept", async ({
 
 for (const route of ["/sign-up", "/sign-in", "/verify", "/reset-password"]) {
   test(`${route} has no serious or critical axe violations`, async ({ page }) => {
+    await page.goto(route);
+    await page.getByRole("heading", { level: 1 }).waitFor();
+    await expectNoAxeViolations(page);
+  });
+
+  test(`${route} on a phone has no serious or critical axe violations`, async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
     await page.goto(route);
     await page.getByRole("heading", { level: 1 }).waitFor();
     await expectNoAxeViolations(page);

@@ -1,4 +1,4 @@
-import { Sparkles } from "lucide-react";
+import { Sprout } from "lucide-react";
 import type { ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
@@ -23,10 +23,10 @@ export function EmptyState({ title, description, icon, action, className }: Empt
         aria-hidden
         className="grid size-12 place-items-center rounded-full bg-nebula-950 text-link [&_svg]:size-6"
       >
-        {icon ?? <Sparkles />}
+        {icon ?? <Sprout />}
       </span>
-      <h2 className="text-xl font-semibold text-text">{title}</h2>
-      {description ? <p className="max-w-prose text-text-muted">{description}</p> : null}
+      <h2 className="wl-h4 text-text">{title}</h2>
+      {description ? <p className="max-w-prose wl-body text-text-muted">{description}</p> : null}
       {action ? <div className="mt-2">{action}</div> : null}
     </div>
   );

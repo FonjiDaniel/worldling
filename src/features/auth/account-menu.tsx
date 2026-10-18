@@ -12,7 +12,7 @@ import { api } from "@convex/_generated/api";
 import { useSignOut } from "./account-screens";
 
 const itemClass =
-  "flex min-h-touch w-full items-center gap-2 rounded-sm px-3 text-left text-text hover:bg-surface-raised [&_svg]:size-4";
+  "flex min-h-touch w-full items-center gap-2 rounded-sm px-3 text-left text-text hover:bg-surface-raised [&_svg]:size-5";
 
 /** Header account control: sign in when signed out, a small menu when signed in. */
 export function AccountMenu() {

@@ -37,7 +37,7 @@ export function SwatchPicker({
 
   return (
     <div className={cn("flex flex-col gap-2", className)}>
-      <p id={labelId} className="text-sm font-medium text-text">
+      <p id={labelId} className="wl-label text-text">
         {label}
         {selected ? <span className="font-normal text-text-muted">: {selected.name}</span> : null}
       </p>
@@ -60,7 +60,7 @@ export function SwatchPicker({
             aria-label={swatch.name}
             title={swatch.name}
             style={{ backgroundColor: swatch.color }}
-            className="group grid size-touch place-items-center rounded-full border-2 border-control-line transition-transform duration-fast ease-out hover:scale-105 data-[state=checked]:border-text"
+            className="group grid size-touch place-items-center rounded-full border-2 border-control-line transition-colors duration-fast ease-out hover:border-text-muted data-[state=checked]:border-text data-[state=checked]:shadow-selection"
           >
             <RadioGroup.Indicator className="grid size-6 place-items-center rounded-full bg-void text-text">
               <Check aria-hidden className="size-4" />

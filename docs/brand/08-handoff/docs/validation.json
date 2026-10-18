@@ -1,0 +1,318 @@
+{
+  "status": "passed",
+  "tailwind": {
+    "version": "4.3.3",
+    "buildSucceeded": true,
+    "cssVariablesVerified": 177,
+    "requiredVariablesVerified": 25,
+    "typeUtilitiesVerified": 14,
+    "durationUtilitiesVerified": [
+      "fast",
+      "base",
+      "slow"
+    ],
+    "fontSizeWeightCompanionEmitted": true
+  },
+  "assets": {
+    "unchangedApprovedFiles": 57,
+    "fontFilesResolved": 3,
+    "copyFilesUnchanged": 3,
+    "details": [
+      {
+        "file": "assets/font-licenses/Bricolage-OFL.txt",
+        "approvedSource": "Worldling-Step-2/07-source/fonts/Bricolage-OFL.txt",
+        "sha256": "4b5a7d8f37f5602621c8a8d7358a6a2e71317e6c231c661e15aef0275d3e07ba"
+      },
+      {
+        "file": "assets/font-licenses/GeistMono-OFL.txt",
+        "approvedSource": "Worldling-Step-2/07-source/fonts/GeistMono-OFL.txt",
+        "sha256": "1781d2806a07d91c4edf4740b88449fab7d0eadad53f7c351b94cd4d4eb8c00f"
+      },
+      {
+        "file": "assets/font-licenses/Geist-OFL.txt",
+        "approvedSource": "Worldling-Step-2/07-source/fonts/Geist-OFL.txt",
+        "sha256": "1781d2806a07d91c4edf4740b88449fab7d0eadad53f7c351b94cd4d4eb8c00f"
+      },
+      {
+        "file": "assets/app-icon/worldling-app-icon-rounded.svg",
+        "approvedSource": "Worldling-Step-2/03-app-icon/worldling-app-icon-rounded.svg",
+        "sha256": "2bd43a4a69a3f9f9d5af00eb9c22e8d6e5a11cab950e55c5b6a1f70c6ea12ac0"
+      },
+      {
+        "file": "assets/app-icon/worldling-app-icon-rounded-512.png",
+        "approvedSource": "Worldling-Step-2/03-app-icon/worldling-app-icon-rounded-512.png",
+        "sha256": "beb5e3b71757109160d52799416c4eabdbb9c39053550b0cbe04db15b4be9ac2"
+      },
+      {
+        "file": "assets/app-icon/worldling-app-icon-rounded-1024.png",
+        "approvedSource": "Worldling-Step-2/03-app-icon/worldling-app-icon-rounded-1024.png",
+        "sha256": "c96aac0273c5a4663968f3dca4f9498ada6ee72f78f0486254232552ca1d82ad"
+      },
+      {
+        "file": "assets/app-icon/worldling-app-icon-square-source.svg",
+        "approvedSource": "Worldling-Step-2/03-app-icon/worldling-app-icon-square-source.svg",
+        "sha256": "9ab806420d476766b5d014cb5608466650d191b2e64586a4e87cdc84ba141608"
+      },
+      {
+        "file": "assets/app-icon/worldling-app-icon-square-source-1024.png",
+        "approvedSource": "Worldling-Step-2/03-app-icon/worldling-app-icon-square-source-1024.png",
+        "sha256": "0e39dd99af8800e7543e9af42259c90876d9693baf63726fc26b4ac74e6aba96"
+      },
+      {
+        "file": "assets/fonts/GeistMono-variable.woff2",
+        "approvedSource": "Worldling-Step-4/03-fonts/woff2/GeistMono-variable.woff2",
+        "sha256": "fd0249098831805453f287e7259da06caf2b690369d937e63c02003ab54cdb34"
+      },
+      {
+        "file": "assets/fonts/Geist-variable.woff2",
+        "approvedSource": "Worldling-Step-4/03-fonts/woff2/Geist-variable.woff2",
+        "sha256": "7049954dc0654e740d9ba9abae20990abec58c277d32ce1f89217f16b43f7bf6"
+      },
+      {
+        "file": "assets/fonts/BricolageGrotesque-variable.woff2",
+        "approvedSource": "Worldling-Step-4/03-fonts/woff2/BricolageGrotesque-variable.woff2",
+        "sha256": "f82c8f11818e6335038a2bfd36a774b9397df601751106dc3fc9e10c759c5b9f"
+      },
+      {
+        "file": "assets/logos/worldling-stacked-on-light.svg",
+        "approvedSource": "Worldling-Step-2/01-logos/svg/worldling-stacked-on-light.svg",
+        "sha256": "88da4813223c7ee39c136ca78206d4006a1c306cf6b2c827a277e896aa6f1a4e"
+      },
+      {
+        "file": "assets/logos/worldling-horizontal-dark-transparent.svg",
+        "approvedSource": "Worldling-Step-2/01-logos/svg/worldling-horizontal-dark-transparent.svg",
+        "sha256": "b7fa7b7c09bb72ada82962276a25d70cf6bd9442642c75de4770917cbfb9cc9d"
+      },
+      {
+        "file": "assets/logos/worldling-stacked-white-transparent.svg",
+        "approvedSource": "Worldling-Step-2/01-logos/svg/worldling-stacked-white-transparent.svg",
+        "sha256": "4de44f3be19d50696e9165398cbe1a624e166f85f0fa72009c3ba51f07d908fd"
+      },
+      {
+        "file": "assets/logos/worldling-stacked-dark-transparent.svg",
+        "approvedSource": "Worldling-Step-2/01-logos/svg/worldling-stacked-dark-transparent.svg",
+        "sha256": "0f709bfe0d99d6a09efc5a82084aa31c6d0c8e4fd294fef8a5b36b1e829b2d23"
+      },
+      {
+        "file": "assets/logos/worldling-stacked-on-dark.svg",
+        "approvedSource": "Worldling-Step-2/01-logos/svg/worldling-stacked-on-dark.svg",
+        "sha256": "792037dfb5f73c8e360c81d85505201d04328a254a11955f2cbbba21bdc6778f"
+      },
+      {
+        "file": "assets/logos/worldling-horizontal-on-light.svg",
+        "approvedSource": "Worldling-Step-2/01-logos/svg/worldling-horizontal-on-light.svg",
+        "sha256": "b62997221308ba7c09d247c6776593c9e320af4dafec142068b0be08b6d9db47"
+      },
+      {
+        "file": "assets/logos/worldling-horizontal-white-transparent.svg",
+        "approvedSource": "Worldling-Step-2/01-logos/svg/worldling-horizontal-white-transparent.svg",
+        "sha256": "8b321e62f55e60511e52fe6f1665b8e24a630f7afb23c69336eeae7371655e8d"
+      },
+      {
+        "file": "assets/logos/worldling-horizontal-on-dark.svg",
+        "approvedSource": "Worldling-Step-2/01-logos/svg/worldling-horizontal-on-dark.svg",
+        "sha256": "687453305dceb618866466fd07a9d7b7620e629a069da156ecdfec9497d570e7"
+      },
+      {
+        "file": "assets/marks/worldling-mark-white-transparent.svg",
+        "approvedSource": "Worldling-Step-2/02-marks/svg/worldling-mark-white-transparent.svg",
+        "sha256": "aa4f20502ed83285d4c2807c099e9403dc901c510d0bf99242010a6e0c51c4e9"
+      },
+      {
+        "file": "assets/marks/worldling-mark-dark-on-starlight.svg",
+        "approvedSource": "Worldling-Step-2/02-marks/svg/worldling-mark-dark-on-starlight.svg",
+        "sha256": "8938f552039a27d5948d95a6245852e10117c31916df53df27f2583959ed32bd"
+      },
+      {
+        "file": "assets/marks/worldling-mark-starlight-on-void.svg",
+        "approvedSource": "Worldling-Step-2/02-marks/svg/worldling-mark-starlight-on-void.svg",
+        "sha256": "552bbe68cb1e7be3a05da1ebdae247e244e463f2035bcf12f2a4f0f25691ea84"
+      },
+      {
+        "file": "assets/marks/worldling-mark-hero-gradient.svg",
+        "approvedSource": "Worldling-Step-2/02-marks/svg/worldling-mark-hero-gradient.svg",
+        "sha256": "72be16d34eb9d56fc76ca6c8e1bb8f5912b2f146fbcb91700f6cadfd940908c3"
+      },
+      {
+        "file": "assets/marks/worldling-mark-dark-transparent.svg",
+        "approvedSource": "Worldling-Step-2/02-marks/svg/worldling-mark-dark-transparent.svg",
+        "sha256": "a534a16cd2cdfc13735b33bd90d74e501c038d3d246c221d01cc4286da1a7718"
+      },
+      {
+        "file": "assets/marks/worldling-mark-primary-nebula.svg",
+        "approvedSource": "Worldling-Step-2/02-marks/svg/worldling-mark-primary-nebula.svg",
+        "sha256": "7992453fe1e0299091bc2a102ed2cd9389a11d1f5fbc34ed5727200eb68b5b73"
+      },
+      {
+        "file": "assets/favicons/worldling-64.png",
+        "approvedSource": "Worldling-Step-2/04-favicons/worldling-64.png",
+        "sha256": "5348c1c0fa14b08f504452b61ac427f66b5a4b549b8bc6bff9dcfa169e748c1c"
+      },
+      {
+        "file": "assets/favicons/favicon.svg",
+        "approvedSource": "Worldling-Step-2/04-favicons/favicon.svg",
+        "sha256": "68d620e1d87fabb7a601cc07d330bdaebcfdb70b1b9d3a954e6d040d3c6c9f0f"
+      },
+      {
+        "file": "assets/favicons/worldling-1024.svg",
+        "approvedSource": "Worldling-Step-2/04-favicons/worldling-1024.svg",
+        "sha256": "095a7d426cdbf62667c6723fb632db6a8c4dd03f55584e0d802782d621c4d8e8"
+      },
+      {
+        "file": "assets/favicons/worldling-64.svg",
+        "approvedSource": "Worldling-Step-2/04-favicons/worldling-64.svg",
+        "sha256": "53daba55a890b82e68ef65c77b59526aaa64c94f77e5ca4081babf6b47d0f96a"
+      },
+      {
+        "file": "assets/favicons/worldling-transparent-64.png",
+        "approvedSource": "Worldling-Step-2/04-favicons/worldling-transparent-64.png",
+        "sha256": "c4f1b956212e7ea6b51f1d899b6c94136fd9e94acfdf06141144bf050ed97f0b"
+      },
+      {
+        "file": "assets/favicons/worldling-16.png",
+        "approvedSource": "Worldling-Step-2/04-favicons/worldling-16.png",
+        "sha256": "8432bc244a8789db41184bd7c70793bd3fba6801b97788adc60453fda2ebb8c6"
+      },
+      {
+        "file": "assets/favicons/worldling-transparent-32.svg",
+        "approvedSource": "Worldling-Step-2/04-favicons/worldling-transparent-32.svg",
+        "sha256": "8e5437e2bcd7bdb9a642892b3a7758d87d87837eaa54e42440ff7c3271217fce"
+      },
+      {
+        "file": "assets/favicons/worldling-32.png",
+        "approvedSource": "Worldling-Step-2/04-favicons/worldling-32.png",
+        "sha256": "2f69c15cbe7543be55b8f8a3ac2cba845738062e7e59c1c49686b3982fe35786"
+      },
+      {
+        "file": "assets/favicons/worldling-transparent-64.svg",
+        "approvedSource": "Worldling-Step-2/04-favicons/worldling-transparent-64.svg",
+        "sha256": "adbca965f27d0002709d0304ca520f1528e9c48077a9456966ef642ed14249aa"
+      },
+      {
+        "file": "assets/favicons/worldling-1024.png",
+        "approvedSource": "Worldling-Step-2/04-favicons/worldling-1024.png",
+        "sha256": "442ed98ea78fc5e421b10311029e6e4e95967a4161052dcd8f74a113c3cdbb46"
+      },
+      {
+        "file": "assets/favicons/worldling-transparent-16.svg",
+        "approvedSource": "Worldling-Step-2/04-favicons/worldling-transparent-16.svg",
+        "sha256": "dfad574313008ca3aff2d63fdbcb2a1b7d7e0d0d94f06a892bf56117d59b87dd"
+      },
+      {
+        "file": "assets/favicons/favicon.ico",
+        "approvedSource": "Worldling-Step-2/04-favicons/favicon.ico",
+        "sha256": "a7654145b062b954d9add9078070bc8c8f60a7efd77c5dd3f4e0822154d41939"
+      },
+      {
+        "file": "assets/favicons/worldling-32.svg",
+        "approvedSource": "Worldling-Step-2/04-favicons/worldling-32.svg",
+        "sha256": "68d620e1d87fabb7a601cc07d330bdaebcfdb70b1b9d3a954e6d040d3c6c9f0f"
+      },
+      {
+        "file": "assets/favicons/worldling-transparent-16.png",
+        "approvedSource": "Worldling-Step-2/04-favicons/worldling-transparent-16.png",
+        "sha256": "3e6de8975d14a5af00a9f7ab1457f14fedaec5ae422c65f86c5432935288f391"
+      },
+      {
+        "file": "assets/favicons/worldling-16.svg",
+        "approvedSource": "Worldling-Step-2/04-favicons/worldling-16.svg",
+        "sha256": "84d765aa003cac86c13eb82c9e0bbbacf118d2de185d501aab4fcf400ba47137"
+      },
+      {
+        "file": "assets/favicons/worldling-transparent-32.png",
+        "approvedSource": "Worldling-Step-2/04-favicons/worldling-transparent-32.png",
+        "sha256": "1d1e21598a21574e39388f8d4d3e495f17f7aa2f5f6df6e6f4738fe37abdecfb"
+      },
+      {
+        "file": "assets/icons/24/settings.svg",
+        "approvedSource": "Worldling-Step-5/03-icons/24/settings.svg",
+        "sha256": "ec91707e51da85f16f4457bac34490dca67f057389132551403a445f78887c2c"
+      },
+      {
+        "file": "assets/icons/24/visit.svg",
+        "approvedSource": "Worldling-Step-5/03-icons/24/visit.svg",
+        "sha256": "88b9bbf970dfafe3760fb587f4571a1d473a6adbbbb7cfa259b86d7417d5e48c"
+      },
+      {
+        "file": "assets/icons/24/bloom.svg",
+        "approvedSource": "Worldling-Step-5/03-icons/24/bloom.svg",
+        "sha256": "394e3f979e3e303fab711f59ea8a379fbeb71b63258c90b4ae9f34e15eb1904f"
+      },
+      {
+        "file": "assets/icons/24/world.svg",
+        "approvedSource": "Worldling-Step-5/03-icons/24/world.svg",
+        "sha256": "4e5a6d26d191fb4bad061705c31d8c14fd225db6279c0a3e9919f6873b9bb754"
+      },
+      {
+        "file": "assets/icons/24/share.svg",
+        "approvedSource": "Worldling-Step-5/03-icons/24/share.svg",
+        "sha256": "13eba6053406e2a20c16ccea7c5a8a68f4f92caf0b0fc2da3c07b88a9b8ed42c"
+      },
+      {
+        "file": "assets/icons/24/notification.svg",
+        "approvedSource": "Worldling-Step-5/03-icons/24/notification.svg",
+        "sha256": "f10786a9d32ad5900537d332783a14f4cc7263254336806362597c37c9aa986f"
+      },
+      {
+        "file": "assets/icons/24/comet.svg",
+        "approvedSource": "Worldling-Step-5/03-icons/24/comet.svg",
+        "sha256": "beaf6c35342d2c870117ec883eeccf2e2e5b287bee3a18e20bff6a6236a9f904"
+      },
+      {
+        "file": "assets/icons/24/universe.svg",
+        "approvedSource": "Worldling-Step-5/03-icons/24/universe.svg",
+        "sha256": "d13e7e818876acddb7f1cb8d8a1a38db81a9677aba1b726d435f396df5b20f51"
+      },
+      {
+        "file": "assets/icons/16/settings.svg",
+        "approvedSource": "Worldling-Step-5/03-icons/16/settings.svg",
+        "sha256": "9583225c7f10276e483acccb26ef6b03336011664021fbe15b99b1e306e0aafc"
+      },
+      {
+        "file": "assets/icons/16/visit.svg",
+        "approvedSource": "Worldling-Step-5/03-icons/16/visit.svg",
+        "sha256": "be2a7921248d836413b43f6c02fe1279257e33927958d395d1fbb1322fd82c07"
+      },
+      {
+        "file": "assets/icons/16/bloom.svg",
+        "approvedSource": "Worldling-Step-5/03-icons/16/bloom.svg",
+        "sha256": "ed7bef0c53829afe9f950048bf36fa7797811e11ed3d14192751110f98a3318e"
+      },
+      {
+        "file": "assets/icons/16/world.svg",
+        "approvedSource": "Worldling-Step-5/03-icons/16/world.svg",
+        "sha256": "5f98106473a637235e9ccae9626ec68c63c3096b0405215a0ce5aca5a4c8527d"
+      },
+      {
+        "file": "assets/icons/16/share.svg",
+        "approvedSource": "Worldling-Step-5/03-icons/16/share.svg",
+        "sha256": "ab0dc9de7d4480410afcd92aecae66b96e1f47c9528c1809cac0283c1691c762"
+      },
+      {
+        "file": "assets/icons/16/notification.svg",
+        "approvedSource": "Worldling-Step-5/03-icons/16/notification.svg",
+        "sha256": "834448b680584b8121a6958d890c04a638edf1f639090dcbbf57028ef45c9df5"
+      },
+      {
+        "file": "assets/icons/16/comet.svg",
+        "approvedSource": "Worldling-Step-5/03-icons/16/comet.svg",
+        "sha256": "ae4abcfb724391947920855708a97e02460e56da9c095111c0384c0659138e94"
+      },
+      {
+        "file": "assets/icons/16/universe.svg",
+        "approvedSource": "Worldling-Step-5/03-icons/16/universe.svg",
+        "sha256": "f28f2d71ea50bfb37220087daa290e88704260db1d1aa4d457c17b308cb6f2f9"
+      }
+    ]
+  },
+  "summary": {
+    "pdfPages": 1,
+    "textExtractionChecked": true,
+    "visualReview": "PNG render inspected; no clipping, overlap or missing glyphs."
+  },
+  "copy": {
+    "emDashesInHandoffText": 0,
+    "jsonFilesParsed": true
+  },
+  "scope": "Handoff and CSS compilation. No finished application audit or WebGL integration is claimed."
+}

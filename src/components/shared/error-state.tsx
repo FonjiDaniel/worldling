@@ -31,8 +31,8 @@ export function ErrorState({
       )}
     >
       <CircleAlert aria-hidden className="size-8 text-danger" />
-      <h2 className="text-xl font-semibold text-text">{title}</h2>
-      <p className="max-w-prose text-text">{description}</p>
+      <h2 className="wl-h4 text-text">{title}</h2>
+      <p className="max-w-prose wl-body text-text">{description}</p>
       {onRetry || action ? (
         <div className="mt-2 flex flex-wrap justify-center gap-3">
           {onRetry ? (

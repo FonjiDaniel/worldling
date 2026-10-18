@@ -116,7 +116,7 @@ export function OtpInput({
             event.target.select();
           }}
           className={cn(
-            "h-touch w-full min-w-0 rounded-md border border-control-line bg-surface text-center font-mono text-xl text-text",
+            "h-control w-full min-w-0 rounded-sm bg-void text-center font-mono text-h4 text-text tabular-nums border-control",
             "transition-colors duration-fast ease-out hover:border-text-muted focus-visible:border-accent",
             "disabled:opacity-50 aria-invalid:border-danger",
           )}

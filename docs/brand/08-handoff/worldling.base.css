@@ -1,0 +1,17 @@
+/* Optional baseline. Import after Tailwind and the Worldling theme. */
+@layer base {
+  html {
+    color-scheme: dark;
+    background: var(--color-void);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    font-optical-sizing: auto;
+    font-synthesis: none;
+  }
+  body {
+    margin: 0;
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    letter-spacing: var(--text-body--letter-spacing);
+  }
+}

@@ -99,7 +99,7 @@ export function OverlaysSection() {
             <Button variant="ghost">What is bloom?</Button>
           </PopoverTrigger>
           <PopoverContent>
-            <p className="text-sm">
+            <p className="wl-small">
               Bloom grows when people visit and send comets. Your world changes as it blooms.
             </p>
           </PopoverContent>

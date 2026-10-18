@@ -1,6 +1,6 @@
 # Worldling brand kit: index
 
-Start here. This file maps every file in `docs/brand/`, pulls the brand values into text, and records the logo and contrast checks. Indexed 2026-10-18.
+Start here. This file maps every file in `docs/brand/`, pulls the brand values into text, and records the logo and contrast checks. Indexed 2026-10-18; 08 handoff applied to code the same day (ADR-018).
 
 ## How to use this kit
 
@@ -9,7 +9,7 @@ Start here. This file maps every file in `docs/brand/`, pulls the brand values i
 3. WCAG 2.2 AA beats brand colors. Failing pairs and their adjusted values are under [Contrast check](#contrast-check).
 4. Images are references, not assets. Copy text from `07-voice/` or the SPEC, never from an image.
 5. Only logo, app icon and favicon files from `02-logo/` ship in the product.
-6. Values reach code only through `src/styles/tokens.css` and `src/lib/motion.ts`.
+6. Values reach code only through `src/styles/tokens.css` and `src/lib/motion.ts`. The brand block of `tokens.css` and `convex/email/templates/emailTheme.ts` are generated from `08-handoff/worldling.tokens.json` by `pnpm tokens`; never edit them by hand.
 
 Suggested reading order:
 
@@ -34,14 +34,9 @@ The kit's PDFs repeat the Markdown guides with layout. The Markdown is the edita
 | `05-visual-language/` | Step 5 | Six-world art direction, glass and controls, icons, motion, backgrounds |
 | `06-applications/` | Step 6 | OG, social, product mockups, email layouts |
 | `07-voice/` | Step 7 | Voice and tone, EN and FR copy strings |
+| `08-handoff/` | Step 8 | Design tokens (JSON + generated Tailwind theme), recipes, one-page summary, copies of the approved assets and copy |
 
-### Missing folders
-
-| Expected | Status |
-| --- | --- |
-| `08-*` (Step 8: design tokens and one-page brand summary, per `07-voice/README.md` and `03-color/README.md`) | **Pending brand.** Until it arrives, token names follow SPEC §3.2. Values come from Steps 3 to 5 as extracted below. |
-
-Folders 02 to 07 are all present. There is no `01-*` folder; the kit starts at Step 2.
+Folders 02 to 08 are all present. There is no `01-*` folder; the kit starts at Step 2.
 
 ## File inventory
 
@@ -128,6 +123,19 @@ SPEC sections and build phases refer to `docs/SPEC.md` and its §15 phases. Phas
 | `06-applications/04-assets/fonts/`, `licenses/` | 3 TTFs and 3 OFL notices | Copies of the Step 4 fonts | §3.2 | | Ref |
 | `06-applications/05-template/` | `og-template.json` | Editable OG fields (world name, @username, planet, tagline) | §12 | 7 | Ref |
 | `06-applications/06-source/` | `build_applications.py`, `build_guide.py`, `copy-and-layout.json` | Rebuild scripts; every text run with position and size | §7, §12 | 3, 7 | Tool |
+
+### 08-handoff
+
+| Folder | Files | Contains | SPEC | Phases | Use |
+| --- | --- | --- | --- | --- | --- |
+| `08-handoff/` | `README.md`, `Worldling-Brand-Summary.{md,pdf,png}` | Handoff guide and one-page brand summary | §3 | all | Ref |
+| `08-handoff/` | `worldling.tokens.json` | Every design value. **Token source of truth** | §3.2 | 1 | Tool input: `scripts/build-tokens.mjs` generates the brand block of `src/styles/tokens.css` and `convex/email/templates/emailTheme.ts` |
+| `08-handoff/` | `worldling.theme.css`, `worldling.fonts.css`, `worldling.base.css`, `worldling.components.css` | Generated `@theme static`, `@font-face`, base and recipe CSS | §3.2 | 1 | Ref (recipes ported as `glass`, `glass-panel`, `border-control`, `pressable` in `src/styles/globals.css`) |
+| `08-handoff/scripts/` | `build-theme.mjs` | The kit's own theme generator | §3.2 | | Tool (logic reused by `scripts/build-tokens.mjs`) |
+| `08-handoff/docs/` | `Implementation.md`, `css-variable-map.json`, `required-variables.json`, `source-versions.json`, `validation.json` | Integration notes, variable inventory, provenance, checks | §3 | 1 | Ref |
+| `08-handoff/examples/` | `app.css`, `world-card.html` | Import order and markup example | §3 | 7 | Ref |
+| `08-handoff/assets/` | Copies of the 02 logos, marks, app icons, favicons, 05 icons, 04 WOFF2 fonts and licences | Same files as the earlier steps | §3.1 | | Ref (product ships from `02-logo/`) |
+| `08-handoff/copy/` | `worldling-copy.{en,fr}.json`, `worldling-copy-context.json` | Latest copy strings (Step 7 wins) | §2 | all | Ref |
 
 ### 07-voice
 
@@ -465,9 +473,9 @@ Source: `07-voice/Worldling-Voice-and-Tone.md`.
 
 **Taglines:** the primary tagline is "Grow a world of your own." The secondary line is "Visit everyone else's."
 
-### Differences from the current code
+### Differences from the current code (resolved)
 
-The brand decides values, so these are inputs for the tokens step (likely Step 8 or a Phase 1 follow-up). SPEC §3.2 prints some of these values, so that change needs an ADR. Nothing was changed in code in this step.
+All rows below were resolved on 2026-10-18 by the brand pass (ADR-018): `tokens.css` now carries the 08 values, components use the 08 type scale and shadows, `logo.tsx` comments point at `02-logo/`, and `src/app/apple-icon.png` is the square-source 1024px icon. The table records what changed.
 
 | Value | Brand | `src/styles/tokens.css` / SPEC §3.2 |
 | --- | --- | --- |
@@ -520,7 +528,7 @@ The mark, the 16 and 32px optical files and the direct reductions were rendered 
 - **16px optical (`worldling-16.svg`, `worldling-transparent-16.svg`):** reads. The ringed planet is clear, the ring gap shows as a dark line across the planet, and the sprout is a small two-leaf tuft.
 - **16px direct reduction:** the ring thins and breaks and the gap closes. This confirms the kit's rule: use the optical files at 16 and 32px.
 - **48px master:** reads well on both backgrounds, as specified.
-- **Gap found:** the transparent optical favicons (`worldling-transparent-16/32/64`) exist only in Starlight. They disappear on light backgrounds. A light page or light browser tab at 16 or 32px has no matching asset; the dark master at that size loses its ring gap. **Pending brand:** a Void-on-transparent optical variant at 16 and 32px. The shipped `favicon.svg` and `.ico` carry their own Void backdrop, so browser tabs are fine today.
+- **Gap found (still pending brand, 08 doesn't add it):** the transparent optical favicons (`worldling-transparent-16/32/64`) exist only in Starlight. They disappear on light backgrounds. A light page or light browser tab at 16 or 32px has no matching asset; the dark master at that size loses its ring gap. **Pending brand:** a Void-on-transparent optical variant at 16 and 32px. The shipped `favicon.svg` and `.ico` carry their own Void backdrop, so browser tabs are fine today.
 
 ## Contrast check
 
@@ -632,4 +640,8 @@ These pairs are needed by the SPEC but fail. Each fix keeps the hue and saturati
 
    The Danger and Info values are fully saturated. Step 8 may prefer to tune them for feel; any replacement still needs 4.5:1 or more.
 
-The audit script that produced these numbers is not kept in the repo. Re-run the brand's own `03-color/04-source/audit_colors.py` for the published pairs.
+**In code:** `src/styles/contrast.test.ts` recomputes the pairs the UI uses (text, muted and link on every dark surface, status on status surfaces, Void on every fill including warm hover and pressed, the 88% glass over white, snow, Starlight, Sunrise and Aurora, control and focus boundaries) from `worldling.tokens.json` on every test run. No brand pair needed a lightness adjustment for the dark UI; the 88% glass is the brand's own fix for the old 62% glass.
+
+**Email logo:** `public/brand/email/worldling-horizontal-on-dark@2x.png` is `02-logo/01-logos/png/worldling-horizontal-on-dark@2x.png` resized to 364px wide (2x the 182px email logo), with its Void background kept so mail clients that recolor can't hide it.
+
+The audit script that produced the original numbers is not kept in the repo. Re-run the brand's own `03-color/04-source/audit_colors.py` for the published pairs.

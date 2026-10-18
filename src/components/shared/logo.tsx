@@ -2,14 +2,22 @@ import Image from "next/image";
 
 import { cn } from "@/lib/utils";
 
-// Intrinsic sizes of the brand SVGs (docs/brand/Worldling-Logo-Kit). Display size comes from className.
+// Brand SVGs copied byte for byte from docs/brand/02-logo (README "Ships"). Intrinsic sizes are the
+// viewBoxes; display size comes from className and must respect the 02-logo minimums:
+// horizontal lockup 160 CSS pixels wide (h-11), hero gradient mark 128 (size-32).
 const logos = {
   horizontal: {
     src: "/brand/worldling-horizontal-white-transparent.svg",
     width: 1331,
     height: 360,
+    className: "h-11 w-auto",
   },
-  mark: { src: "/brand/worldling-mark-hero-gradient.svg", width: 1024, height: 1024 },
+  hero: {
+    src: "/brand/worldling-mark-hero-gradient.svg",
+    width: 1024,
+    height: 1024,
+    className: "size-32",
+  },
 } as const;
 
 interface LogoProps {
@@ -28,7 +36,7 @@ export function Logo({ variant = "horizontal", className, priority = false }: Lo
       alt="Worldling"
       priority={priority}
       unoptimized
-      className={cn(variant === "horizontal" ? "h-8 w-auto" : "size-12", className)}
+      className={cn(logo.className, className)}
     />
   );
 }

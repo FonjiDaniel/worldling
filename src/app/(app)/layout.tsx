@@ -8,10 +8,10 @@ import { AccountMenu } from "@/features/auth/account-menu";
 export default function AppLayout({ children }: { children: ReactNode }) {
   return (
     <>
-      <header className="sticky top-0 z-40 border-b border-line bg-glass backdrop-blur-glass">
-        <div className="mx-auto flex h-16 w-full max-w-page items-center justify-between px-4 sm:px-6">
+      <header className="sticky top-0 z-40 border-b border-line glass">
+        <div className="mx-auto flex min-h-18 w-full max-w-page items-center justify-between px-4 sm:px-6">
           <Link href="/" className="rounded-sm" aria-label="Worldling home">
-            <Logo className="h-7" />
+            <Logo />
           </Link>
           <AccountMenu />
         </div>

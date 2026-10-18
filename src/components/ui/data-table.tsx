@@ -44,10 +44,8 @@ export function DataTable<TData extends RowData>({
 
   return (
     <div className={cn("overflow-x-auto rounded-md border border-line", className)}>
-      <table className="w-full border-collapse text-left text-sm">
-        <caption className="p-4 text-left font-display text-base font-semibold text-text">
-          {caption}
-        </caption>
+      <table className="w-full border-collapse text-left wl-small">
+        <caption className="p-4 text-left wl-h4 text-text">{caption}</caption>
         <thead className="bg-surface-raised">
           {table.getHeaderGroups().map((group) => (
             <tr key={group.id}>
@@ -105,7 +103,7 @@ export function DataTable<TData extends RowData>({
 }
 
 function SortIcon({ sorted }: { sorted: false | "asc" | "desc" }) {
-  if (sorted === "asc") return <ArrowUp aria-hidden className="size-3.5" />;
-  if (sorted === "desc") return <ArrowDown aria-hidden className="size-3.5" />;
-  return <ArrowUpDown aria-hidden className="size-3.5 opacity-60" />;
+  if (sorted === "asc") return <ArrowUp aria-hidden className="size-4" />;
+  if (sorted === "desc") return <ArrowDown aria-hidden className="size-4" />;
+  return <ArrowUpDown aria-hidden className="size-4 text-text-muted" />;
 }

@@ -10,10 +10,10 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
     <div className="flex flex-1 flex-col md:flex-row">
       <aside className="flex shrink-0 flex-col gap-6 border-b border-line bg-surface p-4 md:w-64 md:border-r md:border-b-0">
         <Link href="/" className="rounded-sm" aria-label="Worldling home">
-          <Logo className="h-7" />
+          <Logo />
         </Link>
         <nav aria-label="Admin">
-          <p className="text-xs font-medium tracking-wide text-text-muted uppercase">Admin</p>
+          <p className="wl-caption text-text-muted">Admin</p>
         </nav>
       </aside>
       <main

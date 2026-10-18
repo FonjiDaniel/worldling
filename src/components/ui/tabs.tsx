@@ -20,7 +20,7 @@ export function TabsTrigger({ className, ...props }: ComponentProps<typeof TabsP
   return (
     <TabsPrimitive.Trigger
       className={cn(
-        "-mb-px min-h-touch border-b-2 border-transparent px-4 text-sm font-medium whitespace-nowrap text-text-muted",
+        "-mb-px min-h-touch border-b-2 border-transparent px-4 wl-label whitespace-nowrap text-text-muted",
         "transition-colors duration-fast ease-out hover:text-text",
         "data-[state=active]:border-accent data-[state=active]:text-text",
         className,

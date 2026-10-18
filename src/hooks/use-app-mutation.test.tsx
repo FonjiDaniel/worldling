@@ -80,7 +80,7 @@ describe("useAppMutation", () => {
     await act(async () => {
       await result.current.run({ name: "Vela" });
     });
-    expect(toastError).toHaveBeenCalledWith("Easy there. Try again in 12 seconds.");
+    expect(toastError).toHaveBeenCalledWith("Too many tries for now. Try again in 12 seconds.");
     expect(reportError).not.toHaveBeenCalled();
   });
 

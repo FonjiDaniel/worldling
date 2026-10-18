@@ -1,0 +1,26 @@
+<!-- Markup example, not a working message form. Wire the button to your composer. -->
+<article class="wl-glass max-w-xl" aria-labelledby="world-name">
+  <h1 id="world-name" class="wl-h1 wl-world-title">Éclats d’aurore</h1>
+  <p class="wl-small mt-2 text-text-muted">Mira · @mira</p>
+  <dl class="mt-6 flex items-baseline justify-between gap-4">
+    <dt class="wl-label text-text-muted">Bloom level</dt>
+    <dd class="wl-data text-accent">07</dd>
+  </dl>
+  <button type="button" class="wl-warm-action mt-6 w-full">
+    Send a comet
+  </button>
+  <p class="wl-small mt-3 text-text-muted">
+    Visitors can leave a comet: a short, kind message.
+  </p>
+</article>
+
+<!-- A utilities-only equivalent for a main action: -->
+<button type="button"
+  class="inline-flex min-h-12 items-center justify-center rounded-full bg-warm
+         px-6 py-3 font-sans text-button text-on-warm transition-colors
+         duration-(--duration-fast) ease-out hover:bg-sunrise-400
+         active:bg-sunrise-600 focus-visible:outline-2
+         focus-visible:outline-offset-3 focus-visible:outline-accent
+         motion-reduce:duration-0">
+  Create my world
+</button>

@@ -85,7 +85,7 @@ function RequestStep({ onSent }: { onSent: (email: string) => void }) {
         </Button>
         <OfflineHint />
       </form>
-      <p className="text-center text-sm text-text-muted">
+      <p className="text-center wl-small text-text-muted">
         Remembered it?{" "}
         <Link href="/sign-in" className="text-link underline-offset-4 hover:underline">
           Sign in
@@ -168,7 +168,7 @@ function ChooseStep({ email }: { email: string }) {
         </Button>
         <OfflineHint />
       </form>
-      <div className="flex flex-col items-center gap-2 text-sm">
+      <div className="flex flex-col items-center gap-2 wl-small">
         <p role="status" aria-live="polite" className="text-text-muted">
           {sentNote}
         </p>

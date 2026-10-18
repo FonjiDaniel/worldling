@@ -69,7 +69,7 @@ export function UsernameField({ value, onChange, availability, serverError }: Us
       <div className="relative">
         <span
           aria-hidden
-          className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-text-muted"
+          className="pointer-events-none absolute inset-y-0 left-4 flex items-center text-text-muted"
         >
           @
         </span>
@@ -83,12 +83,12 @@ export function UsernameField({ value, onChange, availability, serverError }: Us
           value={value}
           aria-invalid={invalid || undefined}
           aria-describedby={`${ids.hint} ${ids.status}`}
-          className="pr-10 pl-7"
+          className="pr-12 pl-8"
           onChange={(event) => {
             onChange(event.target.value);
           }}
         />
-        <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
+        <span className="pointer-events-none absolute inset-y-0 right-4 flex items-center">
           {ICONS[state]}
         </span>
       </div>
@@ -100,7 +100,7 @@ export function UsernameField({ value, onChange, availability, serverError }: Us
         id={ids.status}
         role="status"
         aria-live="polite"
-        className={invalid ? "text-sm text-danger" : "text-sm text-success"}
+        className={invalid ? "wl-small text-danger" : "wl-small text-success"}
       >
         {state === "checking" ? <span className="sr-only">Checking</span> : shown}
       </p>

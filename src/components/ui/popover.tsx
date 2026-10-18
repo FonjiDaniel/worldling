@@ -21,7 +21,7 @@ export function PopoverContent({
         align={align}
         sideOffset={sideOffset}
         className={cn(
-          "z-50 w-72 rounded-md border border-line bg-surface-raised p-4 text-text shadow-raised",
+          "z-50 w-72 rounded-md border border-line bg-surface-raised p-4 text-text shadow-panel",
           "data-[state=closed]:animate-pop-out data-[state=open]:animate-pop-in",
           className,
         )}

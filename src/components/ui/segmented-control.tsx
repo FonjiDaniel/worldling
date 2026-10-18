@@ -48,7 +48,7 @@ export function SegmentedControl<T extends string>({
       onValueChange={handleChange}
       disabled={disabled}
       className={cn(
-        "inline-flex rounded-full border border-control-line bg-surface p-0.5 data-disabled:opacity-50",
+        "inline-flex rounded-full bg-void p-0.5 border-control data-disabled:opacity-50",
         className,
       )}
     >
@@ -57,8 +57,8 @@ export function SegmentedControl<T extends string>({
           key={segment.value}
           value={segment.value}
           className={cn(
-            "min-h-touch rounded-full px-4 text-sm font-medium text-text-muted transition-colors duration-fast ease-out",
-            "hover:text-text data-[state=on]:bg-primary data-[state=on]:text-on-primary",
+            "min-h-touch rounded-full px-4 wl-label text-text-muted transition-colors duration-fast ease-out",
+            "hover:text-text data-[state=on]:bg-primary data-[state=on]:text-on-primary data-[state=on]:shadow-selection",
           )}
         >
           {segment.label}

@@ -112,7 +112,7 @@ export function SignUpForm() {
         </Button>
         <OfflineHint />
       </form>
-      <p className="text-center text-sm text-text-muted">
+      <p className="text-center wl-small text-text-muted">
         Already have a world?{" "}
         <Link
           href={{ pathname: "/sign-in", query: { next } }}

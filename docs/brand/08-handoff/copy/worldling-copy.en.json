@@ -1,0 +1,78 @@
+{
+  "brand": {
+    "name": "Worldling",
+    "tagline": {
+      "primary": "Grow a world of your own.",
+      "secondary": "Visit everyone else's."
+    }
+  },
+  "tagline_alternatives": [
+    "A little world. A lot of you.",
+    "Small worlds. Shared wonder.",
+    "A little planet to call home.",
+    "Your corner of the cosmos.",
+    "Let your world bloom.",
+    "Make yourself a world.",
+    "A world shaped by you.",
+    "Where small worlds bring us together.",
+    "Space to make something yours.",
+    "A world to tend. A universe to explore."
+  ],
+  "errors": {
+    "save_failed": {
+      "message": "We couldn’t save your changes. Try again.",
+      "action": "Try again"
+    },
+    "comet_failed": {
+      "message": "Your comet wasn’t sent. Try again.",
+      "action": "Try again"
+    },
+    "world_unavailable": {
+      "message": "This world isn’t available. You can explore another.",
+      "action": "Explore worlds"
+    }
+  },
+  "empty": {
+    "no_world": {
+      "title": "Your world starts here.",
+      "body": "Choose a landscape and make it your own.",
+      "action": "Create my world"
+    },
+    "no_comets": {
+      "title": "No comets yet.",
+      "body": "Visitors can leave a comet: a short, kind message.",
+      "action": "Share my world"
+    },
+    "comet_composer": {
+      "title": "Leave a little kindness.",
+      "body": "Tell them what you enjoyed about their world.",
+      "field_label": "Your message",
+      "action": "Send a comet"
+    }
+  },
+  "celebrations": {
+    "world_created": {
+      "message": "Your world is here. Make yourself at home.",
+      "action": "View my world"
+    },
+    "first_comet": {
+      "message": "Your first comet has arrived. Someone left you a kind message.",
+      "action": "Read comet"
+    },
+    "new_moon": {
+      "message": "Your world has a new moon. Take a look.",
+      "action": "View my world"
+    }
+  },
+  "notifications": {
+    "welcome": {
+      "subject": "Your little corner of the universe"
+    },
+    "comet_arrived": {
+      "subject": "A comet landed on your world"
+    },
+    "new_moon": {
+      "subject": "Your world has a new moon"
+    }
+  }
+}

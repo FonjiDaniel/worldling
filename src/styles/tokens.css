@@ -1,56 +1,47 @@
 /*
- * Design tokens (SPEC §3.2, ADR-013). The only place raw color, size and time values live.
- * Color values come from docs/brand/Worldling-brand-colors/02-color-files/worldling-colors.css.
+ * Design tokens (SPEC §3.2, ADR-013, ADR-018). The only place raw color, size and time values live.
+ * Brand values are generated from docs/brand/08-handoff/worldling.tokens.json by
+ * scripts/build-tokens.mjs (pnpm tokens). Edit the JSON, never the generated block.
  * Components use the semantic names. Scale steps are for art and charts, not text pairs.
  */
+
+/* Only our tokens exist: drop Tailwind's default scales before the brand block fills them. */
 @theme {
   --color-*: initial;
+  --text-*: initial;
+  --radius-*: initial;
+  --ease-*: initial;
+  --shadow-*: initial;
+  --blur-*: initial;
+  --breakpoint-*: initial;
+}
 
-  /* Surfaces */
+/* @generated brand:start (scripts/build-tokens.mjs, do not edit by hand) */
+@theme static {
   --color-void: #07071a;
   --color-surface: #11122b;
   --color-surface-raised: #1a1b3a;
-  --color-glass: color-mix(in srgb, #11122b 62%, transparent);
-  --color-scrim: color-mix(in srgb, #07071a 72%, transparent);
-  --color-line: #34365a;
-  --color-control-line: #696c91;
-
-  /* Text */
   --color-text: #f4f1ea;
   --color-text-muted: #9a9bb8;
-  --color-link: #a99fff;
-
-  /* Brand */
   --color-primary: #7c6cff;
   --color-accent: #3fe0c5;
   --color-warm: #ff8a5b;
-  --color-warm-hover: #ff9d75;
-  --color-warm-active: #d96a40;
-  --color-primary-hover: #9182ff;
-
-  /* Ink on bright fills (Starlight fails AA on these) */
+  --color-link: #a99fff;
+  --color-line: #34365a;
+  --color-control-line: #696c91;
+  --color-success: #68dfa9;
+  --color-success-surface: #1b2b3a;
+  --color-warning: #f4c969;
+  --color-warning-surface: #2c2832;
+  --color-danger: #ff7b91;
+  --color-danger-surface: #2e1f37;
+  --color-info: #8ab4ff;
+  --color-info-surface: #202544;
+  --color-glass: rgb(17 18 43 / 88%);
+  --color-glass-control-line: #9a9bb8;
   --color-on-primary: #07071a;
   --color-on-accent: #07071a;
   --color-on-warm: #07071a;
-  --color-on-danger: #07071a;
-
-  /* Status */
-  --color-success: #68dfa9;
-  --color-warning: #f4c969;
-  --color-danger: #ff7b91;
-  --color-info: #8ab4ff;
-  --color-success-surface: #1b2b3a;
-  --color-warning-surface: #2c2832;
-  --color-danger-surface: #2e1f37;
-  --color-info-surface: #202544;
-
-  /* Third-party marks that must keep their own colors (Google sign-in guidelines). */
-  --color-google-blue: #4285f4;
-  --color-google-green: #34a853;
-  --color-google-yellow: #fbbc05;
-  --color-google-red: #ea4335;
-
-  /* Scales */
   --color-nebula-50: #f3f1ff;
   --color-nebula-100: #e8e3ff;
   --color-nebula-200: #cbc2ff;
@@ -84,65 +75,357 @@
   --color-sunrise-800: #823c26;
   --color-sunrise-900: #5b2d21;
   --color-sunrise-950: #331b16;
-
-  /* Type scale (§3.3): fluid, body never below 1rem */
-  --text-*: initial;
-  --text-xs: 0.8125rem;
-  --text-xs--line-height: 1.4;
-  --text-sm: 0.875rem;
-  --text-sm--line-height: 1.45;
-  --text-base: 1rem;
-  --text-base--line-height: 1.6;
-  --text-lg: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
-  --text-lg--line-height: 1.5;
-  --text-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
-  --text-xl--line-height: 1.35;
-  --text-2xl: clamp(1.5rem, 1.25rem + 1.1vw, 2rem);
-  --text-2xl--line-height: 1.2;
-  --text-3xl: clamp(2rem, 1.5rem + 2vw, 3rem);
-  --text-3xl--line-height: 1.1;
-  --text-display: clamp(2.75rem, 1.75rem + 4.5vw, 5.5rem);
-  --text-display--line-height: 1;
-
-  /* Radius */
-  --radius-*: initial;
+  --font-display: "Bricolage Grotesque", "Trebuchet MS", Arial, sans-serif;
+  --font-sans: "Geist", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-display: 650;
+  --text-display: clamp(2.5rem, calc(1.833333rem + 2.962963vw), 4.5rem);
+  --text-display--line-height: 1.05;
+  --text-display--letter-spacing: -0.035em;
+  --text-display--font-weight: 650;
+  --text-h1: clamp(2.25rem, calc(1.833333rem + 1.851852vw), 3.5rem);
+  --text-h1--line-height: 1.1;
+  --text-h1--letter-spacing: -0.03em;
+  --text-h1--font-weight: 650;
+  --text-h2: clamp(1.75rem, calc(1.5rem + 1.111111vw), 2.5rem);
+  --text-h2--line-height: 1.15;
+  --text-h2--letter-spacing: -0.025em;
+  --text-h2--font-weight: 650;
+  --text-h3: clamp(1.5rem, calc(1.375rem + 0.555556vw), 1.875rem);
+  --text-h3--line-height: 1.2;
+  --text-h3--letter-spacing: -0.02em;
+  --text-h3--font-weight: 600;
+  --text-h4: clamp(1.25rem, calc(1.166667rem + 0.37037vw), 1.5rem);
+  --text-h4--line-height: 1.3;
+  --text-h4--letter-spacing: -0.01em;
+  --text-h4--font-weight: 600;
+  --text-body-lg: clamp(1.125rem, calc(1.083333rem + 0.185185vw), 1.25rem);
+  --text-body-lg--line-height: 1.6;
+  --text-body-lg--letter-spacing: 0em;
+  --text-body-lg--font-weight: 400;
+  --text-body: clamp(1rem, calc(0.958333rem + 0.185185vw), 1.125rem);
+  --text-body--line-height: 1.6;
+  --text-body--letter-spacing: 0em;
+  --text-body--font-weight: 400;
+  --text-small: clamp(0.875rem, calc(0.833333rem + 0.185185vw), 1rem);
+  --text-small--line-height: 1.5;
+  --text-small--letter-spacing: 0em;
+  --text-small--font-weight: 400;
+  --text-caption: clamp(0.75rem, calc(0.708333rem + 0.185185vw), 0.875rem);
+  --text-caption--line-height: 1.45;
+  --text-caption--letter-spacing: 0.01em;
+  --text-caption--font-weight: 500;
+  --text-button: 1rem;
+  --text-button--line-height: 1.25;
+  --text-button--letter-spacing: 0em;
+  --text-button--font-weight: 600;
+  --text-label: 0.875rem;
+  --text-label--line-height: 1.4;
+  --text-label--letter-spacing: 0em;
+  --text-label--font-weight: 500;
+  --text-input: 1rem;
+  --text-input--line-height: 1.5;
+  --text-input--letter-spacing: 0em;
+  --text-input--font-weight: 400;
+  --text-data: clamp(1.5rem, calc(1.333333rem + 0.740741vw), 2rem);
+  --text-data--line-height: 1.15;
+  --text-data--letter-spacing: 0em;
+  --text-data--font-weight: 500;
+  --text-timestamp: clamp(0.75rem, calc(0.708333rem + 0.185185vw), 0.875rem);
+  --text-timestamp--line-height: 1.4;
+  --text-timestamp--letter-spacing: 0em;
+  --text-timestamp--font-weight: 500;
   --radius-sm: 0.5rem;
-  --radius-md: 0.875rem;
-  --radius-lg: 1.375rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
   --radius-full: 9999px;
+  --spacing: 0.25rem;
+  --spacing-0: 0rem;
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-5: 1.25rem;
+  --spacing-6: 1.5rem;
+  --spacing-8: 2rem;
+  --spacing-10: 2.5rem;
+  --spacing-12: 3rem;
+  --spacing-16: 4rem;
+  --spacing-20: 5rem;
+  --spacing-24: 6rem;
+  --spacing-32: 8rem;
+  --shadow-panel: 0 16px 48px rgb(0 0 0 / 32%), inset 0 1px 0 rgb(244 241 234 / 4%);
+  --shadow-dialog: 0 24px 80px rgb(0 0 0 / 45%);
+  --shadow-selection: 0 0 24px rgb(63 224 197 / 12%);
+  --duration-fast: 150ms;
+  --duration-base: 240ms;
+  --duration-slow: 600ms;
+  --duration-press: 100ms;
+  --duration-panel-exit: 180ms;
+  --duration-comet: 900ms;
+  --duration-bloom: 1200ms;
+  --duration-drift: 16000ms;
+  --duration-rotation: 120000ms;
+  --duration-orbit: 90000ms;
+  --duration-reduced: 150ms;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.45, 0, 0.55, 1);
+  --ease-press: cubic-bezier(0.4, 0, 1, 1);
+  --ease-comet: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-linear: linear;
+  --blur-glass: 20px;
+  --border-width: 1px;
+  --border-focus-width: 2px;
+  --border-focus-offset: 3px;
+  --size-control-min: 3rem;
+  --size-icon-target-min: 2.75rem;
+  --size-icon: 1.5rem;
+  --size-icon-optical: 1rem;
+  --layout-panel-padding-mobile: 1.25rem;
+  --layout-panel-padding-desktop: 1.5rem;
+  --layout-panel-breakpoint: 48rem;
+  --gradient-worldling: linear-gradient(135deg, #7c6cff 0%, #3fe0c5 100%);
+  --icon-stroke: 1.75px;
+  --icon-optical-stroke: 1.5px;
+  --icon-cap: round;
+  --icon-join: round;
+  --measure-body: 65ch;
+  --measure-display: 16ch;
+  --display-width: 100%;
+}
 
-  /* Motion (mirrored in src/lib/motion.ts) */
-  --ease-*: initial;
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+@utility duration-fast {
+  transition-duration: var(--duration-fast);
+}
+
+@utility duration-base {
+  transition-duration: var(--duration-base);
+}
+
+@utility duration-slow {
+  transition-duration: var(--duration-slow);
+}
+
+@utility duration-press {
+  transition-duration: var(--duration-press);
+}
+
+@utility duration-panel-exit {
+  transition-duration: var(--duration-panel-exit);
+}
+
+@utility duration-comet {
+  transition-duration: var(--duration-comet);
+}
+
+@utility duration-bloom {
+  transition-duration: var(--duration-bloom);
+}
+
+@utility duration-drift {
+  transition-duration: var(--duration-drift);
+}
+
+@utility duration-rotation {
+  transition-duration: var(--duration-rotation);
+}
+
+@utility duration-orbit {
+  transition-duration: var(--duration-orbit);
+}
+
+@utility duration-reduced {
+  transition-duration: var(--duration-reduced);
+}
+
+@utility wl-display {
+  font-family: var(--font-display);
+  font-size: var(--text-display);
+  font-weight: var(--text-display--font-weight);
+  line-height: var(--text-display--line-height);
+  letter-spacing: var(--text-display--letter-spacing);
+  font-optical-sizing: auto;
+  font-stretch: var(--display-width);
+}
+
+@utility wl-h1 {
+  font-family: var(--font-display);
+  font-size: var(--text-h1);
+  font-weight: var(--text-h1--font-weight);
+  line-height: var(--text-h1--line-height);
+  letter-spacing: var(--text-h1--letter-spacing);
+  font-optical-sizing: auto;
+  font-stretch: var(--display-width);
+}
+
+@utility wl-h2 {
+  font-family: var(--font-display);
+  font-size: var(--text-h2);
+  font-weight: var(--text-h2--font-weight);
+  line-height: var(--text-h2--line-height);
+  letter-spacing: var(--text-h2--letter-spacing);
+  font-optical-sizing: auto;
+  font-stretch: var(--display-width);
+}
+
+@utility wl-h3 {
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  font-weight: var(--text-h3--font-weight);
+  line-height: var(--text-h3--line-height);
+  letter-spacing: var(--text-h3--letter-spacing);
+  font-optical-sizing: auto;
+  font-stretch: var(--display-width);
+}
+
+@utility wl-h4 {
+  font-family: var(--font-sans);
+  font-size: var(--text-h4);
+  font-weight: var(--text-h4--font-weight);
+  line-height: var(--text-h4--line-height);
+  letter-spacing: var(--text-h4--letter-spacing);
+}
+
+@utility wl-body-lg {
+  font-family: var(--font-sans);
+  font-size: var(--text-body-lg);
+  font-weight: var(--text-body-lg--font-weight);
+  line-height: var(--text-body-lg--line-height);
+  letter-spacing: var(--text-body-lg--letter-spacing);
+}
+
+@utility wl-body {
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  font-weight: var(--text-body--font-weight);
+  line-height: var(--text-body--line-height);
+  letter-spacing: var(--text-body--letter-spacing);
+}
+
+@utility wl-small {
+  font-family: var(--font-sans);
+  font-size: var(--text-small);
+  font-weight: var(--text-small--font-weight);
+  line-height: var(--text-small--line-height);
+  letter-spacing: var(--text-small--letter-spacing);
+}
+
+@utility wl-caption {
+  font-family: var(--font-sans);
+  font-size: var(--text-caption);
+  font-weight: var(--text-caption--font-weight);
+  line-height: var(--text-caption--line-height);
+  letter-spacing: var(--text-caption--letter-spacing);
+}
+
+@utility wl-button {
+  font-family: var(--font-sans);
+  font-size: var(--text-button);
+  font-weight: var(--text-button--font-weight);
+  line-height: var(--text-button--line-height);
+  letter-spacing: var(--text-button--letter-spacing);
+}
+
+@utility wl-label {
+  font-family: var(--font-sans);
+  font-size: var(--text-label);
+  font-weight: var(--text-label--font-weight);
+  line-height: var(--text-label--line-height);
+  letter-spacing: var(--text-label--letter-spacing);
+}
+
+@utility wl-input {
+  font-family: var(--font-sans);
+  font-size: var(--text-input);
+  font-weight: var(--text-input--font-weight);
+  line-height: var(--text-input--line-height);
+  letter-spacing: var(--text-input--letter-spacing);
+}
+
+@utility wl-data {
+  font-family: var(--font-mono);
+  font-size: var(--text-data);
+  font-weight: var(--text-data--font-weight);
+  line-height: var(--text-data--line-height);
+  letter-spacing: var(--text-data--letter-spacing);
+  font-variant-numeric: tabular-nums;
+}
+
+@utility wl-timestamp {
+  font-family: var(--font-mono);
+  font-size: var(--text-timestamp);
+  font-weight: var(--text-timestamp--font-weight);
+  line-height: var(--text-timestamp--line-height);
+  letter-spacing: var(--text-timestamp--letter-spacing);
+  font-variant-numeric: tabular-nums;
+}
+
+@utility bg-worldling-gradient {
+  background-image: var(--gradient-worldling);
+}
+/* @generated brand:end */
+
+/* App tokens the brand handoff doesn't define. */
+@theme {
+  --color-scrim: color-mix(in srgb, var(--color-void) 72%, transparent);
+  --color-primary-hover: var(--color-nebula-400);
+  --color-warm-hover: var(--color-sunrise-400);
+  --color-warm-active: var(--color-sunrise-600);
+  --color-on-danger: var(--color-void);
+
+  /* Third-party marks that must keep their own colors (Google sign-in guidelines). */
+  --color-google-blue: #4285f4;
+  --color-google-green: #34a853;
+  --color-google-yellow: #fbbc05;
+  --color-google-red: #ea4335;
+
   --ease-soft: cubic-bezier(0.37, 0, 0.63, 1);
+  --duration-flight: 1600ms;
 
   /* Breakpoints (§3.6) */
-  --breakpoint-*: initial;
   --breakpoint-sm: 40rem;
   --breakpoint-md: 48rem;
   --breakpoint-lg: 64rem;
   --breakpoint-xl: 80rem;
 
   /* Sizes */
-  --spacing-touch: 2.75rem;
-  --container-prose: 40rem;
+  --spacing-touch: var(--size-icon-target-min);
+  --spacing-control: var(--size-control-min);
+  --spacing-panel-pad: var(--layout-panel-padding-mobile);
+  --spacing-panel-pad-lg: var(--layout-panel-padding-desktop);
+  --container-prose: var(--measure-body);
   --container-panel: 28rem;
   --container-page: 72rem;
-  --blur-glass: 1rem;
-  --shadow-raised: 0 0.75rem 2rem -0.5rem color-mix(in srgb, #07071a 80%, transparent);
 
-  /* Animations used by overlays (Radix waits for animationend on exit) */
+  /* Animations. Radix waits for animationend on exit. */
+  --animate-panel-in: panel-in var(--duration-base) var(--ease-out) both;
+  --animate-panel-out: fade-out var(--duration-panel-exit) var(--ease-in-out) both;
   --animate-fade-in: fade-in var(--duration-base) var(--ease-out);
-  --animate-fade-out: fade-out var(--duration-fast) var(--ease-in-out);
+  --animate-fade-out: fade-out var(--duration-panel-exit) var(--ease-in-out);
   --animate-pop-in: pop-in var(--duration-base) var(--ease-out);
-  --animate-pop-out: pop-out var(--duration-fast) var(--ease-in-out);
-  --animate-sheet-up: sheet-up var(--duration-slow) var(--ease-out);
-  --animate-sheet-down: sheet-down var(--duration-base) var(--ease-in-out);
-  --animate-sheet-left: sheet-left var(--duration-slow) var(--ease-out);
-  --animate-sheet-right: sheet-right var(--duration-base) var(--ease-in-out);
+  --animate-pop-out: pop-out var(--duration-panel-exit) var(--ease-in-out);
+  --animate-sheet-up: sheet-up var(--duration-base) var(--ease-out);
+  --animate-sheet-down: sheet-down var(--duration-panel-exit) var(--ease-in-out);
+  --animate-sheet-left: sheet-left var(--duration-base) var(--ease-out);
+  --animate-sheet-right: sheet-right var(--duration-panel-exit) var(--ease-in-out);
+  --animate-bloom-in: bloom-in var(--duration-bloom) var(--ease-in-out) both;
   --animate-shimmer: shimmer 1.6s var(--ease-soft) infinite;
 
+  @keyframes panel-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+  @keyframes bloom-in {
+    from {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+  }
   @keyframes fade-in {
     from {
       opacity: 0;
@@ -192,37 +475,59 @@
   }
 }
 
-/* Fonts resolve at the element, so next/font variables set on <html> apply (src/styles/fonts.ts). */
+/* next/font hashes family names, so its variables come first, then the brand fallback stacks. */
 @theme inline {
   --font-*: initial;
-  --font-display: var(--font-display-face), ui-sans-serif, system-ui, sans-serif;
-  --font-sans: var(--font-sans-face), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-mono-face), ui-monospace, monospace;
+  --font-display:
+    var(--font-display-face), "Bricolage Grotesque", "Trebuchet MS", Arial, sans-serif;
+  --font-sans:
+    var(--font-sans-face), "Geist", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --font-mono:
+    var(--font-mono-face), "Geist Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
 }
 
-/* Tokens with no Tailwind namespace. */
+/* Tokens with no Tailwind namespace. SPEC names alias the brand ones. */
 :root {
-  --duration-fast: 160ms;
-  --duration-base: 260ms;
-  --duration-slow: 480ms;
-  --duration-flight: 1600ms;
-  --focus-ring-width: 2px;
-  --focus-ring-offset: 2px;
-  --gradient-brand: linear-gradient(135deg, #7c6cff 0%, #3fe0c5 100%);
+  --focus-ring-width: var(--border-focus-width);
+  --focus-ring-offset: var(--border-focus-offset);
+  --gradient-brand: var(--gradient-worldling);
+  --press-scale: 0.985;
+
+  /* Quiet space (05 visual language): static round stars, nebula tints at 8% or less, Void base. */
+  --space-stars:
+    radial-gradient(circle at 23% 31%, rgb(244 241 234 / 55%) 0 1px, transparent 1.5px) 0 0 / 433px
+      379px,
+    radial-gradient(circle at 71% 64%, rgb(244 241 234 / 32%) 0 0.6px, transparent 1px) 0 0 / 433px
+      379px,
+    radial-gradient(circle at 12% 78%, rgb(244 241 234 / 40%) 0 0.8px, transparent 1.2px) 0 0 /
+      617px 541px,
+    radial-gradient(circle at 54% 18%, rgb(244 241 234 / 24%) 0 1.2px, transparent 1.6px) 0 0 /
+      617px 541px,
+    radial-gradient(circle at 88% 47%, rgb(244 241 234 / 45%) 0 0.7px, transparent 1.1px) 0 0 /
+      617px 541px,
+    radial-gradient(circle at 40% 60%, rgb(244 241 234 / 30%) 0 0.9px, transparent 1.3px) 0 0 /
+      271px 293px;
   --space-backdrop:
-    radial-gradient(ellipse at 20% 0%, #17132e 0%, transparent 60%),
-    radial-gradient(ellipse at 90% 100%, #0c2d2a 0%, transparent 55%), #07071a;
+    var(--space-stars),
+    radial-gradient(ellipse at 20% 0%, rgb(124 108 255 / 8%) 0%, transparent 60%),
+    radial-gradient(ellipse at 90% 100%, rgb(63 224 197 / 6%) 0%, transparent 55%), #07071a;
 }
 
-@utility duration-fast {
-  transition-duration: var(--duration-fast);
+/* Reduced motion (05): entrances become a 150ms fade; nothing travels, scales or loops. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --animate-panel-in: fade-in var(--duration-reduced) var(--ease-out) both;
+    --animate-pop-in: fade-in var(--duration-reduced) var(--ease-out);
+    --animate-sheet-up: fade-in var(--duration-reduced) var(--ease-out);
+    --animate-sheet-left: fade-in var(--duration-reduced) var(--ease-out);
+    --animate-bloom-in: fade-in var(--duration-reduced) var(--ease-out) both;
+    --animate-pop-out: fade-out var(--duration-reduced) var(--ease-out);
+    --animate-sheet-down: fade-out var(--duration-reduced) var(--ease-out);
+    --animate-sheet-right: fade-out var(--duration-reduced) var(--ease-out);
+    --animate-shimmer: none;
+  }
 }
-@utility duration-base {
-  transition-duration: var(--duration-base);
-}
-@utility duration-slow {
-  transition-duration: var(--duration-slow);
-}
+
 @utility bg-gradient-brand {
   background-image: var(--gradient-brand);
 }

@@ -65,14 +65,29 @@ const scales = {
 } as const;
 
 const typeScale = [
-  { name: "display", className: "font-display text-display" },
-  { name: "3xl", className: "font-display text-3xl" },
-  { name: "2xl", className: "font-display text-2xl" },
-  { name: "xl", className: "font-display text-xl" },
-  { name: "lg", className: "text-lg" },
-  { name: "base", className: "text-base" },
-  { name: "sm", className: "text-sm" },
-  { name: "mono", className: "font-mono text-sm" },
+  { name: "display", className: "wl-display" },
+  { name: "h1", className: "wl-h1" },
+  { name: "h2", className: "wl-h2" },
+  { name: "h3", className: "wl-h3" },
+  { name: "h4", className: "wl-h4" },
+  { name: "body-lg", className: "wl-body-lg" },
+  { name: "body", className: "wl-body" },
+  { name: "small", className: "wl-small" },
+  { name: "caption", className: "wl-caption" },
+  { name: "button", className: "wl-button" },
+  { name: "label", className: "wl-label" },
+  { name: "data", className: "wl-data" },
+  { name: "timestamp", className: "wl-timestamp" },
+] as const;
+
+const surfaces = [
+  { name: "glass panel", className: "glass-panel" },
+  { name: "shadow-panel", className: "rounded-lg bg-surface shadow-panel" },
+  { name: "shadow-dialog", className: "rounded-lg bg-surface shadow-dialog" },
+  {
+    name: "shadow-selection",
+    className: "rounded-lg border border-accent bg-surface shadow-selection",
+  },
 ] as const;
 
 export function TokensSection() {
@@ -80,7 +95,7 @@ export function TokensSection() {
     <ShowcaseSection
       id="tokens"
       title="Tokens"
-      description="Brand colors (ADR-013), type and radius."
+      description="Brand values from the 08 handoff (ADR-018): color, type, radius and surfaces."
     >
       <ShowcaseRow label="Semantic colors">
         <ul className="grid w-full grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-8">
@@ -90,7 +105,7 @@ export function TokensSection() {
                 aria-hidden
                 className={cn("h-12 rounded-md border border-line", token.className)}
               />
-              <span className="font-mono text-xs text-text-muted">{token.name}</span>
+              <span className="wl-timestamp text-text-muted">{token.name}</span>
             </li>
           ))}
         </ul>
@@ -110,6 +125,16 @@ export function TokensSection() {
         <span aria-hidden className="size-12 rounded-md border border-control-line" />
         <span aria-hidden className="size-12 rounded-lg border border-control-line" />
         <span aria-hidden className="size-12 rounded-full border border-control-line" />
+      </ShowcaseRow>
+      <ShowcaseRow label="Surfaces and shadows">
+        {surfaces.map((surface) => (
+          <div
+            key={surface.name}
+            className={cn("grid h-24 w-40 place-items-center p-4 wl-label", surface.className)}
+          >
+            {surface.name}
+          </div>
+        ))}
       </ShowcaseRow>
       <ShowcaseRow label="Type scale">
         <div className="flex w-full flex-col gap-2">

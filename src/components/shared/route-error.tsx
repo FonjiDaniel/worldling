@@ -18,7 +18,7 @@ export function RouteError({ retry }: RouteErrorProps) {
     >
       <ErrorState
         className="w-full"
-        title="This page lost its orbit"
+        title="This page didn't load"
         description="Something went wrong on our side. Try again, and if it keeps happening, come back in a little while."
         onRetry={retry}
       />

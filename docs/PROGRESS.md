@@ -6,7 +6,77 @@ Where the build stands, phase by phase (SPEC §15). Updated at the end of every 
 
 **Phase 4: Authentication and onboarding** is complete, except Google sign-in, which is built but not yet tried end to end because the Google OAuth client doesn't exist yet (see notes). Typecheck, lint, tests (303), build and e2e (16) pass locally against the dev deployment. GitHub Actions is still blocked by the account billing lock (see Phase 0).
 
+**Brand pass (2026-10-18):** the full brand kit (03 to 08) is applied to everything from phases 1 to 4 (ADR-018). Every "pending brand" item for those phases is done, except the dark optical favicon, which the kit doesn't include yet. The real Gmail check of the restyled email waits for deploy (see below).
+
 **Next:** Phase 5, Planet renderer. It extends the minimal `shared/worldParams.ts` from Phase 4 (ADR-017).
+
+## Brand pass: phases 1 to 4
+
+- [x] ADR-018. SPEC §3.2, §3.3, §3.5 and §3.7 now carry the 08 values; names are unchanged.
+- [x] Tokens from one source. `scripts/build-tokens.mjs` (`pnpm tokens`, `pnpm tokens:check`) reads `docs/brand/08-handoff/worldling.tokens.json` and generates two outputs:
+  - the brand block of `src/styles/tokens.css`
+  - `convex/email/templates/emailTheme.ts`
+
+  Tailwind defaults for color, text, radius, ease, shadow, blur and breakpoints are reset. App-only tokens (scrim, Google colors, containers, overlay animations, `duration-flight`) and the SPEC aliases (`gradient-brand`, `focus-ring-*`) are kept by hand.
+
+- [x] `src/lib/motion.ts`: every 08 duration and easing (as cubic-bezier points), `registerEases(gsap)` for matching `CustomEase`s, and a reduced-motion block. The parity test covers every duration and ease.
+- [x] Typography: `next/font` in `src/styles/fonts.ts`, with Bricolage `opsz` and `wdth` axes and `latin-ext`. The 9-level fluid scale and UI styles come in as `text-*` sizes and `wl-*` utilities. The old `text-xs` to `text-3xl` scale is retired and components are migrated. Base `h1` to `h3` use the brand levels.
+- [x] UI style (05), from `globals.css` utilities:
+  - `glass` and `glass-panel`: 88% Deep Space, 20px blur, opaque fallback, panel shadow, 20/24px padding.
+  - `border-control`: Control Line, or Dust inside glass.
+  - `pressable`: 150ms color, 100ms press to 0.985, no scaling with reduced motion.
+
+  Also: dialog and sheet use `shadow-dialog` and the 240/180ms panel motion. Selected swatches and segments get `shadow-selection`. Inputs sit on Void at 48px. The primary button is a Sunrise pill at 48px. Focus is 2px Aurora with a 3px offset.
+
+- [x] Backdrop: static round-dot stars (05 density), with Nebula and Aurora tints at 8% or less over Void.
+- [x] Icons (05): lucide is restroked to 1.75 with round caps and joins, sizes are limited to 16, 20, 24 and 32, and decorative icons are `aria-hidden`. Brand icons don't ship (ADR-018).
+- [x] Logo: the horizontal lockup is at its 160px minimum in every shell. The hero gradient mark is used only at 128px (404). The apple icon is now the square source, so iOS applies its own mask.
+- [x] Auth and onboarding: one centered glass panel from `sm` up. Below `sm`, the 06 mobile feel: lockup top left, full-bleed content, full-width Sunrise action. The OTP cells, username field and error alert are restyled.
+- [x] Emails: the 06 header and footer.
+  - Header: logo, display headline, Line divider.
+  - Footer: "Visit everyone else's.", "A little kindness travels far.", "Email preferences" and "Unsubscribe".
+  - Sunrise pill button.
+  - Logo: `public/brand/email/worldling-horizontal-on-dark@2x.png`, linked absolutely from `SITE_URL`.
+
+  `compose.ts` fails mail permanently (`missing_site_url`) without `SITE_URL`. The unsubscribe pages match. No hex outside `emailTheme.ts` (tested).
+
+- [x] Copy audit against 07-voice (table below).
+- [x] Checks:
+  - `src/styles/contrast.test.ts` (AA from the token JSON, including the 88% glass over bright backdrops). The brand's `audit_colors.py` re-run reports `verified` (175 text and 12 UI pairs).
+  - No raw values in components.
+  - axe has nothing serious or critical on `/`, `/dev/ui`, 404 and every auth page, now also at phone width.
+  - typecheck, lint, test, build and e2e pass.
+- [ ] Real `auth.verify` in Gmail, light and dark. Needs production to serve the logo PNG: after deploy, temporarily point dev `SITE_URL` at the production URL, send, then restore `http://localhost:3000`.
+
+### Copy changes
+
+| Where                           | Before                                                                                                        | After                                                                                                                                                                                                                                                                                            |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `userMessageFor` `NOT_FOUND`    | We couldn't find that. It may have drifted away.                                                              | We couldn't find that. It may have moved.                                                                                                                                                                                                                                                        |
+| `userMessageFor` `FORBIDDEN`    | You can't do that here.                                                                                       | You don't have access to that.                                                                                                                                                                                                                                                                   |
+| `userMessageFor` `RATE_LIMITED` | Easy there. Try again {when}.                                                                                 | Too many tries for now. Try again {when}.                                                                                                                                                                                                                                                        |
+| Auth network error              | We can't reach the universe right now. Check your connection.                                                 | We can't connect right now. Check your connection and try again.                                                                                                                                                                                                                                 |
+| Route error title               | This page lost its orbit                                                                                      | This page didn't load                                                                                                                                                                                                                                                                            |
+| Unsubscribe, invalid link       | This link has drifted away                                                                                    | This link has expired                                                                                                                                                                                                                                                                            |
+| Page title separator            | `\|` on global error and unsubscribe pages                                                                    | `·` everywhere                                                                                                                                                                                                                                                                                   |
+| Marketing footer                | Worldling. Grow a world of your own.                                                                          | Grow a world of your own. / Visit everyone else's.                                                                                                                                                                                                                                               |
+| `account.welcome` subject       | Welcome to Worldling, {name}                                                                                  | Your little corner of the universe (07 key)                                                                                                                                                                                                                                                      |
+| `account.welcome` body          | Welcome, {name} / … Tend it each day and it grows. … / Visit your world                                       | Grow a world of your own. / Hi {name}, / You've found a little corner of the universe. {world} is out there now, ready to grow. Visit other worlds and leave a comet, a short, kind message, when one makes you smile. / View my world / Your world will bloom as you tend it and friends visit. |
+| `comets.alert` subject          | A comet landed on {world} / {n} comets landed on {world}                                                      | A comet landed on your world / {n} comets landed on your world (07 key)                                                                                                                                                                                                                          |
+| `comets.alert` body             | Hi {name}, visitors left you something. / See your comets                                                     | Hi {name}, / Visitors left you something kind. / Read my comets                                                                                                                                                                                                                                  |
+| `digest.weekly` body            | Hi {name}, here is how your world did this week. / Level {n} / {n} days of tending in a row / Tend your world | Hi {name}, / Here is what happened on your world this week. / Bloom level {n} / Tended on {n} days (no streak pressure) / Tend my world                                                                                                                                                          |
+| `account.export` button         | Download your data                                                                                            | Download my data                                                                                                                                                                                                                                                                                 |
+| `account.deleted` heading       | Goodbye for now, {name}                                                                                       | Goodbye for now (greeting "Hi {name},")                                                                                                                                                                                                                                                          |
+| Email footer                    | Worldling. Grow a world of your own. / Unsubscribe from these emails                                          | Visit everyone else's. / A little kindness travels far. / Email preferences / Unsubscribe                                                                                                                                                                                                        |
+
+Everything else was already on voice, so it stays as it was. That covers the auth and onboarding forms, the username and password rules, the account screens and the shared states. The e2e-asserted headings and buttons are unchanged.
+
+### Brand pass notes
+
+- **Spacing names must not shadow containers.** Tailwind resolved `max-w-panel` to a `--spacing-panel` padding token, so the padding tokens are `panel-pad` and `panel-pad-lg`.
+- **tailwind-merge knows the brand scales** (`src/lib/utils.ts`). Without that, `text-body-lg` read as a color and stripped `text-on-warm` from the large button.
+- **Weight companions.** `text-*` brand sizes set a font weight, so a size utility on a button needs an explicit weight after it (the large button has `font-semibold`).
+- **E2E username.** The sign-up flow now uses a letters-only random username. Random hex could hold a run of digits the moderation filter reads as a phone number, which made the test flaky.
 
 ## Phase 4: Authentication and onboarding
 
@@ -134,7 +204,7 @@ Where the build stands, phase by phase (SPEC §15). Updated at the end of every 
 
 ## Notes and decisions
 
-- **Brand kit indexed (2026-10-18).** `docs/brand/README.md` maps all 210 files, extracts every value and records the logo and contrast checks. The kit moved to numbered folders (`02-logo` to `07-voice`). **Pending brand:** `08` (design tokens and one-page summary) and a dark optical favicon for light backgrounds. The README lists where `tokens.css` differs from the brand (radii, 88% glass, focus offset, easings, durations, shadows, type scale) and the light-theme status colors that need darker values. Those changes wait for the tokens step and need an ADR for SPEC §3.2.
+- **Brand kit indexed (2026-10-18).** `docs/brand/README.md` maps every file, extracts every value and records the logo and contrast checks. The kit uses numbered folders (`02-logo` to `08-handoff`). The `08` handoff that was pending is done: the brand pass applied it (ADR-018). **Still pending brand:** a dark optical favicon for light backgrounds. The light-theme status colors that need darker values are in the README for when the light theme lands.
 
 - **Pinned versions.** All dependencies are exact (`.npmrc` `save-exact=true`). Only Phase 0 dependencies are installed. Later phases add theirs, also pinned.
 - **TypeScript 6.0.3, not 7.** typescript-eslint 8.71 supports `<6.1.0`, and TS 7 (native port) breaks the compiler API used by Next and ESLint.

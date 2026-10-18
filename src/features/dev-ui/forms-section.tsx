@@ -54,7 +54,7 @@ export function FormsSection() {
       </div>
       <ShowcaseRow label="Slider">
         <div className="flex w-full max-w-panel flex-col gap-2">
-          <p className="text-sm text-text" id="demo-ocean-label">
+          <p className="wl-label text-text" id="demo-ocean-label">
             Ocean level: {ocean[0]}%
           </p>
           <Slider

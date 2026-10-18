@@ -14,18 +14,18 @@ describe("userMessageFor", () => {
 
   it("counts down rate limits in friendly units", () => {
     expect(userMessageFor("RATE_LIMITED", { retryAfterMs: 1000 })).toBe(
-      "Easy there. Try again in 1 second.",
+      "Too many tries for now. Try again in 1 second.",
     );
     expect(userMessageFor("RATE_LIMITED", { retryAfterMs: 11_200 })).toBe(
-      "Easy there. Try again in 12 seconds.",
+      "Too many tries for now. Try again in 12 seconds.",
     );
     expect(userMessageFor("RATE_LIMITED", { retryAfterMs: 90_000 })).toBe(
-      "Easy there. Try again in 2 minutes.",
+      "Too many tries for now. Try again in 2 minutes.",
     );
     expect(userMessageFor("RATE_LIMITED", { retryAfterMs: 5 * 3_600_000 })).toBe(
-      "Easy there. Try again in 5 hours.",
+      "Too many tries for now. Try again in 5 hours.",
     );
-    expect(userMessageFor("RATE_LIMITED")).toBe("Easy there. Try again in a moment.");
+    expect(userMessageFor("RATE_LIMITED")).toBe("Too many tries for now. Try again in a moment.");
   });
 });
 

@@ -11,9 +11,9 @@ export default function NotFound() {
       tabIndex={-1}
       className="flex flex-1 flex-col items-center justify-center gap-6 px-4 py-16 text-center focus:outline-none"
     >
-      <Logo variant="mark" className="size-20" />
-      <h1 className="text-3xl font-semibold">This corner of space is quiet</h1>
-      <p className="max-w-prose text-lg text-text-muted">
+      <Logo variant="hero" />
+      <h1 className="wl-h1">This corner of space is quiet</h1>
+      <p className="max-w-prose wl-body-lg text-text-muted">
         There&apos;s no world at this address. It may have moved, or it was never here.
       </p>
       <Link href="/" className={buttonVariants({ variant: "primary" })}>

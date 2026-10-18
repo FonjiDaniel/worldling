@@ -36,10 +36,10 @@ export function ChartContainer({
       style={style}
     >
       <figcaption className="flex flex-col gap-1">
-        <span className="font-display text-base font-semibold text-text">{title}</span>
-        <span className="text-sm text-text-muted">{summary}</span>
+        <span className="wl-h4 text-text">{title}</span>
+        <span className="wl-small text-text-muted">{summary}</span>
       </figcaption>
-      <div className="h-64 w-full text-xs text-text-muted [&_.recharts-cartesian-grid_line]:stroke-line [&_.recharts-text]:fill-text-muted">
+      <div className="h-64 w-full text-caption text-text-muted [&_.recharts-cartesian-grid_line]:stroke-line [&_.recharts-text]:fill-text-muted">
         <ResponsiveContainer width="100%" height="100%">
           {children}
         </ResponsiveContainer>
@@ -51,7 +51,7 @@ export function ChartContainer({
 
 function ChartLegend({ config }: { config: ChartConfig }) {
   return (
-    <ul className="flex flex-wrap gap-4 text-sm text-text-muted">
+    <ul className="flex flex-wrap gap-4 wl-small text-text-muted">
       {Object.entries(config).map(([key, series]) => (
         <li key={key} className="inline-flex items-center gap-2">
           <span aria-hidden className="size-3 rounded-sm" style={{ background: series.color }} />
@@ -78,8 +78,8 @@ interface ChartTooltipContentProps {
 export function ChartTooltipContent({ active, label, payload, config }: ChartTooltipContentProps) {
   if (active !== true || !payload || payload.length === 0) return null;
   return (
-    <div className="rounded-sm border border-line bg-surface-raised px-3 py-2 text-sm text-text shadow-raised">
-      <p className="font-medium">{label}</p>
+    <div className="rounded-sm border border-line bg-surface-raised px-3 py-2 wl-small text-text shadow-panel">
+      <p className="font-semibold">{label}</p>
       <ul>
         {payload.map((item) => {
           const key = String(item.dataKey ?? item.name ?? "");

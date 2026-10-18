@@ -15,7 +15,7 @@ export const SheetTrigger = SheetPrimitive.Trigger;
 export const SheetClose = SheetPrimitive.Close;
 
 const sheetVariants = cva(
-  "fixed z-50 flex flex-col gap-4 border-line bg-surface p-6 shadow-raised focus-visible:outline-none",
+  "fixed z-50 flex flex-col gap-4 border-line bg-surface p-panel-pad shadow-dialog focus-visible:outline-none md:p-panel-pad-lg",
   {
     variants: {
       side: {
@@ -56,12 +56,7 @@ export function SheetContent({
 }
 
 export function SheetTitle({ className, ...props }: ComponentProps<typeof SheetPrimitive.Title>) {
-  return (
-    <SheetPrimitive.Title
-      className={cn("pr-10 font-display text-xl font-semibold text-text", className)}
-      {...props}
-    />
-  );
+  return <SheetPrimitive.Title className={cn("pr-10 wl-h4 text-text", className)} {...props} />;
 }
 
 export function SheetDescription({
@@ -69,6 +64,6 @@ export function SheetDescription({
   ...props
 }: ComponentProps<typeof SheetPrimitive.Description>) {
   return (
-    <SheetPrimitive.Description className={cn("text-base text-text-muted", className)} {...props} />
+    <SheetPrimitive.Description className={cn("wl-body text-text-muted", className)} {...props} />
   );
 }

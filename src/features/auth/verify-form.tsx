@@ -125,7 +125,7 @@ export function VerifyForm() {
         </Button>
         <OfflineHint />
       </form>
-      <div className="flex flex-col items-center gap-2 text-sm text-text-muted">
+      <div className="flex flex-col items-center gap-2 wl-small text-text-muted">
         <p role="status" aria-live="polite">
           {sentNote}
         </p>

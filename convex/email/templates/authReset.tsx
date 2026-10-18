@@ -1,11 +1,14 @@
 import { EMAIL_TEMPLATES, type EmailTemplateData } from "../../shared/emailTemplates";
-import { Code, EmailLayout, Heading, Text } from "./Layout";
+import { Code, EmailLayout, Text } from "./Layout";
 import type { TemplateProps } from "./types";
 
-function AuthResetEmail({ data }: TemplateProps<EmailTemplateData<"auth.reset">>) {
+function AuthResetEmail({ data, siteUrl }: TemplateProps<EmailTemplateData<"auth.reset">>) {
   return (
-    <EmailLayout preview={`Your reset code is ${data.code}`}>
-      <Heading>Reset your password</Heading>
+    <EmailLayout
+      preview={`Your reset code is ${data.code}`}
+      heading="Reset your password"
+      siteUrl={siteUrl}
+    >
       <Text>Enter this code to choose a new password. It works for {data.minutes} minutes.</Text>
       <Code>{data.code}</Code>
       <Text muted>

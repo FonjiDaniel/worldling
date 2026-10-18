@@ -1,5 +1,7 @@
 export interface TemplateProps<Data> {
   data: Data;
+  /** The app's public origin, for the logo and preference links. */
+  siteUrl: string;
   /** Set for non-security mail. */
   unsubscribeUrl?: string;
 }

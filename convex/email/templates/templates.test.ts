@@ -1,5 +1,6 @@
 // @vitest-environment node
-import { readFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
+import { readdirSync, readFileSync } from "node:fs";
 
 import { describe, expect, it } from "vitest";
 
@@ -10,10 +11,11 @@ import {
   templatePreviewData,
 } from "../../shared/emailTemplates";
 import { renderEmail } from "./render";
-import { emailColors } from "./theme";
 
 const EM_DASH = "—";
+const SITE = { siteUrl: "https://worldling.test" };
 const UNSUBSCRIBE = "https://example.convex.site/email/unsubscribe?t=abc";
+const LOGO = "https://worldling.test/brand/email/worldling-horizontal-on-dark@2x.png";
 
 describe("email templates", () => {
   it.each(EMAIL_TEMPLATE_KEYS)("%s preview data passes its own schema", (key) => {
@@ -21,7 +23,10 @@ describe("email templates", () => {
   });
 
   it.each(EMAIL_TEMPLATE_KEYS)("%s renders html, text and a subject", async (key) => {
-    const email = await renderEmail(key, templatePreviewData(key), UNSUBSCRIBE);
+    const email = await renderEmail(key, templatePreviewData(key), {
+      ...SITE,
+      unsubscribeUrl: UNSUBSCRIBE,
+    });
     expect(email.subject.length).toBeGreaterThan(0);
     expect(email.html).toContain('content="dark"');
     expect(email.text.length).toBeGreaterThan(20);
@@ -31,17 +36,29 @@ describe("email templates", () => {
     }
   });
 
+  it.each(EMAIL_TEMPLATE_KEYS)("%s uses the 06 header and footer", async (key) => {
+    const { html } = await renderEmail(key, templatePreviewData(key), SITE);
+    expect(html).toContain(`src="${LOGO}"`);
+    expect(html).toContain('alt="Worldling"');
+    expect(html).toContain("Visit everyone else&#x27;s.");
+    expect(html).toContain('href="https://worldling.test/settings"');
+  });
+
   it.each(EMAIL_TEMPLATE_KEYS)("%s shows the unsubscribe link only when given", async (key) => {
-    const withLink = await renderEmail(key, templatePreviewData(key), UNSUBSCRIBE);
-    const withoutLink = await renderEmail(key, templatePreviewData(key));
+    const withLink = await renderEmail(key, templatePreviewData(key), {
+      ...SITE,
+      unsubscribeUrl: UNSUBSCRIBE,
+    });
+    const withoutLink = await renderEmail(key, templatePreviewData(key), SITE);
     expect(withoutLink.html).not.toContain("Unsubscribe");
     if (templateCategory(key) !== "security") {
-      expect(withLink.html).toContain("Unsubscribe from these emails");
+      expect(withLink.html).toContain(`href="${UNSUBSCRIBE.replace("&", "&amp;")}"`);
+      expect(withLink.html).toMatch(/>Unsubscribe<\/a>/);
     }
   });
 
   it("puts the code in the verification email text", async () => {
-    const email = await renderEmail("auth.verify", { code: "482913", minutes: 15 });
+    const email = await renderEmail("auth.verify", { code: "482913", minutes: 15 }, SITE);
     expect(email.text).toContain("482913");
   });
 
@@ -53,10 +70,20 @@ describe("email templates", () => {
 });
 
 describe("email theme", () => {
-  const tokens = readFileSync("src/styles/tokens.css", "utf8");
+  it("is generated from the same brand tokens as tokens.css", () => {
+    expect(() =>
+      execFileSync(process.execPath, ["scripts/build-tokens.mjs", "--check"], { stdio: "pipe" }),
+    ).not.toThrow();
+  });
 
-  it.each(Object.entries(emailColors))("%s matches the CSS token", (name, value) => {
-    const match = new RegExp(`--color-${name}:\\s*(#[0-9a-f]{6});`, "i").exec(tokens);
-    expect(match?.[1]?.toLowerCase()).toBe(value);
+  it("keeps hex colors out of templates (they come from emailTheme.ts)", () => {
+    const dir = "convex/email/templates";
+    const files = readdirSync(dir).filter(
+      (name) => /\.tsx?$/.test(name) && name !== "emailTheme.ts" && !name.includes(".test."),
+    );
+    const offenders = files.filter((name) =>
+      /#[0-9a-f]{3,8}\b/i.test(readFileSync(`${dir}/${name}`, "utf8")),
+    );
+    expect(offenders).toEqual([]);
   });
 });

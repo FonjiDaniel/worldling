@@ -37,7 +37,7 @@ export function Slider({
       <SliderPrimitive.Thumb
         aria-label={label}
         aria-valuetext={valueText?.(current)}
-        className="block size-5 rounded-full border-2 border-void bg-text shadow-raised transition-transform duration-fast ease-out hover:scale-110"
+        className="block size-5 rounded-full border-2 border-void bg-text shadow-panel transition-colors duration-fast ease-out hover:bg-nebula-50"
       />
     </SliderPrimitive.Root>
   );

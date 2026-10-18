@@ -1,0 +1,74 @@
+{
+  "errors.save_failed": {
+    "category": "error",
+    "context": "A save attempt has failed; success has not been reported.",
+    "before": "Something went wrong.",
+    "note": "Do not add a promise about draft recovery unless it is supported."
+  },
+  "errors.comet_failed": {
+    "category": "error",
+    "context": "The app has confirmed that the comet was not sent.",
+    "before": "Transmission failed.",
+    "note": "Use this wording only when delivery failure is known."
+  },
+  "errors.world_unavailable": {
+    "category": "error",
+    "context": "A requested world is unavailable.",
+    "before": "Resource unavailable.",
+    "note": "Give an available route back into the universe."
+  },
+  "empty.no_world": {
+    "category": "empty",
+    "context": "A person has not created their own world yet.",
+    "before": "No world found.",
+    "note": "An invitation to begin, with one clear action."
+  },
+  "empty.no_comets": {
+    "category": "empty",
+    "context": "The owner’s world has no received comets.",
+    "before": "No messages.",
+    "note": "Explain the feature without treating a quiet world as a failure."
+  },
+  "empty.comet_composer": {
+    "category": "empty",
+    "context": "A visitor opens the comet composer before writing a message.",
+    "before": "Enter text.",
+    "note": "Keep the field label visible. Enable sending once the message is valid."
+  },
+  "celebrations.world_created": {
+    "category": "celebration",
+    "context": "The first world has been created and saved successfully.",
+    "before": "World created successfully.",
+    "note": "Celebrate the beginning without adding a list of tasks."
+  },
+  "celebrations.first_comet": {
+    "category": "celebration",
+    "context": "The world has received its first comet.",
+    "before": "First message received.",
+    "note": "Celebrate the gesture, not a popularity score."
+  },
+  "celebrations.new_moon": {
+    "category": "celebration",
+    "context": "A bloom event has actually added a moon to the world.",
+    "before": "Bloom level increased.",
+    "note": "Name the visible change. Do not imply that every bloom adds a moon."
+  },
+  "notifications.welcome": {
+    "category": "notification",
+    "context": "Welcome email after signup.",
+    "before": "Welcome to Worldling",
+    "note": "A welcoming subject with no demand to finish onboarding."
+  },
+  "notifications.comet_arrived": {
+    "category": "notification",
+    "context": "Push title after a comet has arrived on the recipient’s world.",
+    "before": "New notification",
+    "note": "Send only after the event. The subject does not quote the visitor’s message."
+  },
+  "notifications.new_moon": {
+    "category": "notification",
+    "context": "Email subject or push title after a moon has been added.",
+    "before": "Bloom update",
+    "note": "The event provides the reason to return. Do not add false urgency."
+  }
+}

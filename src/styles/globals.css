@@ -5,6 +5,8 @@
   html {
     color-scheme: dark;
     background: var(--color-void);
+    font-optical-sizing: auto;
+    font-synthesis: none;
   }
 
   body {
@@ -12,15 +14,41 @@
     background-attachment: fixed;
     color: var(--color-text);
     font-family: var(--font-sans);
-    font-size: var(--text-base);
-    line-height: var(--text-base--line-height);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
   }
 
   h1,
   h2,
   h3 {
     font-family: var(--font-display);
+    font-stretch: var(--display-width);
     text-wrap: balance;
+  }
+
+  h1 {
+    font-size: var(--text-h1);
+    font-weight: var(--text-h1--font-weight);
+    line-height: var(--text-h1--line-height);
+    letter-spacing: var(--text-h1--letter-spacing);
+  }
+
+  h2 {
+    font-size: var(--text-h2);
+    font-weight: var(--text-h2--font-weight);
+    line-height: var(--text-h2--line-height);
+    letter-spacing: var(--text-h2--letter-spacing);
+  }
+
+  h3 {
+    font-size: var(--text-h3);
+    font-weight: var(--text-h3--font-weight);
+    line-height: var(--text-h3--line-height);
+    letter-spacing: var(--text-h3--letter-spacing);
+  }
+
+  [data-user-text] {
+    overflow-wrap: anywhere;
   }
 
   :focus-visible {
@@ -32,15 +60,66 @@
     background: var(--color-nebula-700);
     color: var(--color-text);
   }
+
+  /* Icons (05 visual language): 1.75 stroke on the 24 grid, round caps and joins. */
+  svg.lucide {
+    stroke-width: var(--icon-stroke);
+    stroke-linecap: var(--icon-cap);
+    stroke-linejoin: var(--icon-join);
+  }
 }
 
+/* One glass layer per region. Opaque Deep Space where blur isn't supported. */
+@utility glass {
+  --control-edge: var(--color-glass-control-line);
+  background-color: var(--color-surface);
+  @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+    background-color: var(--color-glass);
+    -webkit-backdrop-filter: blur(var(--blur-glass));
+    backdrop-filter: blur(var(--blur-glass));
+  }
+}
+
+/* The brand panel: glass, decorative Line border, large radius, panel shadow. */
+@utility glass-panel {
+  @apply glass;
+  border: var(--border-width) solid var(--color-line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-panel);
+  padding: var(--layout-panel-padding-mobile);
+  @variant md {
+    padding: var(--layout-panel-padding-desktop);
+  }
+}
+
+/* Required control boundary: Control Line on opaque dark, Dust inside glass. */
+@utility border-control {
+  border: var(--border-width) solid var(--control-edge, var(--color-control-line));
+}
+
+/* Hover and focus color in 150ms; press scales to 0.985 in 100ms, color only for reduced motion. */
+@utility pressable {
+  transition-property: color, background-color, border-color, scale;
+  transition-duration: var(--duration-fast);
+  transition-timing-function: var(--ease-out);
+  &:active:not(:disabled) {
+    scale: var(--press-scale);
+    transition-duration: var(--duration-press);
+    transition-timing-function: var(--ease-press);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &:active:not(:disabled) {
+      scale: none;
+    }
+  }
+}
+
+/* Reduced motion: color changes are instant. Animation tokens switch to a fade in tokens.css. */
 @media (prefers-reduced-motion: reduce) {
   *,
   ::before,
   ::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    transition-duration: 0s !important;
     scroll-behavior: auto !important;
   }
 }

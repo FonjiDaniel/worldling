@@ -1,11 +1,15 @@
 import { EMAIL_TEMPLATES, type EmailTemplateData } from "../../shared/emailTemplates";
-import { EmailLayout, Heading, Text } from "./Layout";
+import { EmailLayout, Greeting, Text } from "./Layout";
 import type { TemplateProps } from "./types";
 
-function DeletedEmail({ data }: TemplateProps<EmailTemplateData<"account.deleted">>) {
+function DeletedEmail({ data, siteUrl }: TemplateProps<EmailTemplateData<"account.deleted">>) {
   return (
-    <EmailLayout preview="Your account and your world are deleted">
-      <Heading>Goodbye for now, {data.displayName}</Heading>
+    <EmailLayout
+      preview="Your account and your world are deleted"
+      heading="Goodbye for now"
+      siteUrl={siteUrl}
+    >
+      <Greeting>Hi {data.displayName},</Greeting>
       <Text>
         Your Worldling account and your world are deleted. Thank you for growing something with us.
       </Text>

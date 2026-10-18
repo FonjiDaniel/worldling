@@ -9,9 +9,9 @@ import { useOnlineStatus } from "@/hooks/use-online-status";
 
 export function AuthHeading({ title, children }: { title: string; children?: ReactNode }) {
   return (
-    <header className="flex flex-col gap-2 text-center">
-      <h1 className="font-display text-2xl font-semibold tracking-tight text-text">{title}</h1>
-      {children === undefined ? null : <p className="text-text-muted">{children}</p>}
+    <header className="flex flex-col gap-2 sm:text-center">
+      <h1 className="wl-h2 text-text sm:wl-h3">{title}</h1>
+      {children === undefined ? null : <p className="wl-body text-text-muted">{children}</p>}
     </header>
   );
 }
@@ -21,8 +21,8 @@ export function FormAlert({ message }: { message: string | null }) {
   return (
     <div role="alert" aria-live="assertive" className="empty:hidden">
       {message === null ? null : (
-        <p className="flex items-start gap-2 rounded-md border border-danger bg-danger-surface px-3 py-2 text-sm text-text">
-          <CircleAlert aria-hidden className="mt-0.5 size-4 shrink-0 text-danger" />
+        <p className="flex items-start gap-2 rounded-md border border-danger bg-danger-surface px-4 py-3 wl-small text-text">
+          <CircleAlert aria-hidden className="mt-0.5 size-5 shrink-0 text-danger" />
           <span>{message}</span>
         </p>
       )}
@@ -35,7 +35,7 @@ export function OfflineHint() {
   const online = useOnlineStatus();
   if (online) return null;
   return (
-    <p role="status" className="text-center text-sm text-warning">
+    <p role="status" className="text-center wl-small text-warning">
       You&apos;re offline. We&apos;ll be ready when your connection is back.
     </p>
   );
@@ -65,7 +65,7 @@ export function PasswordInput(props: Omit<ComponentProps<typeof Input>, "type">)
 
 export function Divider({ label }: { label: string }) {
   return (
-    <div className="flex items-center gap-3 text-sm text-text-muted">
+    <div className="flex items-center gap-3 wl-small text-text-muted">
       <span aria-hidden className="h-px flex-1 bg-line" />
       {label}
       <span aria-hidden className="h-px flex-1 bg-line" />

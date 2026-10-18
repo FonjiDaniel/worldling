@@ -91,7 +91,9 @@ export function OnboardingForm() {
             <span
               aria-hidden
               className={
-                nameCount > DISPLAY_NAME_MAX ? "text-sm text-danger" : "text-sm text-text-muted"
+                nameCount > DISPLAY_NAME_MAX
+                  ? "wl-timestamp text-danger"
+                  : "wl-timestamp text-text-muted"
               }
             >
               {nameCount}/{DISPLAY_NAME_MAX}

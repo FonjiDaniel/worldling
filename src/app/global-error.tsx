@@ -11,7 +11,7 @@ export default function GlobalError({ retry }: RouteErrorProps) {
   return (
     <html lang="en" className={`${fontVariables} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
-        <title>Something went wrong | Worldling</title>
+        <title>Something went wrong · Worldling</title>
         <main className="mx-auto flex w-full max-w-panel flex-1 items-center px-4 py-16">
           <ErrorState
             className="w-full"

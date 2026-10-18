@@ -1,11 +1,14 @@
 import { EMAIL_TEMPLATES, type EmailTemplateData } from "../../shared/emailTemplates";
-import { Code, EmailLayout, Heading, Text } from "./Layout";
+import { Code, EmailLayout, Text } from "./Layout";
 import type { TemplateProps } from "./types";
 
-function AuthVerifyEmail({ data }: TemplateProps<EmailTemplateData<"auth.verify">>) {
+function AuthVerifyEmail({ data, siteUrl }: TemplateProps<EmailTemplateData<"auth.verify">>) {
   return (
-    <EmailLayout preview={`Your code is ${data.code}`}>
-      <Heading>Your verification code</Heading>
+    <EmailLayout
+      preview={`Your code is ${data.code}`}
+      heading="Your verification code"
+      siteUrl={siteUrl}
+    >
       <Text>Enter this code to finish signing in. It works for {data.minutes} minutes.</Text>
       <Code>{data.code}</Code>
       <Text muted>If you didn&apos;t ask for this, you can ignore this email.</Text>

@@ -20,9 +20,9 @@ export function DevUiShowcase() {
   return (
     <div className="mx-auto flex w-full max-w-page flex-col gap-10 px-4 py-12 sm:px-6">
       <header className="flex flex-col gap-3">
-        <p className="font-mono text-sm text-accent">/dev/ui</p>
-        <h1 className="text-3xl font-semibold">Worldling UI kit</h1>
-        <p className="max-w-prose text-lg text-text-muted">
+        <p className="wl-timestamp text-accent">/dev/ui</p>
+        <h1 className="wl-h1">Worldling UI kit</h1>
+        <p className="max-w-prose wl-body-lg text-text-muted">
           Every component and state in one place. Development only.
         </p>
         <nav aria-label="Sections">

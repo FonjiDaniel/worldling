@@ -1,0 +1,10 @@
+{
+  "approvedSourceSHA256": {
+    "Worldling-Step-2/07-source/worldling-geometry.json": "54e7b014f7e3c72571d3352172ce06b1d8ac13583f4636d8a88094b6c0e1bbf2",
+    "Worldling-Step-3/02-color-files/worldling-colors.json": "c137ae05257cc90e992ba83357267d5ffdedbbc7c136ab687ab16a7d5b0e39b1",
+    "Worldling-Step-4/02-type-files/worldling-typography.json": "533ae60c1ab0be074cb5aa25082ebe4da1acedf5f13fe01b33e683da3380eb38",
+    "Worldling-Step-5/04-style-files/worldling-visual-language.json": "881db16edfd1c932ec01c0d18835efa5bd0ff3a2cd57ace6fe34819e149c903b"
+  },
+  "copySource": "Worldling Step 7, version delivered in this conversation",
+  "tailwindVerifiedVersion": "4.3.3"
+}

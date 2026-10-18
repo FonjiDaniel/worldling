@@ -81,7 +81,7 @@ export function SignInForm() {
         <Field>
           <div className="flex items-baseline justify-between gap-2">
             <Label htmlFor={ids.password}>Password</Label>
-            <Link href="/reset-password" className={`text-sm ${linkClass}`}>
+            <Link href="/reset-password" className={`wl-small ${linkClass}`}>
               Forgot it?
             </Link>
           </div>
@@ -100,7 +100,7 @@ export function SignInForm() {
         </Button>
         <OfflineHint />
       </form>
-      <p className="text-center text-sm text-text-muted">
+      <p className="text-center wl-small text-text-muted">
         New here?{" "}
         <Link href={{ pathname: "/sign-up", query: { next } }} className={linkClass}>
           Create your world

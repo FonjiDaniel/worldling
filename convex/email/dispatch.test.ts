@@ -147,6 +147,13 @@ describe("dispatch.send", () => {
     expect(await row(id)).toMatchObject({ status: "failed", lastError: "missing_link_secret" });
   });
 
+  it("refuses mail without SITE_URL, since the logo and links need it", async () => {
+    vi.stubEnv("SITE_URL", "");
+    const id = await queued("kai@worldling.test", "auth.verify", { code: "482913", minutes: 15 });
+    await t.action(internal.email.dispatch.send, { outboxId: id });
+    expect(await row(id)).toMatchObject({ status: "failed", lastError: "missing_site_url" });
+  });
+
   it("clears security data once sent", async () => {
     const id = await queued("kai@worldling.test", "auth.verify", { code: "482913", minutes: 15 });
     await t.action(internal.email.dispatch.send, { outboxId: id });

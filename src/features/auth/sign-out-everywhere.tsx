@@ -37,12 +37,12 @@ export function SignOutEverywhere() {
   return (
     <section
       aria-labelledby="security-heading"
-      className="flex flex-col gap-3 rounded-lg border border-line bg-surface p-5"
+      className="flex flex-col gap-3 rounded-lg border border-line bg-surface p-panel-pad shadow-panel md:p-panel-pad-lg"
     >
-      <h2 id="security-heading" className="text-lg font-semibold">
+      <h2 id="security-heading" className="wl-h4">
         Sign out everywhere
       </h2>
-      <p className="text-text-muted">
+      <p className="wl-body text-text-muted">
         Lost a phone or used a shared computer? This signs you out on every device, including this
         one.
       </p>

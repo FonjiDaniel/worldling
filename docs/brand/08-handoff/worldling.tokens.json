@@ -1,0 +1,436 @@
+{
+  "meta": {
+    "brand": "Worldling",
+    "version": "1.0.0",
+    "format": "Plain JSON design tokens. CSS-ready strings for dimensions, colors, shadows and easing; numeric weights and line heights.",
+    "source": "Steps 2, 3, 4, 5 and 7. Step 7 wording supersedes earlier specimen copy.",
+    "referenceRootPx": 16
+  },
+  "color": {
+    "void": "#07071A",
+    "surface": "#11122B",
+    "surface-raised": "#1A1B3A",
+    "text": "#F4F1EA",
+    "text-muted": "#9A9BB8",
+    "primary": "#7C6CFF",
+    "accent": "#3FE0C5",
+    "warm": "#FF8A5B",
+    "link": "#A99FFF",
+    "line": "#34365A",
+    "control-line": "#696C91",
+    "success": "#68DFA9",
+    "success-surface": "#1B2B3A",
+    "warning": "#F4C969",
+    "warning-surface": "#2C2832",
+    "danger": "#FF7B91",
+    "danger-surface": "#2E1F37",
+    "info": "#8AB4FF",
+    "info-surface": "#202544",
+    "glass": "rgb(17 18 43 / 88%)",
+    "glass-control-line": "#9A9BB8",
+    "on-primary": "#07071A",
+    "on-accent": "#07071A",
+    "on-warm": "#07071A",
+    "nebula": {
+      "50": "#F3F1FF",
+      "100": "#E8E3FF",
+      "200": "#CBC2FF",
+      "300": "#A99FFF",
+      "400": "#9182FF",
+      "500": "#7C6CFF",
+      "600": "#6550DB",
+      "700": "#503EAF",
+      "800": "#3D3083",
+      "900": "#2A2257",
+      "950": "#17132E"
+    },
+    "aurora": {
+      "50": "#E9FCF6",
+      "100": "#CCF8ED",
+      "200": "#A2F1DF",
+      "300": "#76EBD3",
+      "400": "#57E5CB",
+      "500": "#3FE0C5",
+      "600": "#28B49E",
+      "700": "#1E8C7C",
+      "800": "#196B61",
+      "900": "#164E48",
+      "950": "#0C2D2A"
+    },
+    "sunrise": {
+      "50": "#FFF4ED",
+      "100": "#FFE5D7",
+      "200": "#FFCDB6",
+      "300": "#FFB394",
+      "400": "#FF9D75",
+      "500": "#FF8A5B",
+      "600": "#D96A40",
+      "700": "#AC4E2E",
+      "800": "#823C26",
+      "900": "#5B2D21",
+      "950": "#331B16"
+    }
+  },
+  "typography": {
+    "family": {
+      "display": "\"Bricolage Grotesque\", \"Trebuchet MS\", Arial, sans-serif",
+      "sans": "\"Geist\", system-ui, -apple-system, \"Segoe UI\", Arial, sans-serif",
+      "mono": "\"Geist Mono\", ui-monospace, \"SFMono-Regular\", Consolas, \"Liberation Mono\", monospace"
+    },
+    "weight": {
+      "regular": 400,
+      "medium": 500,
+      "semibold": 600,
+      "display": 650
+    },
+    "scale": {
+      "display": {
+        "family": "display",
+        "size": "clamp(2.5rem, calc(1.833333rem + 2.962963vw), 4.5rem)",
+        "weight": 650,
+        "lineHeight": 1.05,
+        "letterSpacing": "-0.035em",
+        "mobilePx": 40,
+        "desktopPx": 72,
+        "use": "Hero statement. Use once per view."
+      },
+      "h1": {
+        "family": "display",
+        "size": "clamp(2.25rem, calc(1.833333rem + 1.851852vw), 3.5rem)",
+        "weight": 650,
+        "lineHeight": 1.1,
+        "letterSpacing": "-0.03em",
+        "mobilePx": 36,
+        "desktopPx": 56,
+        "use": "World title or main page heading."
+      },
+      "h2": {
+        "family": "display",
+        "size": "clamp(1.75rem, calc(1.500000rem + 1.111111vw), 2.5rem)",
+        "weight": 650,
+        "lineHeight": 1.15,
+        "letterSpacing": "-0.025em",
+        "mobilePx": 28,
+        "desktopPx": 40,
+        "use": "Major section heading."
+      },
+      "h3": {
+        "family": "display",
+        "size": "clamp(1.5rem, calc(1.375000rem + 0.555556vw), 1.875rem)",
+        "weight": 600,
+        "lineHeight": 1.2,
+        "letterSpacing": "-0.02em",
+        "mobilePx": 24,
+        "desktopPx": 30,
+        "use": "Section or feature heading."
+      },
+      "h4": {
+        "family": "sans",
+        "size": "clamp(1.25rem, calc(1.166667rem + 0.370370vw), 1.5rem)",
+        "weight": 600,
+        "lineHeight": 1.3,
+        "letterSpacing": "-0.01em",
+        "mobilePx": 20,
+        "desktopPx": 24,
+        "use": "Compact section and panel heading."
+      },
+      "body-lg": {
+        "family": "sans",
+        "size": "clamp(1.125rem, calc(1.083333rem + 0.185185vw), 1.25rem)",
+        "weight": 400,
+        "lineHeight": 1.6,
+        "letterSpacing": "0em",
+        "mobilePx": 18,
+        "desktopPx": 20,
+        "use": "Short introductions and lead paragraphs."
+      },
+      "body": {
+        "family": "sans",
+        "size": "clamp(1rem, calc(0.958333rem + 0.185185vw), 1.125rem)",
+        "weight": 400,
+        "lineHeight": 1.6,
+        "letterSpacing": "0em",
+        "mobilePx": 16,
+        "desktopPx": 18,
+        "use": "Default reading text and descriptions."
+      },
+      "small": {
+        "family": "sans",
+        "size": "clamp(0.875rem, calc(0.833333rem + 0.185185vw), 1rem)",
+        "weight": 400,
+        "lineHeight": 1.5,
+        "letterSpacing": "0em",
+        "mobilePx": 14,
+        "desktopPx": 16,
+        "use": "Supporting copy and metadata."
+      },
+      "caption": {
+        "family": "sans",
+        "size": "clamp(0.75rem, calc(0.708333rem + 0.185185vw), 0.875rem)",
+        "weight": 500,
+        "lineHeight": 1.45,
+        "letterSpacing": "0.01em",
+        "mobilePx": 12,
+        "desktopPx": 14,
+        "use": "Short, nonessential captions only."
+      }
+    },
+    "ui": {
+      "button": {
+        "family": "sans",
+        "size": "1rem",
+        "weight": 600,
+        "lineHeight": 1.25,
+        "letterSpacing": "0em",
+        "use": "Visible action labels. Keep sentence case and allow wrapping."
+      },
+      "label": {
+        "family": "sans",
+        "size": ".875rem",
+        "weight": 500,
+        "lineHeight": 1.4,
+        "letterSpacing": "0em",
+        "use": "Short form labels, always visible and separate from placeholders."
+      },
+      "input": {
+        "family": "sans",
+        "size": "1rem",
+        "weight": 400,
+        "lineHeight": 1.5,
+        "letterSpacing": "0em",
+        "use": "Input content. Use at least the default 16px equivalent."
+      },
+      "data": {
+        "family": "mono",
+        "size": "clamp(1.5rem, calc(1.333333rem + 0.740741vw), 2rem)",
+        "weight": 500,
+        "lineHeight": 1.15,
+        "letterSpacing": "0em",
+        "use": "Standalone counters, bloom levels and numeric highlights."
+      },
+      "timestamp": {
+        "family": "mono",
+        "size": "clamp(0.75rem, calc(0.708333rem + 0.185185vw), 0.875rem)",
+        "weight": 500,
+        "lineHeight": 1.4,
+        "letterSpacing": "0em",
+        "use": "Compact timestamps. Keep important time instructions in body size."
+      }
+    },
+    "viewportAnchorsPx": {
+      "mobile": 360,
+      "desktop": 1440
+    },
+    "displayWidth": "100%",
+    "opticalSizing": "auto",
+    "bodyMeasure": "65ch",
+    "displayMeasure": "16ch"
+  },
+  "radius": {
+    "sm": "0.5rem",
+    "md": "1rem",
+    "lg": "1.5rem",
+    "full": "9999px"
+  },
+  "spacing": {
+    "unit": "0.25rem",
+    "scale": {
+      "0": "0rem",
+      "1": "0.25rem",
+      "2": "0.5rem",
+      "3": "0.75rem",
+      "4": "1rem",
+      "5": "1.25rem",
+      "6": "1.5rem",
+      "8": "2rem",
+      "10": "2.5rem",
+      "12": "3rem",
+      "16": "4rem",
+      "20": "5rem",
+      "24": "6rem",
+      "32": "8rem"
+    }
+  },
+  "shadow": {
+    "panel": "0 16px 48px rgb(0 0 0 / 32%), inset 0 1px 0 rgb(244 241 234 / 4%)",
+    "dialog": "0 24px 80px rgb(0 0 0 / 45%)",
+    "selection": "0 0 24px rgb(63 224 197 / 12%)"
+  },
+  "motion": {
+    "duration": {
+      "fast": "150ms",
+      "base": "240ms",
+      "slow": "600ms",
+      "press": "100ms",
+      "panel-exit": "180ms",
+      "comet": "900ms",
+      "bloom": "1200ms",
+      "drift": "16000ms",
+      "rotation": "120000ms",
+      "orbit": "90000ms",
+      "reduced": "150ms"
+    },
+    "ease": {
+      "out": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+      "in-out": "cubic-bezier(0.45, 0, 0.55, 1)",
+      "press": "cubic-bezier(0.4, 0, 1, 1)",
+      "comet": "cubic-bezier(0.22, 0.61, 0.36, 1)",
+      "linear": "linear"
+    },
+    "behavior": {
+      "feedback": {
+        "name": "Hover or focus color",
+        "duration_ms": 150,
+        "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+        "change": "Color or border only. Focus appears immediately.",
+        "reduced": "Keep color change, 100ms or instant."
+      },
+      "press": {
+        "name": "Press feedback",
+        "duration_ms": 100,
+        "easing": "cubic-bezier(0.4, 0, 1, 1)",
+        "change": "Scale 1 to 0.985. Release in 150ms.",
+        "reduced": "Color change only; no scaling."
+      },
+      "panel": {
+        "name": "Panel entrance",
+        "duration_ms": 240,
+        "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+        "change": "Opacity 0 to 1; move up 8px. Exit: 180ms.",
+        "reduced": "150ms opacity only."
+      },
+      "world-focus": {
+        "name": "World focus",
+        "duration_ms": 600,
+        "easing": "cubic-bezier(0.45, 0, 0.55, 1)",
+        "change": "Camera shift at most 8% of viewport. No roll.",
+        "reduced": "150ms crossfade between stationary views."
+      },
+      "comet": {
+        "name": "Comet arrival",
+        "duration_ms": 900,
+        "easing": "cubic-bezier(0.22, 0.61, 0.36, 1)",
+        "change": "One short curved path, up to 140px in the UI.",
+        "reduced": "150ms arrival fade; no trail or travel."
+      },
+      "bloom": {
+        "name": "Bloom reveal",
+        "duration_ms": 1200,
+        "easing": "cubic-bezier(0.45, 0, 0.55, 1)",
+        "change": "Opacity 0 to 1; new detail scales 0.96 to 1.",
+        "reduced": "150ms fade of the completed detail."
+      },
+      "drift": {
+        "name": "Ambient drift",
+        "duration_ms": 16000,
+        "easing": "cubic-bezier(0.45, 0, 0.55, 1)",
+        "change": "Full cycle: 0px to -4px to 0px. One featured world.",
+        "reduced": "Static position; no ambient animation."
+      },
+      "rotation": {
+        "name": "Planet rotation",
+        "duration_ms": 120000,
+        "easing": "linear",
+        "change": "One full turn around its own axis. Optional.",
+        "reduced": "Static view, with manual step controls."
+      },
+      "orbit": {
+        "name": "Moon orbit",
+        "duration_ms": 90000,
+        "easing": "linear",
+        "change": "One full orbit. Small, constant speed. Optional.",
+        "reduced": "Moon remains at its resting position."
+      }
+    }
+  },
+  "blur": {
+    "glass": "20px"
+  },
+  "border": {
+    "width": "1px",
+    "focus-width": "2px",
+    "focus-offset": "3px"
+  },
+  "size": {
+    "control-min": "3rem",
+    "icon-target-min": "2.75rem",
+    "icon": "1.5rem",
+    "icon-optical": "1rem"
+  },
+  "layout": {
+    "panel-padding-mobile": "1.25rem",
+    "panel-padding-desktop": "1.5rem",
+    "panel-breakpoint": "48rem"
+  },
+  "gradient": {
+    "worldling": "linear-gradient(135deg, #7C6CFF 0%, #3FE0C5 100%)"
+  },
+  "icon": {
+    "stroke": "1.75px",
+    "optical-stroke": "1.5px",
+    "cap": "round",
+    "join": "round"
+  },
+  "usage": {
+    "colorRoles": {
+      "void": "Main canvas; ink on bright filled controls.",
+      "surface": "Panels, cards, navigation and status containers.",
+      "surface-raised": "Raised panels, menus and nested surfaces.",
+      "text": "Headings, body copy and primary icons on dark.",
+      "text-muted": "Secondary copy, metadata and supporting labels.",
+      "primary": "Primary brand, selected controls and secondary actions.",
+      "accent": "Growth details, bloom accents and focus color on dark.",
+      "warm": "Main call to action: create a world or send a comet.",
+      "link": "Default link and selected-text color on dark surfaces.",
+      "line": "Decorative separators only, never a required control boundary.",
+      "control-line": "Visible input and control boundaries on dark surfaces.",
+      "success": "Saved, delivered, completed or a healthy system state.",
+      "success-surface": "Opaque success message background; precomposed 12% color over Deep Space.",
+      "warning": "Needs attention; a recoverable limit or unsaved change.",
+      "warning-surface": "Opaque warning message background; precomposed 12% color over Deep Space.",
+      "danger": "Failed action, destructive action or an error that needs repair.",
+      "danger-surface": "Opaque danger message background; precomposed 12% color over Deep Space.",
+      "info": "Neutral guidance, updates and helpful status information.",
+      "info-surface": "Opaque info message background; precomposed 12% color over Deep Space.",
+      "glass": "Translucent background only. Keep foreground text opaque.",
+      "glass-control-line": "Functional boundaries inside glass panels.",
+      "on-primary": "Label on Nebula 500 or 400. Do not assume it works on every shade.",
+      "on-accent": "Label on Aurora 500.",
+      "on-warm": "Label on Sunrise 500, 400 or 600."
+    },
+    "ratios": {
+      "dark_surfaces_percent": 70,
+      "neutral_text_and_icons_percent": 20,
+      "brand_accents_percent": 10,
+      "detail": {
+        "Void": 50,
+        "Deep Space": 15,
+        "Orbit": 5,
+        "Starlight": 15,
+        "Dust": 5,
+        "Nebula": 5,
+        "Aurora": 3,
+        "Sunrise": 2
+      },
+      "interpretation": "A visual-emphasis guide for branded UI, not a literal pixel quota. Planet artwork can have its own world-specific colors. Status colors appear only when needed."
+    },
+    "durationAliases": {
+      "fast": "Hover and focus color feedback",
+      "base": "Panel entrance",
+      "slow": "World focus or camera movement; not a default button transition"
+    },
+    "rules": {
+      "capitalization": "Sentence case for headings and controls; lowercase is reserved for the supplied logo wordmark.",
+      "display_width_percent": 100,
+      "optical_sizing": "auto in browsers; do not condense headings to force a fit.",
+      "paragraph_measure": "50 to 65ch on wide layouts; let mobile copy use the available width.",
+      "display_measure": "About 12 to 16ch; allow natural wrapping.",
+      "title_wrapping": "Allow long world names to wrap, including unbroken user text.",
+      "body_numbers": "Keep numbers inside normal sentences in Geist; use Geist Mono for separate data.",
+      "caption_limit": "Do not use captions for main instructions, errors or actions.",
+      "logo": "Use the approved Step 2 outlined logo. Do not rebuild the wordmark with a live text style.",
+      "locale": "Use the Step 7 English and French copy files.",
+      "scope": "Type specification and specimen checks, not full application accessibility certification."
+    }
+  }
+}

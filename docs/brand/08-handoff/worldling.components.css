@@ -1,0 +1,113 @@
+/* Optional recipes using only the Worldling theme values. */
+@layer components {
+  .wl-glass {
+    color: var(--color-text);
+    background: var(--color-surface);
+    border: var(--border-width) solid var(--color-line);
+    border-radius: var(--radius-lg);
+    padding: var(--layout-panel-padding-mobile);
+    box-shadow: var(--shadow-panel);
+  }
+  @supports ((backdrop-filter: blur(20px)) or (-webkit-backdrop-filter: blur(20px))) {
+    .wl-glass {
+      background: var(--color-glass);
+      backdrop-filter: blur(var(--blur-glass));
+      -webkit-backdrop-filter: blur(var(--blur-glass));
+    }
+  }
+  /* 48rem is the layout.panel-breakpoint token. Media queries cannot use var(). */
+  @media (min-width: 48rem) {
+    .wl-glass { padding: var(--layout-panel-padding-desktop); }
+  }
+  .wl-control {
+    min-inline-size: 0;
+    color: var(--color-text);
+    background: var(--color-void);
+    border: var(--border-width) solid var(--color-control-line);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-3) var(--spacing-4);
+    font-family: var(--font-sans);
+    font-size: var(--text-input);
+    line-height: var(--text-input--line-height);
+  }
+  .wl-glass .wl-control { border-color: var(--color-glass-control-line); }
+  .wl-focus:focus-visible,
+  .wl-control:focus-visible,
+  .wl-warm-action:focus-visible,
+  .wl-icon-button:focus-visible,
+  .wl-link:focus-visible {
+    outline: var(--border-focus-width) solid var(--color-accent);
+    outline-offset: var(--border-focus-offset);
+  }
+  .wl-warm-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-2);
+    min-block-size: var(--size-control-min);
+    padding: var(--spacing-3) var(--spacing-6);
+    border: 0;
+    border-radius: var(--radius-full);
+    background: var(--color-warm);
+    color: var(--color-on-warm);
+    font-family: var(--font-sans);
+    font-size: var(--text-button);
+    font-weight: var(--text-button--font-weight);
+    line-height: var(--text-button--line-height);
+    letter-spacing: var(--text-button--letter-spacing);
+    text-align: center;
+    white-space: normal;
+    cursor: pointer;
+    transition: background-color var(--duration-fast) var(--ease-out);
+  }
+  @media (hover: hover) {
+    .wl-warm-action:not(:disabled):hover { background: var(--color-sunrise-400); }
+  }
+  .wl-warm-action:not(:disabled):active { background: var(--color-sunrise-600); }
+  .wl-warm-action:disabled { opacity: .5; cursor: not-allowed; }
+  .wl-icon-button {
+    min-inline-size: var(--size-icon-target-min);
+    min-block-size: var(--size-icon-target-min);
+    display: inline-grid;
+    place-items: center;
+    border-radius: var(--radius-sm);
+  }
+  .wl-link {
+    color: var(--color-link);
+    text-decoration: underline;
+    text-underline-offset: .2em;
+  }
+  .wl-world-title { overflow-wrap: anywhere; }
+  .wl-panel-enter { animation: wl-panel-in var(--duration-base) var(--ease-out) both; }
+  .wl-bloom-reveal { animation: wl-bloom-in var(--duration-bloom) var(--ease-in-out) both; }
+  [data-ambient="on"] .wl-ambient-drift {
+    animation: wl-drift var(--duration-drift) var(--ease-in-out) infinite;
+  }
+  [data-motion-paused="true"] .wl-ambient-drift { animation-play-state: paused; }
+  [data-reduced-motion="true"] .wl-ambient-drift { animation: none; transform: none; }
+  [data-reduced-motion="true"] .wl-panel-enter,
+  [data-reduced-motion="true"] .wl-bloom-reveal {
+    animation: wl-fade-in var(--duration-reduced) var(--ease-out) both;
+  }
+  [data-reduced-motion="true"] .wl-warm-action { transition-duration: var(--duration-press); }
+  @media (prefers-reduced-motion: reduce) {
+    [data-ambient="on"] .wl-ambient-drift { animation: none; transform: none; }
+    .wl-panel-enter, .wl-bloom-reveal {
+      animation: wl-fade-in var(--duration-reduced) var(--ease-out) both;
+    }
+    .wl-warm-action { transition-duration: var(--duration-press); }
+  }
+}
+@keyframes wl-panel-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes wl-bloom-in {
+  from { opacity: 0; transform: scale(.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes wl-drift {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+@keyframes wl-fade-in { from { opacity: 0; } to { opacity: 1; } }

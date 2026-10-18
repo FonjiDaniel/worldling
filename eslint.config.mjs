@@ -33,7 +33,7 @@ export default defineConfig([
   {
     // Email templates render full HTML documents, not Next.js pages.
     files: ["convex/email/templates/**/*.tsx"],
-    rules: { "@next/next/no-head-element": "off" },
+    rules: { "@next/next/no-head-element": "off", "@next/next/no-img-element": "off" },
   },
   {
     files: ["**/*.mjs", "**/*.cjs"],

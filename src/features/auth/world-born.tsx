@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "convex/react";
-import { Sparkles } from "lucide-react";
+import { Sprout } from "lucide-react";
 
 import { LoadingState } from "@/components/shared/loading-state";
 import { api } from "@convex/_generated/api";
@@ -15,12 +15,12 @@ export function WorldBorn() {
     <section className="mx-auto flex w-full max-w-panel flex-1 flex-col items-center justify-center gap-4 px-4 py-16 text-center">
       <span
         aria-hidden
-        className="flex size-16 items-center justify-center rounded-full bg-gradient-brand text-on-primary [&_svg]:size-8"
+        className="flex size-16 animate-bloom-in items-center justify-center rounded-full bg-gradient-brand text-on-primary [&_svg]:size-8"
       >
-        <Sparkles />
+        <Sprout />
       </span>
-      <h1 className="font-display text-3xl font-semibold tracking-tight">Your world is born</h1>
-      <p role="status" className="max-w-prose text-lg text-text-muted">
+      <h1 className="wl-h1">Your world is born</h1>
+      <p role="status" className="max-w-prose wl-body-lg text-text-muted">
         Welcome, {me.profile.displayName}. Your world is spinning at{" "}
         <span className="font-mono text-text">/w/{me.profile.username}</span>. Soon you&apos;ll be
         able to tend it, visit others and send comets.
