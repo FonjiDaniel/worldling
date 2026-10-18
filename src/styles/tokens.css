@@ -493,6 +493,18 @@
   --gradient-brand: var(--gradient-worldling);
   --press-scale: 0.985;
 
+  /* 3D art (03 color, 05 visual language). Read once by src/three/art.ts; never in shaders. */
+  --art-space: var(--color-void);
+  --art-key-light: var(--color-sunrise-50);
+  --art-fill-light: var(--color-nebula-200);
+  --art-night-lights: var(--color-sunrise-300);
+  --art-firefly: var(--color-sunrise-200);
+  --art-aurora: var(--color-accent);
+  --art-halo: var(--color-link);
+  --art-moon: var(--color-text-muted);
+  --art-nebula: var(--color-primary);
+  --art-star: var(--color-text);
+
   /* Quiet space (05 visual language): static round stars, nebula tints at 8% or less, Void base. */
   --space-stars:
     radial-gradient(circle at 23% 31%, rgb(244 241 234 / 55%) 0 1px, transparent 1.5px) 0 0 / 433px

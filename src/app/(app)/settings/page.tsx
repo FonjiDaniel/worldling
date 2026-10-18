@@ -10,7 +10,7 @@ export default function SettingsPage() {
   return (
     <AccountGate>
       <div className="mx-auto flex w-full max-w-panel flex-col gap-6 px-4 py-10 sm:px-6">
-        <h1 className="font-display text-3xl font-semibold tracking-tight">Settings</h1>
+        <h1 className="text-3xl font-display font-semibold tracking-tight">Settings</h1>
         <SignOutEverywhere />
       </div>
     </AccountGate>

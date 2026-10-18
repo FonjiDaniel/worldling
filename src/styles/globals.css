@@ -123,3 +123,16 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* Tier 0 world (SPEC §8.9): the world's own colors, lit from the upper left like the 3D view. */
+@utility planet-disc {
+  background: radial-gradient(
+    circle at 34% 30%,
+    color-mix(in srgb, var(--disc-shore) 70%, var(--color-text)) 0%,
+    var(--disc-low) 22%,
+    var(--disc-mid) 40%,
+    var(--disc-ocean) 68%,
+    color-mix(in srgb, var(--disc-ocean) 45%, var(--color-void)) 100%
+  );
+  box-shadow: 0 0 2rem 0.25rem color-mix(in srgb, var(--disc-atmosphere) 25%, transparent);
+}

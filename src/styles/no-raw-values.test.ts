@@ -4,7 +4,7 @@ import { join, relative } from "node:path";
 import { describe, expect, it } from "vitest";
 
 // SPEC §3.1: no raw hex, px or ms values outside src/styles/tokens.css.
-const roots = ["src/components", "src/features", "src/app"];
+const roots = ["src/components", "src/features", "src/app", "src/three"];
 const patterns: { name: string; regex: RegExp }[] = [
   { name: "hex color", regex: /#[0-9a-fA-F]{3,8}\b/ },
   { name: "color function", regex: /\b(?:rgba?|hsla?|oklch|oklab|lab|lch)\(/ },
@@ -36,7 +36,7 @@ function findViolations(): string[] {
 }
 
 describe("design token discipline", () => {
-  it("has no raw colors, px or ms values in components, features or app", () => {
+  it("has no raw colors, px or ms values in components, features, app or three", () => {
     expect(findViolations()).toEqual([]);
   });
 });

@@ -3,6 +3,8 @@
 export interface ErrorContext {
   fn?: string;
   rid?: string;
+  /** Searchable tags, like the 3D tier or GPU. Never secrets or user content. */
+  tags?: Record<string, string | number>;
 }
 
 export function reportError(error: unknown, context: ErrorContext = {}): void {
