@@ -40,7 +40,10 @@ export function SliderRow({ control }: { control: SliderKey }) {
           state.preview({ ...present, params: spec.set(present.params, fromPercent(spec, value)) });
         }}
         onValueCommit={() => {
-          store.getState().commit(`${spec.label.toLowerCase()} change`);
+          // Radix commits before it reports the value on key presses, so let the preview land.
+          queueMicrotask(() => {
+            store.getState().commit(`${spec.label.toLowerCase()} change`);
+          });
         }}
       />
     </div>

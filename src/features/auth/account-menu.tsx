@@ -32,9 +32,13 @@ export function AccountMenu() {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="ghost" size="sm" aria-label={`Account menu for ${name}`}>
-          <Avatar name={name} size="sm" />
-          <span className="hidden sm:inline">{name}</span>
+        <Button variant="ghost" size="sm">
+          {/* The name comes from text, so it always holds what's visible (WCAG 2.5.3). */}
+          <span aria-hidden className="contents">
+            <Avatar name={name} size="sm" />
+          </span>
+          <span className="sr-only">Account menu for </span>
+          <span className="sr-only sm:not-sr-only">{name}</span>
           <ChevronDown aria-hidden />
         </Button>
       </PopoverTrigger>

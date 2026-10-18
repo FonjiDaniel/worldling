@@ -95,14 +95,17 @@ export function CreatorSheet({ children, footer }: { children: ReactNode; footer
       velocity: 0,
       moved: false,
     };
-    event.currentTarget.setPointerCapture(event.pointerId);
   };
 
   const onPointerMove = (event: PointerEvent<HTMLDivElement>) => {
     const state = drag.current;
     if (state === null) return;
     if (!state.moved && Math.abs(event.clientY - state.startY) < DRAG_SLOP) return;
-    state.moved = true;
+    if (!state.moved) {
+      // Capture only once it's a drag: capturing on press would steal the handle's click.
+      event.currentTarget.setPointerCapture(event.pointerId);
+      state.moved = true;
+    }
     const elapsed = Math.max(event.timeStamp - state.lastTime, 1) / 1000;
     state.velocity = (state.lastY - event.clientY) / elapsed;
     state.lastY = event.clientY;
