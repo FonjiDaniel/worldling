@@ -445,6 +445,8 @@ Pin exact versions in `package.json` at Phase 0. Upgrade deliberately, never wit
 | ADR-013 | Brand color tokens replace §3.2 values | Two parallel palettes | One semantic palette from the brand kit, light theme deferred |
 | ADR-019 | Canvas mounted once in the root layout, lazy-loaded on the first view; flat color; space backdrop pass; clouds from level 1 | Canvas per route group | Truly persistent context, no 3D cost on pages without 3D |
 | ADR-020 | Shader glow instead of a bloom pass; StatsGl instead of r3f-perf | EffectComposer, r3f-perf | Composer breaks scissored `View`s; r3f-perf targets R3F v8 |
+| ADR-021 | A minimal `/w/[username]` (with `getByUsername` and the claim celebration) lands in Phase 6; `/me` redirects to it | Celebrating on `/me` until Phase 7 | §2.2 lands people on their world page; Phase 7 extends the same page |
+| ADR-022 | Creator: mockup tabs holding the SPEC sections, a custom non-modal bottom sheet, WASM WebP fallback for Safari, thumbnail uploads spend a `world.update` token | Six stacked sections, vaul, PNG thumbnails | Matches the 06 mockup, keeps the world usable on phones, keeps thumbnails WebP-only |
 
 ### 4.4 Repository structure
 
@@ -1551,7 +1553,7 @@ Acceptance: e2e guest create -> claim -> world exists with matching params and a
 
 ```
 Read CLAUDE.md and docs/SPEC.md (§2.2 Visit/Return, §2.4, §12). Plan first, then implement Phase 7.
-- /w/[username]: server metadata + preloadQuery, full-screen world, owner info, bloom progress, comet orbit visuals (read-only list for now).
+- /w/[username]: server metadata + preloadQuery, full-screen world, owner info, bloom progress, comet orbit visuals (read-only list for now). (A minimal page with getByUsername, the owner link and the claim celebration exists since Phase 6, ADR-021. Extend it.)
 - tend (owner, once per UTC day) and recordVisit (3s visible dwell, idempotent) enqueueing bloomQueue.
 - jobs.bloomProcessor per §5.6 with caps from convex/shared/bloom.ts, worldStatsDaily, level-up notifications.
 - opengraph-image.tsx, share sheet (§12), copy link with confirmation.

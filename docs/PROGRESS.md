@@ -4,11 +4,59 @@ Where the build stands, phase by phase (SPEC §15). Updated at the end of every 
 
 ## Current status
 
-**Phase 5: Planet renderer** is complete. Typecheck, lint, tests (380), build and e2e (26) pass locally. One acceptance item still needs a real phone: the 60fps check at tier 2 (see Phase 5 notes). GitHub Actions is still blocked by the account billing lock (see Phase 0).
+**Phase 6: World creator** is complete. Typecheck, lint, unit and Convex tests, build and the creator e2e on desktop Chrome, Pixel 7 and iPhone 14 pass locally. Two items still need real phones: the creator on a real iPhone (Safari) and Android (Chrome), and the Phase 5 60fps check. GitHub Actions is still blocked by the account billing lock (see Phase 0).
 
 Phase 4 is complete, except Google sign-in, which is built but not yet tried end to end (see Phase 4 notes).
 
-**Next:** Phase 6, World creator. It builds on `PlanetView`, `presetParams`, `PALETTES` and `clampColor`.
+**Next:** Phase 7, World page and sharing. It extends the minimal `/w/[username]` from this phase (ADR-021).
+
+## Phase 6: World creator
+
+- [x] ADR-021 (a minimal world page lands now) and ADR-022 (creator details). SPEC §4.3 and the §15 Phase 7 entry updated.
+- [x] Convex, `worlds.ts` + `model/worlds.ts`:
+  - `mine` (userQuery) and `getByUsername` (publicQuery: null for unknown names, hidden worlds and owners who aren't active).
+  - `update`: owner only, `world.update` rate limit, schema clamps, name moderation. Onboarding drafts and updates share `parseWorldParams` / `parseWorldName`.
+  - `generateThumbnailUploadUrl` (spends a `world.update` token) and `setThumbnail`: checks `_storage` for `image/webp` and 300KB or less, deletes the previous file, and returns `{ ok: false, reason }` for a bad file so the file's deletion isn't rolled back.
+  - `testing/e2e:worldFor` for the e2e assertion. New log events in `docs/events.md`.
+- [x] `/create` (`src/features/creator/*`):
+  - Desktop follows the 06 mockup: copy from `06-source/copy-and-layout.json`, the world on the left, a glass panel on the right.
+  - Below `lg`, a custom non-modal bottom sheet with peek, 40% and 88% snaps. The handle drags, and it's also a button (tap or Enter cycles, arrows step). The world keeps the top 60%. The Pause motion control rides above the sheet.
+  - Tabs Landscape (Presets, Shape, Colors), Atmosphere (Sky), Details (Motion, Name). Six preset cards with CSS discs, sliders with percent values, curated palettes, and custom colors clamped by `clampColor` with a note when a color moved.
+  - Randomize re-forms the world: the terrain settles, the new world swaps in at the midpoint, the terrain rises (600ms, GSAP on the shared ticker). Reduced motion swaps at once.
+  - Undo/redo (buttons, Ctrl/Cmd+Z, Shift+Ctrl/Cmd+Z, Ctrl+Y). A slider drag or name edit is one step. Text fields keep their own undo.
+  - Drag to turn, or arrow keys on the focused world.
+  - One polite live region: randomize (with `describeWorld`), presets, palettes, undo/redo, saves.
+  - Guest draft in `worldling:draft:v1`, saved 300ms after each change and on `pagehide`, validated by the shared schema on load.
+  - Owners: "Save my world" with an optimistic `worlds.mine` update (`useAppMutation` gained `optimisticUpdate`), a `beforeunload` warning while unsaved, then a new thumbnail. An owner who also has a guest draft is offered it.
+  - Custom `TiltedWorldIcon` (05 rules) for Motion; the rest is lucide.
+- [x] Claim flow: "Claim this world" keeps the draft and opens `/sign-up?next=/onboarding` (or `/onboarding` when signed in). Onboarding shows "{name} comes with you.", claims the draft, clears it, and lands on `/w/{username}` with the 07 `world_created` celebration. `/me` now redirects to the world page; `WorldBorn` is gone.
+- [x] Thumbnails (§8.7): `ThumbnailStudio` inside the one canvas renders a private scene to a 512px sRGB target with a fixed three-quarter camera, flips the rows, and encodes WebP at 0.85. When the browser returns PNG (Safari), `@jsquash/webp` 1.5.0 is lazy-loaded. The owner's world page makes the first thumbnail; every save makes a new one.
+- [x] Tests:
+  - convex-test `worlds.test.ts` (14).
+  - Unit: history, edits, draft, shortcuts, sheet snaps, WebP fallback, row flip, optimistic `useAppMutation`, onboarding draft claim.
+  - e2e `creator.spec.ts`, on desktop Chrome, Pixel 7 and iPhone 14 (WebKit):
+    - The guest flow: preset, keyboard slider, undo/redo shortcuts, randomize, rename, reload, claim, sign up, onboard, celebration, axe.
+    - The stored params deep-equal the draft, with a WebP thumbnail of 300KB or less. On WebKit that thumbnail comes from the WASM encoder.
+    - Owner edit: save, then a new thumbnail arrives.
+    - Axe, the sheet handle and draft persistence.
+  - The full e2e suite passes: 31 tests. The last two fixes (an exact text match in `auth.spec.ts`, and WebKit code entry) were confirmed in a rerun of those tests.
+  - `auth.spec.ts` now expects the world page after onboarding.
+- [ ] **Real phones.** Open `/create` from the LAN on an iPhone (Safari) and an Android phone (Chrome): drag the sheet, move sliders, claim, and check the world has a thumbnail (the Safari path uses the WASM encoder).
+
+### Phase 6 notes
+
+- **Canvas lifetime fix (Phase 5 bug).** When the last view unmounted (leaving `/create` for `/sign-up`), `ExperienceRoot` unmounted. R3F's dispose fired `webglcontextlost`, the watcher was never removed, and the session fell to tier 0, so no thumbnail could be drawn. Now:
+  - The canvas stays mounted once loaded, as ADR-019 intends. It is hidden and doesn't advance while no view is registered.
+  - The watcher is removed on unmount.
+  - A loss on a detached canvas is ignored.
+- **WebKit can't be granted clipboard access**, so on the iPhone 14 project the e2e enters the code the way iOS autofill does: the whole code into the first box.
+- **Radix Slider** calls `onValueCommit` before `onValueChange` on key presses. The slider commits in a microtask so a key press is one clean undo step.
+- **Breakpoints at runtime.** Tailwind drops theme variables nothing references, so `globals.css` references the breakpoints for `useBreakpoint`.
+- **Account menu label.** Its accessible name now comes from text that includes the visible name (axe `label-content-name-mismatch` at phone width).
+- **Tier 0** devices can't draw a thumbnail; those worlds get one on their next save from a WebGL device. A busy device can miss the first capture, so the owner's world page tries up to three times.
+- **No `worlds.create` yet.** Every account has its primary world from onboarding (ADR-017), so the creator edits it. `worlds.create` waits for multiple worlds.
+- **The "Explore worlds" action** on the not-available world page waits for `/universe` (Phase 8).
+- **E2E runs against a production build** (`PLAYWRIGHT_PORT=3100`). On `next dev` the first visit to each route compiles for longer than the step timeouts.
 
 ## Phase 5: Planet renderer
 
