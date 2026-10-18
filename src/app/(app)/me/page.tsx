@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
 
 import { AccountGate } from "@/features/auth/account-gate";
-import { WorldBorn } from "@/features/auth/world-born";
+import { MeRedirect } from "@/features/auth/me-redirect";
 
 export const metadata: Metadata = { title: "Your world · Worldling" };
 
-// Phase 7 turns this into a redirect to /w/[username].
 export default function MePage() {
   return (
     <AccountGate>
-      <WorldBorn />
+      <MeRedirect />
     </AccountGate>
   );
 }

@@ -17,11 +17,11 @@ import type { Id } from "@convex/_generated/dataModel";
 export function useThumbnailUpload() {
   const uploadUrl = useMutation(api.worlds.generateThumbnailUploadUrl);
   const setThumbnail = useMutation(api.worlds.setThumbnail);
-  const running = useRef<Promise<void> | null>(null);
+  const running = useRef<Promise<boolean> | null>(null);
 
   const upload = async (worldId: Id<"worlds">, params: WorldParams, level: number) => {
     const blob = await requestThumbnail(params, level);
-    if (blob === null) return;
+    if (blob === null) return false;
     const url = await uploadUrl({ worldId });
     const response = await fetch(url, {
       method: "POST",
@@ -32,18 +32,24 @@ export function useThumbnailUpload() {
     const { storageId } = (await response.json()) as { storageId: Id<"_storage"> };
     const result = await setThumbnail({ worldId, storageId });
     if (!result.ok) throw new Error(`Thumbnail rejected: ${result.reason}`);
+    return true;
   };
 
-  /** Captures and uploads, one at a time. Resolves when done, never rejects. */
-  return (worldId: Id<"worlds">, params: WorldParams, level: number): Promise<void> => {
-    const previous = running.current ?? Promise.resolve();
+  /**
+   * Captures and uploads, one at a time. Resolves true once the thumbnail is stored, false when
+   * it couldn't be made this time. Never rejects.
+   */
+  return (worldId: Id<"worlds">, params: WorldParams, level: number): Promise<boolean> => {
+    const previous = running.current ?? Promise.resolve(true);
     const next = previous
       .then(() => upload(worldId, params, level))
       .catch((error: unknown) => {
         // Expected refusals (too many saves, maintenance) just wait for the next save.
         const { code } = toAppError(error);
-        if (code === "RATE_LIMITED" || code === "MAINTENANCE") return;
-        reportError(error, { fn: "worlds:thumbnail" });
+        if (code !== "RATE_LIMITED" && code !== "MAINTENANCE") {
+          reportError(error, { fn: "worlds:thumbnail" });
+        }
+        return false;
       });
     running.current = next;
     return next;
