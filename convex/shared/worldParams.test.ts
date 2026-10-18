@@ -1,12 +1,16 @@
 import { describe, expect, it } from "vitest";
 
+import { clampColor } from "./color";
 import {
   BIOMES,
+  describeWorld,
+  presetParams,
   randomParams,
   randomWorldName,
   worldNameSchema,
   worldParamsSchema,
 } from "./worldParams";
+import { PALETTES, palettesFor } from "./worldPalettes";
 
 describe("randomParams", () => {
   it("is deterministic per seed", () => {
@@ -70,5 +74,72 @@ describe("world names", () => {
     expect(worldNameSchema.parse("  Moss   bright ")).toBe("Moss bright");
     expect(worldNameSchema.safeParse("").success).toBe(false);
     expect(worldNameSchema.safeParse("a".repeat(33)).success).toBe(false);
+  });
+});
+
+describe("presets and palettes", () => {
+  it("has at least 18 curated palettes, four per biome, with unique ids", () => {
+    expect(PALETTES.length).toBeGreaterThanOrEqual(18);
+    for (const biome of BIOMES) expect(palettesFor(biome)).toHaveLength(4);
+    expect(new Set(PALETTES.map((palette) => palette.id)).size).toBe(PALETTES.length);
+  });
+
+  it("keeps every curated color inside the safe clamp ranges", () => {
+    for (const palette of PALETTES) {
+      for (const color of [...palette.stops, palette.ocean, palette.atmosphere, palette.clouds]) {
+        expect(clampColor(color)).toBe(color);
+      }
+    }
+  });
+
+  it("gives a valid preset per biome that uses the biome's brand palette", () => {
+    for (const biome of BIOMES) {
+      const params = presetParams(biome, 1);
+      expect(worldParamsSchema.parse(params)).toEqual(params);
+      expect(params.palette.id).toBe(palettesFor(biome)[0]?.id);
+    }
+  });
+
+  it("clamps custom colors that are too bright or too saturated", () => {
+    const params = randomParams(1);
+    const parsed = worldParamsSchema.parse({
+      ...params,
+      palette: { id: "custom", stops: ["#ffffff", "#000000", "#ff0000", "#00ff00", "#123456"] },
+    });
+    expect(parsed.palette.stops[4]).toBe("#123456");
+    expect(parsed.palette.stops.slice(0, 4)).not.toEqual([
+      "#ffffff",
+      "#000000",
+      "#ff0000",
+      "#00ff00",
+    ]);
+  });
+});
+
+describe("describeWorld", () => {
+  it("names the biome, water, clouds and moons", () => {
+    const params = presetParams("frozen", 1);
+    expect(describeWorld(params)).toBe("A frozen world with turquoise seas and wisps of cloud.");
+    expect(describeWorld(params, 9)).toBe(
+      "A frozen world with turquoise seas, wisps of cloud, night lights and two moons.",
+    );
+    expect(describeWorld(presetParams("oceanic", 1), 6)).toMatch(
+      /^An oceanic world with .*one moon\.$/,
+    );
+  });
+
+  it("describes lava, lakes and cloud density", () => {
+    expect(describeWorld(presetParams("volcanic", 1))).toContain("lava seams");
+    expect(describeWorld(presetParams("desert", 1))).toContain("lakes and wisps of cloud");
+    const cloudy = presetParams("verdant", 1);
+    expect(describeWorld({ ...cloudy, clouds: { ...cloudy.clouds, coverage: 0.9 } })).toContain(
+      "thick clouds",
+    );
+  });
+
+  it("never uses an em dash", () => {
+    for (let seed = 0; seed < 100; seed += 1) {
+      expect(describeWorld(randomParams(seed), 10)).not.toContain("—");
+    }
   });
 });

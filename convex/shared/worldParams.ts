@@ -1,20 +1,25 @@
 import { z } from "zod";
 
+import { clampColor } from "./color";
 import { countGraphemes } from "./graphemes";
 import { between, clamp, pick, seededRandom } from "./random";
+import { type CuratedPalette, palettesFor } from "./worldPalettes";
 
-// World parameters (SPEC §2.3, §5.2 worldParamsV1). Started minimal in Phase 4 so onboarding
-// can create a world; Phase 5 adds the curated palettes, tuning and describeWorld.
+export { describeWorld } from "./worldDescription";
+
+// World parameters (SPEC §2.3, §5.2 worldParamsV1): zod schema, clamps, biome presets and
+// randomParams. Palettes live in worldPalettes.ts, describeWorld in worldDescription.ts.
 
 export const BIOMES = ["oceanic", "verdant", "desert", "frozen", "volcanic", "crystal"] as const;
 export type Biome = (typeof BIOMES)[number];
 
 export const WORLD_NAME_MAX = 32;
 
+/** A hex color, lowercased and clamped into the safe ranges (ADR-009). */
 const hex = z
   .string()
   .regex(/^#[0-9a-fA-F]{6}$/)
-  .transform((value) => value.toLowerCase());
+  .transform((value) => clampColor(value.toLowerCase()));
 
 /** A number clamped into [min, max] instead of rejected, so old drafts still load. */
 const ranged = (min: number, max: number) =>
@@ -45,84 +50,106 @@ export const worldParamsSchema = z.object({
 export type WorldParams = z.output<typeof worldParamsSchema>;
 
 interface Preset {
-  palette: readonly [string, string, string, string, string];
-  ocean: string;
-  atmosphere: string;
-  clouds: string;
-  seaLevel: number;
+  terrain: WorldParams["terrain"];
+  gloss: number;
+  density: number;
+  coverage: number;
+  cloudSpeed: number;
 }
 
-const PRESETS: Record<Biome, Preset> = {
+/** Tuned starting points per biome, matched to the six-world moodboard. */
+export const PRESETS: Record<Biome, Preset> = {
   oceanic: {
-    palette: ["#0b3d63", "#1f7a8c", "#7fc8a9", "#e9d8a6", "#f4f1ea"],
-    ocean: "#1b4f8a",
-    atmosphere: "#8ab4ff",
-    clouds: "#f4f1ea",
-    seaLevel: 0.62,
+    terrain: { scale: 0.7, roughness: 0.3, amplitude: 0.07, seaLevel: 0.62 },
+    gloss: 0.7,
+    density: 0.55,
+    coverage: 0.3,
+    cloudSpeed: 0.3,
   },
   verdant: {
-    palette: ["#2e4a2c", "#4f7a3a", "#8fb85b", "#c9b37e", "#efe9d8"],
-    ocean: "#1e5d74",
-    atmosphere: "#9fe2d0",
-    clouds: "#f6f3ec",
-    seaLevel: 0.45,
+    terrain: { scale: 1.2, roughness: 0.45, amplitude: 0.07, seaLevel: 0.2 },
+    gloss: 0.6,
+    density: 0.5,
+    coverage: 0.3,
+    cloudSpeed: 0.3,
   },
   desert: {
-    palette: ["#7a3f1d", "#b8642e", "#e0a35b", "#f1cf8f", "#fbeed2"],
-    ocean: "#2f6f78",
-    atmosphere: "#ffc89a",
-    clouds: "#fff4e3",
-    seaLevel: 0.2,
+    terrain: { scale: 1.0, roughness: 0.4, amplitude: 0.07, seaLevel: 0.08 },
+    gloss: 0.5,
+    density: 0.45,
+    coverage: 0.1,
+    cloudSpeed: 0.25,
   },
   frozen: {
-    palette: ["#3b5a7a", "#6f93b5", "#a9c6dd", "#dbe8f2", "#ffffff"],
-    ocean: "#2a5b85",
-    atmosphere: "#cfe4ff",
-    clouds: "#ffffff",
-    seaLevel: 0.4,
+    terrain: { scale: 1.2, roughness: 0.5, amplitude: 0.08, seaLevel: 0.36 },
+    gloss: 0.3,
+    density: 0.55,
+    coverage: 0.25,
+    cloudSpeed: 0.25,
   },
   volcanic: {
-    palette: ["#1a1414", "#3d2420", "#6e2f1f", "#c2461f", "#ff8a5b"],
-    ocean: "#3a1c1c",
-    atmosphere: "#ff9f7a",
-    clouds: "#5b4a4a",
-    seaLevel: 0.3,
+    terrain: { scale: 1.3, roughness: 0.5, amplitude: 0.07, seaLevel: 0.16 },
+    gloss: 0.4,
+    density: 0.4,
+    coverage: 0.15,
+    cloudSpeed: 0.2,
   },
   crystal: {
-    palette: ["#2b1d5c", "#5b3fb0", "#7c6cff", "#a99fff", "#e7e2ff"],
-    ocean: "#3fe0c5",
-    atmosphere: "#c4b8ff",
-    clouds: "#efeaff",
-    seaLevel: 0.5,
+    terrain: { scale: 1.2, roughness: 0.45, amplitude: 0.07, seaLevel: 0.24 },
+    gloss: 0.6,
+    density: 0.6,
+    coverage: 0.2,
+    cloudSpeed: 0.25,
   },
 };
+
+function firstPalette(biome: Biome): CuratedPalette {
+  const [first] = palettesFor(biome);
+  if (!first) throw new Error(`No palette for ${biome}`);
+  return first;
+}
+
+function build(seed: number, biome: Biome, palette: CuratedPalette, preset: Preset): WorldParams {
+  return {
+    version: 1,
+    seed: seed >>> 0,
+    biome,
+    terrain: { ...preset.terrain },
+    palette: { id: palette.id, stops: [...palette.stops] },
+    ocean: { color: palette.ocean, gloss: preset.gloss },
+    atmosphere: { color: palette.atmosphere, density: preset.density },
+    clouds: { coverage: preset.coverage, speed: preset.cloudSpeed, color: palette.clouds },
+    motion: { spin: 0.5, tilt: 0.2 },
+    cosmetics: [],
+  };
+}
+
+/** The untouched preset for a biome, with its brand palette. */
+export function presetParams(biome: Biome, seed: number): WorldParams {
+  return build(seed, biome, firstPalette(biome), PRESETS[biome]);
+}
 
 /** A complete, valid world for a seed. The same seed always gives the same world. */
 export function randomParams(seed: number): WorldParams {
   const random = seededRandom(seed);
   const biome = pick(random, BIOMES);
+  const [first, ...rest] = palettesFor(biome);
+  const palette = first ? pick(random, [first, ...rest]) : firstPalette(biome);
   const preset = PRESETS[biome];
-  return {
-    version: 1,
-    seed: seed >>> 0,
-    biome,
+  const jitter = (value: number, spread: number, min: number, max: number) =>
+    clamp(value + between(random, -spread, spread), min, max);
+  return build(seed, biome, palette, {
     terrain: {
-      scale: between(random, 0.9, 2.2),
-      roughness: between(random, 0.3, 0.7),
-      amplitude: between(random, 0.06, 0.16),
-      seaLevel: clamp(preset.seaLevel + between(random, -0.08, 0.08), 0, 1),
+      scale: jitter(preset.terrain.scale, 0.3, 0.5, 3),
+      roughness: jitter(preset.terrain.roughness, 0.1, 0, 1),
+      amplitude: jitter(preset.terrain.amplitude, 0.02, 0, 0.25),
+      seaLevel: jitter(preset.terrain.seaLevel, 0.06, 0, 1),
     },
-    palette: { id: biome, stops: [...preset.palette] },
-    ocean: { color: preset.ocean, gloss: between(random, 0.4, 0.8) },
-    atmosphere: { color: preset.atmosphere, density: between(random, 0.35, 0.7) },
-    clouds: {
-      coverage: between(random, 0.25, 0.6),
-      speed: between(random, 0.2, 0.5),
-      color: preset.clouds,
-    },
-    motion: { spin: between(random, 0.2, 0.5), tilt: between(random, 0.05, 0.35) },
-    cosmetics: [],
-  };
+    gloss: jitter(preset.gloss, 0.1, 0, 1),
+    density: jitter(preset.density, 0.1, 0, 1),
+    coverage: jitter(preset.coverage, 0.1, 0, 1),
+    cloudSpeed: jitter(preset.cloudSpeed, 0.1, 0, 1),
+  });
 }
 
 const NAME_STARTS: readonly [string, ...string[]] = [
