@@ -4,11 +4,13 @@ import { publicQuery, userMutation, userQuery } from "./lib/functions";
 import {
   getByUsername as findByUsername,
   primaryWorld,
+  setCometReview as applyCometReview,
   setThumbnail as applyThumbnail,
   thumbnailUploadUrl,
   updateWorld,
   worldView,
 } from "./model/worlds";
+import { recordVisit as applyVisit, tendWorld } from "./model/visits";
 import { worldParamsV1 } from "./schema";
 
 // Worlds (SPEC §5.5). Logic lives in model/worlds.ts.
@@ -18,6 +20,7 @@ const worldViewValidator = v.object({
   name: v.string(),
   params: worldParamsV1,
   level: v.number(),
+  xp: v.number(),
   thumbnailUrl: v.union(v.null(), v.string()),
 });
 
@@ -40,6 +43,7 @@ export const getByUsername = publicQuery({
       world: worldViewValidator,
       owner: v.object({ username: v.string(), displayName: v.string() }),
       isOwner: v.boolean(),
+      cometReview: v.union(v.null(), v.boolean()),
     }),
   ),
   handler: async (ctx, { username }) => await findByUsername(ctx, ctx.viewer, username),
@@ -74,4 +78,38 @@ export const setThumbnail = userMutation({
     }),
   ),
   handler: async (ctx, { worldId, storageId }) => await applyThumbnail(ctx, worldId, storageId),
+});
+
+/** The owner's first open of the day (SPEC §2.2 Return). Idempotent per UTC day. */
+export const tend = userMutation({
+  args: { worldId: v.id("worlds") },
+  returns: v.object({ tended: v.boolean() }),
+  handler: async (ctx, { worldId }) => ({ tended: await tendWorld(ctx, worldId) }),
+});
+
+/** A visit after 3s of visible dwell (SPEC §2.2 Visit). Idempotent per visitor per day. */
+export const recordVisit = userMutation({
+  args: { worldId: v.id("worlds") },
+  returns: v.union(
+    v.object({ counted: v.literal(true) }),
+    v.object({
+      counted: v.literal(false),
+      reason: v.union(
+        v.literal("owner"),
+        v.literal("unverified"),
+        v.literal("blocked"),
+        v.literal("already"),
+      ),
+    }),
+  ),
+  handler: async (ctx, { worldId }) => await applyVisit(ctx, worldId),
+});
+
+export const setCometReview = userMutation({
+  args: { worldId: v.id("worlds"), enabled: v.boolean() },
+  returns: v.null(),
+  handler: async (ctx, { worldId, enabled }) => {
+    await applyCometReview(ctx, worldId, enabled);
+    return null;
+  },
 });

@@ -143,6 +143,8 @@ export default defineSchema({
     cometsReceived: v.number(),
     cometsSent: v.number(),
     xpGained: v.number(),
+    // Authors whose comet earned XP today, at most DAILY_CAPS.cometsReceived (ADR-023).
+    cometAuthors: v.optional(v.array(v.id("users"))),
   })
     .index("by_world_day", ["worldId", "day"])
     .index("by_day", ["day"]),

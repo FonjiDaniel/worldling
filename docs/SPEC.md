@@ -447,6 +447,7 @@ Pin exact versions in `package.json` at Phase 0. Upgrade deliberately, never wit
 | ADR-020 | Shader glow instead of a bloom pass; StatsGl instead of r3f-perf | EffectComposer, r3f-perf | Composer breaks scissored `View`s; r3f-perf targets R3F v8 |
 | ADR-021 | A minimal `/w/[username]` (with `getByUsername` and the claim celebration) lands in Phase 6; `/me` redirects to it | Celebrating on `/me` until Phase 7 | §2.2 lands people on their world page; Phase 7 extends the same page |
 | ADR-022 | Creator: mockup tabs holding the SPEC sections, a custom non-modal bottom sheet, WASM WebP fallback for Safari, thumbnail uploads spend a `world.update` token | Six stacked sections, vaul, PNG thumbnails | Matches the 06 mockup, keeps the world usable on phones, keeps thumbnails WebP-only |
+| ADR-023 | Comet XP dedupe via `worldStatsDaily.cometAuthors`, tend markers in `worldVisits`, streak bonus `min(streak - 1, 5)`, share as the world page's main action until Phase 9, static OG fonts | A `bloomQueue` index, a disabled comet button | Caps hold across processor batches with no growing scans |
 
 ### 4.4 Repository structure
 
@@ -675,6 +676,7 @@ export default defineSchema({
     cometsReceived: v.number(),
     cometsSent: v.number(),
     xpGained: v.number(),
+    cometAuthors: v.optional(v.array(v.id("users"))), // ADR-023, at most 10
   }).index("by_world_day", ["worldId", "day"])
     .index("by_day", ["day"]),
 

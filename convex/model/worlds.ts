@@ -97,6 +97,7 @@ export interface WorldView {
   name: string;
   params: WorldParams;
   level: number;
+  xp: number;
   thumbnailUrl: string | null;
 }
 
@@ -106,6 +107,7 @@ export async function worldView(ctx: ReadCtx, world: Doc<"worlds">): Promise<Wor
     name: world.name,
     params: world.params,
     level: world.bloom.level,
+    xp: world.bloom.xp,
     thumbnailUrl:
       world.thumbnailId === undefined ? null : await ctx.storage.getUrl(world.thumbnailId),
   };
@@ -120,14 +122,17 @@ export async function getByUsername(ctx: ReadCtx, viewer: Viewer | null, raw: st
   if (profile?.status !== "active") return null;
   const world = await primaryWorld(ctx, profile.userId);
   if (world === null || world.visibility === "hidden") return null;
+  const isOwner = viewer?.userId === profile.userId;
   return {
     world: await worldView(ctx, world),
     owner: { username: profile.username, displayName: profile.displayName },
-    isOwner: viewer?.userId === profile.userId,
+    isOwner,
+    // Owner settings stay private to the owner.
+    cometReview: isOwner ? world.cometReview : null,
   };
 }
 
-async function ownedWorld(ctx: WriteCtx, worldId: Id<"worlds">): Promise<Doc<"worlds">> {
+export async function ownedWorld(ctx: WriteCtx, worldId: Id<"worlds">): Promise<Doc<"worlds">> {
   const world = await ctx.db.get("worlds", worldId);
   if (world === null) throw appError("NOT_FOUND", "World not found");
   if (world.ownerId !== ctx.viewer.userId) throw appError("FORBIDDEN", "Not your world");
@@ -187,4 +192,17 @@ export async function setThumbnail(
   if (previous !== undefined && previous !== storageId) await ctx.storage.delete(previous);
   ctx.log.info("world.thumbnail.set", { worldId, size: file.size });
   return { ok: true };
+}
+
+/** "Review comets before they appear" (SPEC §2.6). */
+export async function setCometReview(
+  ctx: WriteCtx,
+  worldId: Id<"worlds">,
+  enabled: boolean,
+): Promise<void> {
+  const world = await ownedWorld(ctx, worldId);
+  await enforceRateLimit(ctx, "world.update", ctx.viewer.userId);
+  if (world.cometReview === enabled) return;
+  await ctx.db.patch("worlds", worldId, { cometReview: enabled, updatedAt: Date.now() });
+  ctx.log.info("world.comet_review.set", { worldId, enabled });
 }
