@@ -4,9 +4,67 @@ Where the build stands, phase by phase (SPEC §15). Updated at the end of every 
 
 ## Current status
 
-**Phase 7: World page and sharing** is built. Typecheck, lint, unit and Convex tests and build pass. The world e2e is not green yet. The unknown-world test passes on all three devices. The owner test got through tend, comet review, share, comets, axe and the counted visit on desktop Chrome and Pixel 7 before hitting its old 5-minute timeout; on iPhone 14 it hasn't got past sign-up (a fix is in, not yet run). The OG image with and without a thumbnail was checked by hand (see the open item below). Still open from earlier phases: the creator and the 60fps check on real phones, and Google sign-in end to end. GitHub Actions is still blocked by the account billing lock (see Phase 0).
+**Phase 8: The universe** is built. Typecheck, lint, unit and Convex tests (485) and build pass. The universe e2e passes on desktop Chrome, Pixel 7 and iPhone 14 (15 tests). The performance acceptance is only partly met: with 10,000 worlds the draw calls stay at 40 or under and memory is flat over 5 minutes, but frame rate on the one tier 2 machine measured (Intel UHD 620) reaches the 55fps p75 target in only 6 of 10 half-minute windows (details in Phase 8). Still open from earlier phases: the world e2e owner test in one green run, the creator and the 60fps check on real phones, and Google sign-in end to end. GitHub Actions is still blocked by the account billing lock (see Phase 0).
 
-**Next:** Phase 8, the universe. It also turns on the "Explore the universe" link the world page leaves out for now.
+**Next:** Phase 9, comets, safety and notifications. Moderation hide, suspension and account deletion must call `syncWorldPin` (ADR-024).
+
+## Phase 8: The universe
+
+- [x] ADR-024: a denormalized `worldPins` table, slot dust for the whole spiral, featured and just born in settings keys, static stars, screen-space picking, Tab that releases focus, and light planets below tier 3. SPEC §3.8, §4.3, §5.2, §5.5 and §8.4 updated.
+- [x] Shared:
+  - `convex/shared/galaxy.ts` adds `neighborSectors`, `sectorCoords`, `sectorCenter`, `sectorDistance`, `isSectorKey`, `galaxyRadius` and `MAX_SECTORS`.
+  - `convex/shared/pins.ts` adds `pinColors(params)` (land and atmosphere colors lifted so a dot reads on Void) and the query caps.
+- [x] Convex:
+  - `worldPins` is kept in sync by `model/pins.ts` `syncWorldPin` from world create, update, thumbnail and level-up. XP alone never touches a pin.
+  - `migrations:backfillWorldPins` creates pins for older worlds. **Run once per deployment:** `npx convex run migrations:backfillWorldPins` (done on dev).
+  - `universe.sectors` (one sector per subscription, at most 9 keys and 256 pins each), `renderable` (12 ids), `overview` (slot count and `universe.live`), `featured`, `justBorn`, `search` (username prefix, 6) and `list` (paginated, newest first, with descriptions).
+  - `jobs.rollups.trending` runs hourly and writes the rails into `universe.featured` and `universe.justBorn` through `setSystemSetting`. New log event `universe.rails.refreshed`.
+  - The dev-only seed is `pnpm seed:universe [count]`; `--clear` removes the seeded worlds. Both are guarded like the e2e helpers. Dev holds about 10,100 seeded worlds now.
+- [x] 3D (`src/three/universe/`, `src/three/camera/CameraRig.tsx`):
+  - **Draw layers:** `GalaxyDust` is one draw for every slot, with births that grow in with a soft flash. `MidWorlds` is one instanced draw for the nearest 120/300/600 worlds by tier. `NearWorlds` draws full planets for the nearest 4/8/12. `ProgramWarmup` keeps the planet shaders compiled.
+  - **Streaming:** sectors follow the camera's ground point after a 250ms settle, and an LRU of 27 sectors bounds memory.
+  - **Picking:** screen-space picking with a DOM name tag, off during flights.
+  - **CameraRig:** drei CameraControls on the view's own camera. `flyTo` is a GSAP arc of 1.2 to 2.0s with Skip over 1.5s. Any input stops a flight. Reduced motion cuts behind a short fade.
+- [x] UI (`/universe`, `src/features/universe/`):
+  - **Search:** username search as an ARIA combobox.
+  - **Rails and zoom:** featured and just born rails, plus zoom and whole-universe controls.
+  - **Keyboard:** arrows pan, plus and minus zoom, Tab cycles the 8 nearest worlds, Enter visits and Esc clears. Focus is announced in a live region.
+  - **Arrival and toasts:** an arrival card with "Visit this world". A "just born" toast for nearby births, at most one every 10 seconds.
+  - **List mode:** paginated with descriptions and thumbnails or color discs. It is the automatic view at tier 0.
+  - **Empty:** an empty-universe state, and "This corner of space is quiet. For now." for empty sectors.
+  - **Entry points:** the header has "Explore", and the world page has "Explore the universe" (opens `/universe?w=username`).
+- [x] Tests:
+  - Unit: galaxy helpers, pin colors, near selection and its hysteresis, the flight curve, the keyboard map and the universe store (births, eviction, renderables).
+  - convex-test `universe.test.ts` (14): every pin sync point, hidden worlds and inactive owners, the caps, search, list paging, trending, the backfill and the seed guard.
+  - e2e `universe.spec.ts`: search flies and visits, keyboard Tab and Enter, list mode with axe and paging, tier 0 list, and the world page link.
+- [x] Brand notes in `docs/brand/README.md` (static stars, motion, icons, copy). **Pending brand:** search, list, zoom and close icons in the 05 style, and a 07 pass on the universe copy.
+
+### Performance (SPEC §8.8, Phase 8 acceptance)
+
+**Setup:**
+
+- `/universe?perf=1` on a production build (`DEV_ROUTES=true pnpm start`).
+- 10,045 worlds, quality forced to tier 2.
+- Headed Chromium at 1400x900, DPR 1, on this desktop: Intel UHD 620 integrated GPU, which detect-gpu rates tier 2.
+- The tour flies to a random slot every 4 seconds for 5 minutes. That is denser flying than a person does, so sectors and near planets churn constantly.
+
+| Check                 | Target       | Result                                                                                                                                 |
+| --------------------- | ------------ | -------------------------------------------------------------------------------------------------------------------------------------- |
+| Draw calls            | < 120        | **Met.** At most 40 per frame; 3 between worlds                                                                                        |
+| Memory over 5 minutes | Stable       | **Met.** Geometries 5 to 7, shader programs fixed at 10, JS heap between 17 and 44MB with no upward trend                              |
+| Frame rate            | p75 >= 55fps | **Not met on this machine.** 45 to 59 per 30-second window, 6 of 10 windows at 55 or more. The worst frame in any window is 30 to 67ms |
+
+What the numbers showed along the way:
+
+- **Shader compile stalls (fixed).** Before `ProgramWarmup`, three released and recompiled the planet shaders whenever near planets changed. That caused 100 to 235ms stalls.
+- **Planet fill cost (reduced).** On this GPU the existing world page (one full-tier planet) runs at 30fps. With full-tier planets in the universe the tour held p75 at 37fps, so universe planets below tier 3 now use the tier 1 planet.
+- **Static views are fine.** A static universe view runs at a steady 60fps.
+- **The rest is the planet shader near the camera** while flying between worlds.
+
+Not yet checked: a mid-range phone or laptop with a discrete or newer GPU. Two follow-ups would close the gap:
+
+- Tune `tierFromGpu` so UHD 620-class GPUs land on tier 1 (detect-gpu benchmarks it at about 50fps).
+- Make the planet fragment shader cheaper (Phase 11 polish).
 
 ## Phase 7: World page and sharing
 

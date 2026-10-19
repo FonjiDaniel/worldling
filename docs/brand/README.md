@@ -382,6 +382,15 @@ Source: `worldling-visual-language.json`, `03-icons/README.md`.
 
 Keep the area under copy calm.
 
+**In code (Phase 8, the universe):**
+
+- **Stars stay static.** SPEC §3.8 asked for "sparse twinkling stars". 05 decides motion feel and says stars are still ("no flashing stars"), so §3.8 now reads "sparse still stars" (ADR-024).
+- **Slot dust** draws every galaxy slot as a dim round dot at the brand star opacity (0.55 at most). Worlds only take their own colors up close, so the spiral reads as one calm field from afar.
+- **Births** grow over the Bloom reveal duration (`--duration-bloom`) with one soft flash. Reduced motion uses the short fade and no flash.
+- **Flights** use `--duration-flight` (1.2 to 2.0s by distance) with the soft in-out ease. There is no roll. Reduced motion cuts behind a short Void fade (05: "a stationary or crossfade way to visit worlds").
+- **Icons:** the brand `universe.svg` ships as `UniverseIcon` (header "Explore", the world page link, the zoom-to-galaxy control). 05 has no search, plus, minus or close icons, so those stay Lucide like the rest of the app. **Pending brand:** search, list, zoom and close icons in the 05 style.
+- **Copy:** 07 has no universe strings. New ones live in `src/features/universe/copy.ts`, written to the 07 rules. §2.8 supplies "This corner of space is quiet. For now." **Pending brand:** a 07 pass on the universe copy (search, list mode, just born toast, skip flight, the keyboard hint).
+
 ### Logo
 
 Sources: `02-logo/05-guidelines/REBUILD.md`, `07-source/worldling-geometry.json`.

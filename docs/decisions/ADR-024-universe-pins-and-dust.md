@@ -29,6 +29,7 @@ The brand (05) also says stars are static ("no flashing stars"), while §3.8 ask
 - **Featured and just born are precomputed**, as §5.6 says. `jobs.rollups.trending` (hourly) writes world ids into the `universe.featured` and `universe.justBorn` settings keys through `setSystemSetting`, a job-only writer with no audit row because no person acted. Live births come from the sector subscriptions, not from the just born list.
 - **Static stars.** The brand decides motion feel; §3.8 now reads "sparse, still stars".
 - **Screen-space picking.** Hover and click project the loaded pins (at most about 1,200) into screen space and take the nearest one inside a radius. This replaces a GPU raycast over 10k instanced points, and it uses no per-frame allocations.
+- **Universe planets are light below tier 3.** Measured on an Intel UHD 620, which detect-gpu rates tier 2, a full-tier planet filling a third of the screen holds the frame at about 30fps. In the universe, every near world uses the tier 1 planet (mesh detail and octaves), and only tier 3 draws the closest world at full detail. The world page keeps the full planet. The planet shader programs are compiled once on entry and held for the session, so arriving at a world never stalls on a compile.
 - **Tab cycling releases focus.** With the galaxy focused, Tab and Shift+Tab move through the 8 nearest worlds. One more Tab moves focus on to the next control, so there is no keyboard trap (WCAG 2.1.2).
 
 ## Alternatives considered
@@ -42,4 +43,5 @@ The brand (05) also says stars are static ("no flashing stars"), while §3.8 ask
 
 - One more table to keep in sync. A unit test (`convex/universe.test.ts`) checks each sync point. Phase 9 to 11 writers must call `syncWorldPin`, so this ADR is linked from `model/pins.ts`.
 - Bloom XP alone never touches pins, so sector subscriptions only change when something visible changes.
+- `/universe?perf=1` (only where dev routes are on) runs a flight tour and publishes draw calls, frame rate and renderer memory on `window.__universePerf` for the §8.8 budgets.
 - Featured and just born can be up to an hour old. That's fine for a discovery rail.
