@@ -33,8 +33,17 @@ export async function pasteCode(page: Page, code: string) {
     }).toPass({ timeout: 45_000 });
     return;
   }
+  // Chromium's clipboard waits forever in a page without focus, like a second context's page.
+  await page.bringToFront();
   await page.evaluate(async (text) => {
-    await navigator.clipboard.writeText(text);
+    await Promise.race([
+      navigator.clipboard.writeText(text),
+      new Promise((_, reject) =>
+        setTimeout(() => {
+          reject(new Error("Clipboard write timed out"));
+        }, 10_000),
+      ),
+    ]);
   }, code);
   // Paste into the middle cell: the whole code should still fill every cell.
   await page.getByRole("textbox", { name: "Digit 4 of 8" }).focus();
