@@ -1,5 +1,7 @@
 "use client";
 
+import { useState, useSyncExternalStore } from "react";
+
 import { Button } from "@/components/ui/button";
 
 // The world_created celebration (SPEC §2.2, 07 celebrations.world_created): shown once, on
@@ -24,6 +26,34 @@ export function takeCelebration(username: string): boolean {
   } catch {
     return false;
   }
+}
+
+function peekCelebration(username: string): boolean {
+  try {
+    return sessionStorage.getItem(KEY) === username;
+  } catch {
+    return false;
+  }
+}
+
+const noSubscribe = () => () => undefined;
+
+/**
+ * Whether to celebrate on this page, and a way to finish. Storage is read after hydration only
+ * (the page is server rendered), and the flag is used up when the celebration ends.
+ */
+export function useCelebration(username: string): [boolean, () => void] {
+  const flagged = useSyncExternalStore(
+    noSubscribe,
+    () => peekCelebration(username),
+    () => false,
+  );
+  const [done, setDone] = useState(false);
+  const finish = () => {
+    takeCelebration(username);
+    setDone(true);
+  };
+  return [flagged && !done, finish];
 }
 
 export function CelebrationCard({ onDone }: { onDone: () => void }) {

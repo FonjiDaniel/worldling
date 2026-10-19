@@ -6,6 +6,7 @@ import { Field, FieldError, FieldHint, Label } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { SegmentedControl } from "@/components/ui/segmented-control";
 import { Slider } from "@/components/ui/slider";
+import { Switch } from "@/components/ui/switch";
 import { type Swatch, SwatchPicker } from "@/components/ui/swatch-picker";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -67,6 +68,15 @@ export function FormsSection() {
           />
           <Slider label="Cloud cover, disabled" defaultValue={[60]} disabled />
         </div>
+      </ShowcaseRow>
+      <ShowcaseRow label="Switch">
+        <div className="flex items-center gap-3">
+          <Switch id="demo-review" defaultChecked />
+          <label htmlFor="demo-review" className="wl-label text-text">
+            Review comets before they appear
+          </label>
+        </div>
+        <Switch aria-label="Disabled switch" disabled />
       </ShowcaseRow>
       <ShowcaseRow label="Swatch picker">
         <SwatchPicker label="Ocean color" swatches={oceanSwatches} defaultValue="lagoon" />

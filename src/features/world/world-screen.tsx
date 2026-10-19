@@ -1,37 +1,38 @@
 "use client";
 
-import { useQuery } from "convex/react";
-import { PenLine } from "lucide-react";
-import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { type Preloaded, usePaginatedQuery, usePreloadedQuery } from "convex/react";
+import type { FunctionReturnType } from "convex/server";
+import { useMemo } from "react";
 
 import { EmptyState } from "@/components/shared/empty-state";
-import { LoadingState } from "@/components/shared/loading-state";
-import { Button } from "@/components/ui/button";
-import { useThumbnailUpload } from "@/features/creator/use-thumbnail-upload";
+import { Avatar } from "@/components/ui/avatar";
+import { useIsClient } from "@/hooks/use-media-query";
+import { env } from "@/lib/env";
 import { cn } from "@/lib/utils";
-import { useEffectiveTier } from "@/stores/experience";
 import { PlanetView } from "@/three/planet/PlanetView";
-import { isRenderTier } from "@/three/quality";
 import { api } from "@convex/_generated/api";
-import type { FunctionReturnType } from "convex/server";
 
-import { CelebrationCard, takeCelebration } from "./celebration";
+import { BloomCard } from "./bloom-card";
+import { CelebrationCard, useCelebration } from "./celebration";
+import { COMET_PAGE, CometList } from "./comet-list";
+import { LevelUpCard, useLevelUp } from "./level-up";
+import { OwnerControls } from "./owner-controls";
+import { sharePayload } from "./share";
+import { ShareControl } from "./share-control";
+import { useEnsureThumbnail } from "./use-ensure-thumbnail";
+import { useVisitTracking } from "./use-visit-tracking";
 
-// /w/[username], the minimal Phase 6 version (ADR-021): the world, its name, its owner, and
-// the claim celebration. Phase 7 adds bloom, visits, comets and sharing.
+// /w/[username] (SPEC §2.2): the 06 mobile world page, the world on top and its story below.
+// From lg the world takes the stage and the story sits in a side column.
 
 type WorldPage = NonNullable<FunctionReturnType<typeof api.worlds.getByUsername>>;
 
-export function WorldScreen({ username }: { username: string }) {
-  const data = useQuery(api.worlds.getByUsername, { username });
-  if (data === undefined) {
-    return (
-      <div className="flex flex-1 items-center justify-center px-4 py-16">
-        <LoadingState label="Finding this world" />
-      </div>
-    );
-  }
+export function WorldScreen({
+  preloaded,
+}: {
+  preloaded: Preloaded<typeof api.worlds.getByUsername>;
+}) {
+  const data = usePreloadedQuery(preloaded);
   if (data === null) {
     return (
       <div className="mx-auto flex w-full max-w-panel flex-1 flex-col justify-center px-4 py-16">
@@ -45,79 +46,92 @@ export function WorldScreen({ username }: { username: string }) {
   return <WorldView data={data} />;
 }
 
-/** Tries before giving up until the next save; a busy device can miss the first one. */
-const THUMBNAIL_TRIES = 3;
-const THUMBNAIL_RETRY_MS = 5_000;
-
-/** Owners without a thumbnail (a freshly claimed world) make one here (SPEC §8.7). */
-function useEnsureThumbnail({ world, isOwner }: WorldPage) {
-  const upload = useThumbnailUpload();
-  const tier = useEffectiveTier();
-  const started = useRef(false);
-  const mounted = useRef(true);
-  const needed = isOwner && world.thumbnailUrl === null && isRenderTier(tier);
-  useEffect(
-    () => () => {
-      mounted.current = false;
-    },
-    [],
+function OwnerLine({ displayName, username }: WorldPage["owner"]) {
+  return (
+    <div className="flex items-center gap-3">
+      <Avatar name={displayName} />
+      <p className="flex flex-col">
+        <span className="wl-label text-text">{displayName}</span>
+        <span className="wl-small text-text-muted">@{username}</span>
+      </p>
+    </div>
   );
-  useEffect(() => {
-    if (!needed || started.current) return;
-    started.current = true;
-    const isMounted = () => mounted.current;
-    const attempt = async (left: number): Promise<void> => {
-      const done = await upload(world._id, world.params, world.level);
-      if (done || left <= 1 || !isMounted()) return;
-      await new Promise((resolve) => setTimeout(resolve, THUMBNAIL_RETRY_MS));
-      if (isMounted()) await attempt(left - 1);
-    };
-    void attempt(THUMBNAIL_TRIES);
-  }, [needed, upload, world]);
+}
+
+interface MomentsProps {
+  data: WorldPage;
+  celebrating: boolean;
+  onCelebrated: () => void;
+}
+
+/** The claim celebration first; after that, a level-up when the world has bloomed. */
+function Moments({ data, celebrating, onCelebrated }: MomentsProps) {
+  const { world, isOwner } = data;
+  const levelUp = useLevelUp(world._id, world.level, isOwner && !celebrating);
+  if (celebrating) return <CelebrationCard onDone={onCelebrated} />;
+  if (levelUp.celebrate !== null) {
+    return <LevelUpCard level={levelUp.celebrate} onDone={levelUp.dismiss} />;
+  }
+  return null;
 }
 
 function WorldView({ data }: { data: WorldPage }) {
-  const { world, owner, isOwner } = data;
-  const [celebrating, setCelebrating] = useState(() => takeCelebration(owner.username));
-  useEnsureThumbnail(data);
+  const { world, owner, isOwner, cometReview } = data;
+  const [celebrating, finishCelebration] = useCelebration(owner.username);
+  // The 3D view depends on this device's quality tier, so it starts after hydration.
+  const isClient = useIsClient();
+  useEnsureThumbnail(world, isOwner);
+  useVisitTracking(world._id, isOwner);
+  const comets = usePaginatedQuery(
+    api.comets.listForWorld,
+    { worldId: world._id },
+    { initialNumItems: COMET_PAGE },
+  );
+  const idsKey = comets.results.map((comet) => comet._id).join(",");
+  const cometIds = useMemo(() => (idsKey === "" ? [] : idsKey.split(",")), [idsKey]);
+  const payload = sharePayload({
+    siteUrl: env.NEXT_PUBLIC_SITE_URL,
+    username: owner.username,
+    worldName: world.name,
+    isOwner,
+  });
+  const shareLabel = isOwner ? "Share my world" : "Share this world";
+  const share = (look: "icon" | "primary", className?: string) => (
+    <ShareControl payload={payload} look={look} label={shareLabel} className={className} />
+  );
 
   return (
-    <div className="relative flex h-[calc(100dvh-(--spacing(18)))] flex-col">
-      <PlanetView
-        params={world.params}
-        level={world.level}
-        className={cn("min-h-0 flex-1", celebrating && "animate-bloom-in")}
-      />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 flex flex-col gap-4 p-4 sm:p-6 lg:flex-row lg:items-end lg:justify-between">
-        <section
-          aria-labelledby="world-name"
-          className="pointer-events-auto flex max-w-panel flex-col gap-1 glass-panel"
-        >
-          <h1 id="world-name" className="wl-h2 text-text">
-            {world.name}
-          </h1>
-          <p className="wl-body text-text-muted">
-            {owner.displayName} <span className="wl-timestamp">@{owner.username}</span>
-          </p>
-          {isOwner ? (
-            <Button asChild variant="secondary" size="sm" className="mt-3 self-start">
-              <Link href="/create">
-                <PenLine aria-hidden />
-                Edit my world
-              </Link>
-            </Button>
-          ) : null}
-        </section>
-        {celebrating ? (
-          <div className="pointer-events-auto max-w-panel">
-            <CelebrationCard
-              onDone={() => {
-                setCelebrating(false);
-              }}
-            />
-          </div>
+    <div className="flex flex-1 flex-col lg:h-[calc(100dvh-(--spacing(18)))] lg:flex-row">
+      <div className="relative h-[55dvh] shrink-0 lg:h-auto lg:min-w-0 lg:flex-1">
+        {isClient ? (
+          <PlanetView
+            params={world.params}
+            level={world.level}
+            comets={cometIds}
+            className={cn("size-full", celebrating && "animate-bloom-in")}
+          />
         ) : null}
+        {share("icon", "absolute top-3 right-3 lg:hidden")}
       </div>
+      <aside className="flex flex-col gap-6 px-4 pb-10 sm:px-6 lg:w-panel lg:shrink-0 lg:overflow-y-auto lg:border-l lg:border-line lg:glass lg:py-8">
+        <header className="flex items-start justify-between gap-4">
+          <h1 className="wl-h1 break-words text-text lg:wl-h2">{world.name}</h1>
+          {share("icon", "hidden lg:inline-flex")}
+        </header>
+        <OwnerLine {...owner} />
+        <Moments data={data} celebrating={celebrating} onCelebrated={finishCelebration} />
+        <BloomCard xp={world.xp} />
+        {share("primary", "w-full")}
+        {isOwner && cometReview !== null ? (
+          <OwnerControls worldId={world._id} username={owner.username} cometReview={cometReview} />
+        ) : null}
+        <CometList
+          worldId={world._id}
+          comets={comets}
+          isOwner={isOwner}
+          shareAction={share("primary")}
+        />
+      </aside>
     </div>
   );
 }

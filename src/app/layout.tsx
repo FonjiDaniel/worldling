@@ -5,11 +5,13 @@ import { OfflineBanner } from "@/components/shared/offline-banner";
 import { SkipLink } from "@/components/shared/skip-link";
 import { Toaster } from "@/components/ui/toaster";
 import { fontVariables } from "@/styles/fonts";
+import { env } from "@/lib/env";
 import { ExperienceMount } from "@/three/ExperienceMount";
 
 import "@/styles/globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(env.NEXT_PUBLIC_SITE_URL),
   title: "Worldling",
   description: "Grow a world of your own. Visit everyone else's.",
 };
