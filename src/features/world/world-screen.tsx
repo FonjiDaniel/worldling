@@ -2,8 +2,10 @@
 
 import { type Preloaded, usePaginatedQuery, usePreloadedQuery } from "convex/react";
 import type { FunctionReturnType } from "convex/server";
+import Link from "next/link";
 import { useMemo } from "react";
 
+import { UniverseIcon } from "@/components/icons/universe";
 import { EmptyState } from "@/components/shared/empty-state";
 import { Avatar } from "@/components/ui/avatar";
 import { useIsClient } from "@/hooks/use-media-query";
@@ -122,6 +124,13 @@ function WorldView({ data }: { data: WorldPage }) {
         <Moments data={data} celebrating={celebrating} onCelebrated={finishCelebration} />
         <BloomCard xp={world.xp} />
         {share("primary", "w-full")}
+        <Link
+          href={`/universe?w=${owner.username}`}
+          className="flex min-h-touch items-center justify-center gap-2 self-center rounded-full px-3 wl-label text-link hover:underline"
+        >
+          <UniverseIcon className="size-5" />
+          Explore the universe
+        </Link>
         {isOwner && cometReview !== null ? (
           <OwnerControls worldId={world._id} username={owner.username} cometReview={cometReview} />
         ) : null}

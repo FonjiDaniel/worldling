@@ -143,3 +143,19 @@
   );
   box-shadow: 0 0 2rem 0.25rem color-mix(in srgb, var(--disc-atmosphere) 25%, transparent);
 }
+
+/* Universe list mode: a far-away world in its pin colors (world data, set as CSS variables). */
+@utility pin-disc {
+  background: radial-gradient(
+    circle at 34% 30%,
+    color-mix(in srgb, var(--pin-a) 70%, var(--color-text)) 0%,
+    var(--pin-a) 45%,
+    color-mix(in srgb, var(--pin-b) 60%, var(--color-void)) 100%
+  );
+  box-shadow: 0 0 1rem 0.125rem color-mix(in srgb, var(--pin-b) 25%, transparent);
+}
+
+/* Horizontal rails that scroll by touch, wheel or keyboard without a visible bar. */
+@utility scrollbar-none {
+  scrollbar-width: none;
+}
