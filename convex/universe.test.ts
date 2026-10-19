@@ -216,3 +216,16 @@ describe("testing/universe seed", () => {
     );
   });
 });
+
+describe("migrations.backfillWorldPins", () => {
+  it("creates missing pins and refreshes the rails", async () => {
+    const { worldId } = await owner();
+    await t.run(async (ctx) => {
+      const pin = await pinForWorld(ctx, worldId);
+      if (pin) await ctx.db.delete("worldPins", pin._id);
+    });
+    await t.mutation(internal.migrations.backfillWorldPins, {});
+    expect(await pinOf(worldId)).toMatchObject({ name: "Mossbright" });
+    expect((await t.query(api.universe.justBorn, {})).map((pin) => pin.id)).toEqual([worldId]);
+  });
+});

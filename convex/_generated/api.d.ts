@@ -55,6 +55,7 @@ import type * as lib_rateLimits from "../lib/rateLimits.js";
 import type * as lib_settings from "../lib/settings.js";
 import type * as lib_systemEvents from "../lib/systemEvents.js";
 import type * as lib_time from "../lib/time.js";
+import type * as migrations from "../migrations.js";
 import type * as model_admin from "../model/admin.js";
 import type * as model_bloom from "../model/bloom.js";
 import type * as model_comets from "../model/comets.js";
@@ -148,6 +149,7 @@ declare const fullApi: ApiFromModules<{
   "lib/settings": typeof lib_settings;
   "lib/systemEvents": typeof lib_systemEvents;
   "lib/time": typeof lib_time;
+  migrations: typeof migrations;
   "model/admin": typeof model_admin;
   "model/bloom": typeof model_bloom;
   "model/comets": typeof model_comets;
