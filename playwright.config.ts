@@ -19,16 +19,20 @@ export default defineConfig({
   projects: [
     // Chromium draws WebGL with SwiftShader, so 3D works in headless runs.
     { name: "chromium", use: { ...devices["Desktop Chrome"], launchOptions: SWIFTSHADER } },
-    // Phones run the creator only (Phase 6).
+    // Phones run the creator (Phase 6) and the world page (Phase 7).
     {
       name: "mobile-chrome",
-      testMatch: /creator\.spec\.ts/,
+      testMatch: /(creator|world)\.spec\.ts/,
       use: {
         ...devices["Pixel 7"],
         launchOptions: SWIFTSHADER,
       },
     },
-    { name: "mobile-safari", testMatch: /creator\.spec\.ts/, use: { ...devices["iPhone 14"] } },
+    {
+      name: "mobile-safari",
+      testMatch: /(creator|world)\.spec\.ts/,
+      use: { ...devices["iPhone 14"] },
+    },
   ],
   webServer: process.env.PLAYWRIGHT_BASE_URL
     ? undefined

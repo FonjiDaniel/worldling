@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, type Page } from "@playwright/test";
+import { expect, type Locator, type Page } from "@playwright/test";
 
 import { waitForCode } from "./mailbox";
 
@@ -41,9 +41,25 @@ export async function pasteCode(page: Page, code: string) {
   await page.keyboard.press("ControlOrMeta+V");
 }
 
+/**
+ * Waits until React has attached its props to the element. A value typed into a controlled
+ * input before that is lost: slow WebKit hydration otherwise sends an empty email.
+ */
+export async function expectHydrated(element: Locator) {
+  await expect
+    .poll(
+      () =>
+        element.evaluate((node) => Object.keys(node).some((key) => key.startsWith("__reactProps"))),
+      { timeout: 30_000 },
+    )
+    .toBe(true);
+}
+
 /** Fills the sign-up form on the current page, then enters the emailed code. */
 export async function completeSignUp(page: Page, email: string) {
-  await page.getByLabel("Email").fill(email);
+  const emailField = page.getByLabel("Email");
+  await expectHydrated(emailField);
+  await emailField.fill(email);
   await page.getByLabel("Password", { exact: true }).fill(PASSWORD);
   await page.getByRole("button", { name: "Create my world" }).click();
   // The first auth call can be slow while a 3D page is still busy in software WebGL.

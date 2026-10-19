@@ -37,6 +37,12 @@ describe("e2e mailbox", () => {
       /off on this deployment/,
     );
     await expect(
+      t.query(internal.testing.world.worldState, { email: to, day: "2026-10-19" }),
+    ).rejects.toThrow(/off on this deployment/);
+    await expect(
+      t.mutation(internal.testing.world.seedComets, { email: to, bodies: ["hi"] }),
+    ).rejects.toThrow(/off on this deployment/);
+    await expect(
       t.mutation(internal.testing.e2e.record, { to, template: "auth.verify", data: {} }),
     ).rejects.toThrow(/off on this deployment/);
   });

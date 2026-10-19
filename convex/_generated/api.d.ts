@@ -84,6 +84,7 @@ import type * as shared_worldPalettes from "../shared/worldPalettes.js";
 import type * as shared_worldParams from "../shared/worldParams.js";
 import type * as system from "../system.js";
 import type * as testing_e2e from "../testing/e2e.js";
+import type * as testing_world from "../testing/world.js";
 import type * as worlds from "../worlds.js";
 
 import type {
@@ -169,6 +170,7 @@ declare const fullApi: ApiFromModules<{
   "shared/worldParams": typeof shared_worldParams;
   system: typeof system;
   "testing/e2e": typeof testing_e2e;
+  "testing/world": typeof testing_world;
   worlds: typeof worlds;
 }>;
 

@@ -7,7 +7,7 @@ import { primaryWorld } from "../model/worlds";
 // The e2e mailbox (ADR-016). Internal, so only the CLI with deploy access can read it, and
 // both functions refuse on production even then.
 
-function assertEnabled(): void {
+export function assertEnabled(): void {
   if (!isE2eMailboxEnabled()) throw new Error("The e2e mailbox is off on this deployment");
 }
 
