@@ -501,6 +501,7 @@
   --art-fill-light: var(--color-nebula-200);
   --art-night-lights: var(--color-sunrise-300);
   --art-firefly: var(--color-sunrise-200);
+  --art-comet: var(--color-sunrise-100);
   --art-aurora: var(--color-accent);
   --art-halo: var(--color-link);
   --art-moon: var(--color-text-muted);

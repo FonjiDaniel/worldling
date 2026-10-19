@@ -12,6 +12,7 @@ import { readArtColors } from "../art";
 import { worldTime } from "../clock";
 import { type RenderTier, TIERS } from "../quality";
 import { ATMOSPHERE_RADIUS } from "../shaders/sky";
+import { CometStreaks } from "./CometStreaks";
 import { FallbackPlanet } from "./FallbackPlanet";
 import { type PlanetHandle, REFORM_SHRINK, RESTING_HANDLE } from "./handle";
 import {
@@ -31,6 +32,8 @@ export interface PlanetProps {
   tier: RenderTier;
   /** Re-form, drag-to-turn and pinned time, read every frame. */
   handle?: Readonly<PlanetHandle>;
+  /** Recent comet ids, newest first, drawn as streaks in orbit. */
+  comets?: readonly string[];
 }
 
 const CLOUD_LIFT = 0.035;
@@ -45,7 +48,15 @@ export function Planet(props: PlanetProps) {
   return <ShaderPlanet {...props} />;
 }
 
-function ShaderPlanet({ params, level, tier, handle = RESTING_HANDLE }: PlanetProps) {
+const NO_COMETS: readonly string[] = [];
+
+function ShaderPlanet({
+  params,
+  level,
+  tier,
+  handle = RESTING_HANDLE,
+  comets = NO_COMETS,
+}: PlanetProps) {
   const dpr = useThree((state) => state.viewport.dpr);
   const data = useMemo(
     () => paramsToUniforms(params, tier, level, readArtColors()),
@@ -132,6 +143,7 @@ function ShaderPlanet({ params, level, tier, handle = RESTING_HANDLE }: PlanetPr
       {data.fireflies ? (
         <points geometry={fireflies} material={materials.fireflies} renderOrder={5} />
       ) : null}
+      <CometStreaks ids={comets} tier={tier} handle={handle} />
     </group>
   );
 }

@@ -20,12 +20,14 @@ export interface PlanetViewProps {
   frame?: number;
   /** Lets the page re-form or turn the world without re-rendering. */
   handle?: Readonly<PlanetHandle>;
+  /** Recent comet ids, newest first, drawn as streaks in orbit. */
+  comets?: readonly string[];
 }
 
 /** A world in a DOM box, with its text description and a non-WebGL fallback. */
-export function PlanetView({ params, level, className, frame, handle }: PlanetViewProps) {
+export function PlanetView({ params, level, className, frame, handle, comets }: PlanetViewProps) {
   const tier = useEffectiveTier();
-  const radius = frame ?? frameRadius(level);
+  const radius = frame ?? frameRadius(level, (comets?.length ?? 0) > 0);
   return (
     <ThreeView
       label={describeWorld(params, level)}
@@ -34,7 +36,13 @@ export function PlanetView({ params, level, className, frame, handle }: PlanetVi
     >
       <PlanetCamera radius={radius} />
       {isRenderTier(tier) ? (
-        <Planet params={params} level={level} tier={tier} {...(handle && { handle })} />
+        <Planet
+          params={params}
+          level={level}
+          tier={tier}
+          {...(handle && { handle })}
+          {...(comets && { comets })}
+        />
       ) : null}
     </ThreeView>
   );

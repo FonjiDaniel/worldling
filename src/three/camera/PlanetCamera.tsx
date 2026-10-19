@@ -13,11 +13,13 @@ const ELEVATION_RAD = (25 * Math.PI) / 180;
 /** Thumbnails turn the camera a little, for a three-quarter view (SPEC §8.7). */
 const THUMBNAIL_AZIMUTH_RAD = (35 * Math.PI) / 180;
 const PLANET_FRAME = 1.2;
+const COMET_FRAME = 1.45;
 const MOON_FRAME = 2.1;
 
-/** World radius to frame: room for moons once a level brings them. */
-export function frameRadius(level: number): number {
-  return unlocksFor(level).moons > 0 ? MOON_FRAME : PLANET_FRAME;
+/** World radius to frame: room for moons once a level brings them, and for orbiting comets. */
+export function frameRadius(level: number, hasComets = false): number {
+  if (unlocksFor(level).moons > 0) return MOON_FRAME;
+  return hasComets ? COMET_FRAME : PLANET_FRAME;
 }
 
 /** Distance that fits a sphere of `radius` in the view's shorter side. */

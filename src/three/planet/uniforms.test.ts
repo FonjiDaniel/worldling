@@ -12,6 +12,7 @@ const art: ArtColors = {
   fillLight: "#cbc2ff",
   nightLights: "#ffb394",
   firefly: "#ffcdb6",
+  comet: "#ffe5d7",
   aurora: "#3fe0c5",
   halo: "#a99fff",
   moon: "#9a9bb8",

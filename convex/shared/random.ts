@@ -33,3 +33,13 @@ export function clamp(value: number, min: number, max: number): number {
 export function randomSeed(): number {
   return crypto.getRandomValues(new Uint32Array(1))[0] ?? 0;
 }
+
+/** FNV-1a: a stable uint32 for a string (a username or a document id). */
+export function hashString(text: string): number {
+  let hash = 0x811c9dc5;
+  for (let i = 0; i < text.length; i += 1) {
+    hash ^= text.charCodeAt(i);
+    hash = Math.imul(hash, 0x01000193);
+  }
+  return hash >>> 0;
+}

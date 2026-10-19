@@ -7,6 +7,7 @@ export interface ArtColors {
   fillLight: string;
   nightLights: string;
   firefly: string;
+  comet: string;
   aurora: string;
   halo: string;
   moon: string;
@@ -20,6 +21,7 @@ const TOKENS: Record<keyof ArtColors, string> = {
   fillLight: "--art-fill-light",
   nightLights: "--art-night-lights",
   firefly: "--art-firefly",
+  comet: "--art-comet",
   aurora: "--art-aurora",
   halo: "--art-halo",
   moon: "--art-moon",
