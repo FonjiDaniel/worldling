@@ -124,6 +124,13 @@ SPEC sections and build phases refer to `docs/SPEC.md` and its §15 phases. Phas
 | `06-applications/05-template/` | `og-template.json` | Editable OG fields (world name, @username, planet, tagline) | §12 | 7 | Ref |
 | `06-applications/06-source/` | `build_applications.py`, `build_guide.py`, `copy-and-layout.json` | Rebuild scripts; every text run with position and size | §7, §12 | 3, 7 | Tool |
 
+**How Phase 7 used 06 (ADR-023):**
+
+- **OG image** (`src/features/world/og/og-card.tsx`): positions and sizes from `build_applications.py` (logo at 45,32 and 272 wide; "A WORLD TO VISIT" at 64,191; name at 60 down to 48 on two lines; rule at 475; planet at 642,55 and 530 square). Colors come from `src/lib/og/theme.ts`, generated from the 08 tokens by `pnpm tokens`. The planet is the world's own thumbnail, or a disc in its palette when there is none. Unknown worlds get a brand card with the tagline and the hero gradient mark.
+- **OG fonts:** satori draws only the default instance of a variable font (Bricolage's default is weight 800), so `src/assets/fonts/` holds static instances at the 06 axes: Bricolage 650 (opsz 48), Geist 400 and 600. See its README.
+- **Mobile world page:** the mockup's order is kept (world, name, owner, bloom card, Sunrise action, then more). From `lg` the world takes the stage and the rest sits in a side column. Until Phase 9 the Sunrise action is share, since comets can't be sent yet.
+- **Copy:** the bloom card's line under the bar names the next unlock ("Next bloom: a first moon.") instead of the mockup's "Growing a little brighter.". Level-up lines use 07 `celebrations.new_moon` for moons and follow its pattern for the rest (`convex/shared/bloomCopy.ts`).
+
 ### 08-handoff
 
 | Folder | Files | Contains | SPEC | Phases | Use |

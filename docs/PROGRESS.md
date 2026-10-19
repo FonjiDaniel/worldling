@@ -4,11 +4,46 @@ Where the build stands, phase by phase (SPEC §15). Updated at the end of every 
 
 ## Current status
 
-**Phase 6: World creator** is complete. Typecheck, lint, unit and Convex tests, build and the creator e2e on desktop Chrome, Pixel 7 and iPhone 14 pass locally. Two items still need real phones: the creator on a real iPhone (Safari) and Android (Chrome), and the Phase 5 60fps check. GitHub Actions is still blocked by the account billing lock (see Phase 0).
+**Phase 7: World page and sharing** is built. Typecheck, lint, unit and Convex tests and build pass. The world e2e is not green yet. The unknown-world test passes on all three devices. The owner test got through tend, comet review, share, comets, axe and the counted visit on desktop Chrome and Pixel 7 before hitting its old 5-minute timeout; on iPhone 14 it hasn't got past sign-up (a fix is in, not yet run). The OG image with and without a thumbnail was checked by hand (see the open item below). Still open from earlier phases: the creator and the 60fps check on real phones, and Google sign-in end to end. GitHub Actions is still blocked by the account billing lock (see Phase 0).
 
-Phase 4 is complete, except Google sign-in, which is built but not yet tried end to end (see Phase 4 notes).
+**Next:** Phase 8, the universe. It also turns on the "Explore the universe" link the world page leaves out for now.
 
-**Next:** Phase 7, World page and sharing. It extends the minimal `/w/[username]` from this phase (ADR-021).
+## Phase 7: World page and sharing
+
+- [x] ADR-023: comet XP dedupe (`worldStatsDaily.cometAuthors`), tend markers in `worldVisits`, streak bonus `min(streak - 1, 5)`, share as the main action until Phase 9, static OG fonts. SPEC §4.3 and §5.2 updated.
+- [x] Bloom (`convex/shared/bloom.ts`, `bloomCopy.ts`): XP per source, daily caps, streaks, `progressFor`, next-unlock lines and level-up lines in the 07 voice.
+- [x] Convex:
+  - `worlds.tend` (owner, once per UTC day) and `worlds.recordVisit` (`visit.record` limit; skips the owner, unverified accounts and visitors the owner blocked; once per visitor per day). Both only insert into `bloomQueue`.
+  - `jobs.bloomProcessor` (`convex/jobs/bloom.ts`, cron every minute): drains 500 rows, groups by world, applies caps through `worldStatsDaily`, writes `worlds.bloom` once per world, one `level_up` notification per level change, a `jobRuns` row, and reschedules itself after a full batch. Rows for hidden worlds are dropped.
+  - `worlds.setCometReview` (owner, `world.update` limit). `getByUsername` adds `xp` and the owner-only `cometReview`.
+  - `comets.listForWorld` (publicQuery, paginated, newest first; `pending` is owner only).
+  - New log events in `docs/events.md`.
+- [x] `/w/[username]`:
+  - `generateMetadata` from the world: `"{World name} by @{username} · Worldling"`, `describeWorld` as the description, Open Graph and Twitter cards, canonical URL, `noindex` for unknown worlds. `metadataBase` comes from `NEXT_PUBLIC_SITE_URL`.
+  - `preloadQuery` with the viewer's token, so the page arrives with its data and the owner's controls.
+  - Layout from the 06 mobile mockup; from `lg` the world takes the stage with a side column.
+  - Bloom card (level, progress bar with `aria-valuetext`, next unlock), owner line, Sunrise share action, owner controls (edit, comet review switch with optimistic update, disabled offline with a reason), read-only comet list (pending ones marked for the owner, empty state from 07 with "Share my world").
+  - Tend on open for the owner; a visit after 3 seconds of continuous visibility for anyone else signed in.
+  - Level-up card once per device (`worldling:bloomSeen:v1`), after the claim celebration if both apply. The celebration now reads storage only after hydration.
+  - Comet streaks in orbit (`src/three/planet/CometStreaks.tsx`): up to 12 recent comets (6 at tier 1, none at tier 0), orbit seeded from the comet id, GPU motion, one geometry and material, disposed. New `--art-comet` token. The camera frames them when there are comets.
+  - New `Switch` component (on `/dev/ui`), `useNow`, `relativeTime`.
+- [x] Sharing (§12): the native sheet on touch devices with `navigator.share`; otherwise a popover with the link, "Copy link" (toast "Link copied", the button turns to "Copied"), WhatsApp, X, Facebook and Telegram. Clean links from `NEXT_PUBLIC_SITE_URL`, no tracking parameters.
+- [x] OG image (`opengraph-image.tsx`): the 06 template in satori, with the world's thumbnail or a disc in its colors, and a brand card for unknown worlds. Thumbnails are fetched only from our Convex origin and converted to PNG with `sharp` 0.35.5 (satori accepts WebP but draws nothing for it).
+- [x] Tests:
+  - convex-test `bloom.test.ts` (14): tend once a day, streak growth and reset, bonus cap, visit cap at 20, one visit per visitor, owner/unverified/blocked visits, comet author dedupe across batches and the cap of 10, comets sent cap, one level-up notification, hidden worlds, rescheduling after a full batch, comet review privacy, pending comets owner only.
+  - Unit: bloom rules and copy, share links, relative time. Production guard for the new `testing/world` helpers.
+  - e2e `world.spec.ts` (desktop Chrome, Pixel 7, iPhone 14; not yet green in one run): sign up and onboard, tend (+10), comet review persists, share (stubbed native sheet on phones, copy link on desktop), seeded comets show, axe, a second account counts as one visit after 3 seconds (+2), OG image is a 1200x630 PNG with and without a thumbnail; an unknown world shows the not-available page and the generic card.
+- [ ] **Full green run of `world.spec.ts`** with `--workers=1` on all three projects.
+- [ ] **Share on a real phone.** Open a world page from the LAN on an iPhone and an Android phone, tap share, and check the sheet and the link it sends.
+
+### Phase 7 notes
+
+- **Run e2e with one worker** (`--workers=1`). With four workers each rendering software WebGL, the Convex CLI calls the tests use to read state got too slow for the polls.
+- **Server-rendered world page.** Now that the page renders with data, the 3D view starts after hydration (its fallback depends on this device's tier), and server reads call `connection()` first because the Convex client uses `Math.random`.
+- **OG file reads use static paths** (`join(process.cwd(), "src/assets/fonts", file)`), otherwise Turbopack traces the whole project into the function.
+- **"Explore the universe"** from the mockup waits for `/universe` (Phase 8).
+- **Arrival animation for new comets** (§2.2 Return) comes with sending in Phase 9.
+- **The OG image is cached by social networks.** A world's card updates when its thumbnail changes, but networks keep their copy for a while.
 
 ## Phase 6: World creator
 
