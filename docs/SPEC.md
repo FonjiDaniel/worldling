@@ -366,7 +366,7 @@ Breakpoints: `sm 640`, `md 768`, `lg 1024`, `xl 1280`. Mobile-first. On mobile t
 
 - Stylized realism: soft, painterly color, not photoreal. Think "museum diorama of a tiny planet".
 - Palettes are curated so every combination looks good. Advanced mode allows custom colors but clamps saturation and lightness to safe ranges.
-- Space background: deep gradient, sparse twinkling stars, faint nebula dust. Never busy. The worlds are the stars of the show.
+- Space background: deep gradient, sparse still stars (brand 05, ADR-024), faint nebula dust. Never busy. The worlds are the stars of the show.
 - Glow only on high tier devices, tuned subtly. It is a shader term, not a post-processing pass (ADR-020).
 
 ---
@@ -448,6 +448,7 @@ Pin exact versions in `package.json` at Phase 0. Upgrade deliberately, never wit
 | ADR-021 | A minimal `/w/[username]` (with `getByUsername` and the claim celebration) lands in Phase 6; `/me` redirects to it | Celebrating on `/me` until Phase 7 | §2.2 lands people on their world page; Phase 7 extends the same page |
 | ADR-022 | Creator: mockup tabs holding the SPEC sections, a custom non-modal bottom sheet, WASM WebP fallback for Safari, thumbnail uploads spend a `world.update` token | Six stacked sections, vaul, PNG thumbnails | Matches the 06 mockup, keeps the world usable on phones, keeps thumbnails WebP-only |
 | ADR-023 | Comet XP dedupe via `worldStatsDaily.cometAuthors`, tend markers in `worldVisits`, streak bonus `min(streak - 1, 5)`, share as the world page's main action until Phase 9, static OG fonts | A `bloomQueue` index, a disabled comet button | Caps hold across processor batches with no growing scans |
+| ADR-024 | Denormalized `worldPins` for the universe, slot dust for the whole spiral, featured/just born in settings keys, static stars, screen-space picking | Reading `worlds` per sector, only drawing loaded sectors | Sector subscriptions only change when something visible changes; the galaxy never looks cut off |
 
 ### 4.4 Repository structure
 
@@ -642,6 +643,25 @@ export default defineSchema({
     .index("by_featured", ["featuredAt"]),
 
   galaxy: defineTable({ nextSlot: v.number() }), // singleton
+
+  // Render-ready copy of each public world with an active owner (ADR-024). Synced by model/pins.ts.
+  worldPins: defineTable({
+    worldId: v.id("worlds"),
+    ownerId: v.id("users"),
+    slot: v.number(),
+    sectorKey: v.string(),
+    name: v.string(),
+    username: v.string(),
+    colorA: v.string(),                   // hex, from pinColors(params)
+    colorB: v.string(),
+    level: v.number(),
+    thumbnailId: v.optional(v.id("_storage")),
+    description: v.string(),              // describeWorld(params, level)
+  })
+    .index("by_sector_slot", ["sectorKey", "slot"])
+    .index("by_slot", ["slot"])
+    .index("by_world", ["worldId"])
+    .index("by_owner", ["ownerId"]),
 
   worldVisits: defineTable({
     worldId: v.id("worlds"),
@@ -855,7 +875,10 @@ Every staff/admin mutation MUST call `writeAudit(ctx, {...})` in the same transa
 | worlds | `recordVisit` | userMutation | Idempotent per visitor per day |
 | universe | `sectors` | publicQuery | Args: up to 9 sector keys, returns lightweight pins |
 | universe | `renderable` | publicQuery | Full params for near-LOD worlds (max 12 ids) |
-| universe | `featured`, `justBorn` | publicQuery | Precomputed lists |
+| universe | `featured`, `justBorn` | publicQuery | Precomputed lists (settings keys written by `jobs.rollups.trending`) |
+| universe | `overview` | publicQuery | `{ slotCount, live }` for slot dust and the live toast (ADR-024) |
+| universe | `search` | publicQuery | Username prefix, at most 6 pins (ADR-024) |
+| universe | `list` | publicQuery | Paginated pins, newest first, with descriptions, for list mode (ADR-024) |
 | comets | `listForWorld` | publicQuery | Paginated, visible only (owner also sees pending) |
 | comets | `send`, `remove`, `hide` | userMutation | |
 | reports | `create` | userMutation | One report per reporter per target |
@@ -865,7 +888,7 @@ Every staff/admin mutation MUST call `writeAudit(ctx, {...})` in the same transa
 | sessions | `signOutEverywhere` | signedInMutation | Deletes every session and refresh token (§6.4), works while suspended |
 | system | `status` | publicQuery | Maintenance state for the maintenance screen |
 
-Universe pins are lightweight: `{ id, slot, name, username, colorA, colorB, level, thumbUrl }`. Full params are only sent for the few worlds near the camera.
+Universe pins are lightweight: `{ id, slot, name, username, colorA, colorB, level }`, read from `worldPins` (ADR-024). `thumbUrl` is added only where a thumbnail is shown (list, search, featured, just born). Full params are only sent for the few worlds near the camera.
 
 ### 5.6 Background jobs
 
@@ -1100,7 +1123,8 @@ export const sectorKeyFor = (x: number, z: number) =>
   - Far: one `InstancedMesh` of glowing points/billboards colored from `colorA/colorB`, size by level. Thousands in one draw call.
   - Mid: low-detail spheres with a simplified shader using the palette (instanced by tier).
   - Near: the full planet renderer for the closest N worlds (N by tier), fetched with `universe.renderable`.
-- **Picking:** raycast against the instanced mesh, hover shows a name tag (DOM, positioned with drei `Html` or projected coordinates).
+- **Slot dust (ADR-024):** every slot up to `universe.overview.slotCount` is drawn as a faint point in the same far-LOD draw call, so the whole spiral shows when zoomed out. Loaded sectors take their pins' colors; slots without a pin fade out.
+- **Picking:** screen-space nearest pick over the loaded pins (ADR-024), hover shows a name tag (DOM, positioned with projected coordinates).
 - **Births:** new pins arriving over the live query animate in (scale from 0, brief flash).
 
 ### 8.5 Camera system
