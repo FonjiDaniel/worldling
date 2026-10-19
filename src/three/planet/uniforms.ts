@@ -139,12 +139,7 @@ export function paramsToUniforms(
     },
     moons: unlocks.moons,
     fireflies: unlocks.fireflies,
-    light: {
-      keyDir: KEY_DIR,
-      key: hexToLinear(art.keyLight),
-      fillDir: FILL_DIR,
-      fill: scaled(hexToLinear(art.fillLight), FILL_ENERGY),
-    },
+    light: sceneLight(art),
     art: {
       nightLights: hexToLinear(art.nightLights),
       aurora: hexToLinear(art.aurora),
@@ -152,5 +147,15 @@ export function paramsToUniforms(
       firefly: hexToLinear(art.firefly),
       moon: hexToLinear(art.moon),
     },
+  };
+}
+
+/** Key and fill light shared by planets and the universe's mid LOD spheres. */
+export function sceneLight(art: ArtColors): PlanetUniformData["light"] {
+  return {
+    keyDir: KEY_DIR,
+    key: hexToLinear(art.keyLight),
+    fillDir: FILL_DIR,
+    fill: scaled(hexToLinear(art.fillLight), FILL_ENERGY),
   };
 }

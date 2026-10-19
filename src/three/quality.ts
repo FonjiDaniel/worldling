@@ -12,14 +12,24 @@ export interface TierSettings {
   octaves: number;
   antialias: boolean;
   bloom: boolean;
-  /** Universe near LOD count (Phase 8). */
+  /** Universe worlds drawn as full planets (§8.4). */
   nearLod: number;
+  /** Universe worlds drawn as instanced low-detail spheres (§8.4, ADR-024). */
+  midLod: number;
 }
 
 export const TIERS: Record<RenderTier, TierSettings> = {
-  1: { maxDpr: 1, detail: 24, octaves: 3, antialias: false, bloom: false, nearLod: 4 },
-  2: { maxDpr: 1.5, detail: 48, octaves: 4, antialias: true, bloom: false, nearLod: 8 },
-  3: { maxDpr: 2, detail: 80, octaves: 6, antialias: true, bloom: true, nearLod: 12 },
+  1: { maxDpr: 1, detail: 24, octaves: 3, antialias: false, bloom: false, nearLod: 4, midLod: 120 },
+  2: {
+    maxDpr: 1.5,
+    detail: 48,
+    octaves: 4,
+    antialias: true,
+    bloom: false,
+    nearLod: 8,
+    midLod: 300,
+  },
+  3: { maxDpr: 2, detail: 80, octaves: 6, antialias: true, bloom: true, nearLod: 12, midLod: 600 },
 };
 
 export const QUALITY_STORAGE_KEY = "worldling:quality:v1";
