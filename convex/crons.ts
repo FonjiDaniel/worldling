@@ -7,5 +7,6 @@ import { internal } from "./_generated/api";
 const crons = cronJobs();
 
 crons.interval("jobs.bloomProcessor", { minutes: 1 }, internal.jobs.bloom.bloomProcessor, {});
+crons.interval("jobs.rollups.trending", { hours: 1 }, internal.jobs.rollups.trending, {});
 
 export default crons;

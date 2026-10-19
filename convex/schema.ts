@@ -97,6 +97,26 @@ export default defineSchema({
 
   galaxy: defineTable({ nextSlot: v.number() }), // singleton
 
+  // Render-ready copy of each public world with an active owner (ADR-024). Synced by model/pins.ts.
+  worldPins: defineTable({
+    worldId: v.id("worlds"),
+    ownerId: v.id("users"),
+    slot: v.number(),
+    sectorKey: v.string(),
+    name: v.string(),
+    username: v.string(),
+    colorA: v.string(), // hex, from pinColors(params)
+    colorB: v.string(),
+    level: v.number(),
+    thumbnailId: v.optional(v.id("_storage")),
+    description: v.string(), // describeWorld(params, level)
+  })
+    .index("by_sector_slot", ["sectorKey", "slot"])
+    .index("by_slot", ["slot"])
+    .index("by_world", ["worldId"])
+    .index("by_owner", ["ownerId"])
+    .index("by_username", ["username"]),
+
   worldVisits: defineTable({
     worldId: v.id("worlds"),
     visitorId: v.id("users"),

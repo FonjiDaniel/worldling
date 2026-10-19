@@ -16,14 +16,14 @@ The brand (05) also says stars are static ("no flashing stars"), while §3.8 ask
 
 ## Decision
 
-- **`worldPins` table**: a denormalized, render-ready copy of each public world with an active owner. Its fields are `worldId`, `ownerId`, `slot`, `sectorKey`, `name`, `username`, `colorA`, `colorB`, `level`, `thumbnailId?` and `description`, with indexes `by_sector_slot`, `by_slot`, `by_world` and `by_owner`. `syncWorldPin(ctx, worldId)` in `model/pins.ts` upserts the pin when the world is public and its owner active, and deletes it otherwise.
+- **`worldPins` table**: a denormalized, render-ready copy of each public world with an active owner. Its fields are `worldId`, `ownerId`, `slot`, `sectorKey`, `name`, `username`, `colorA`, `colorB`, `level`, `thumbnailId?` and `description`, with indexes `by_sector_slot`, `by_slot`, `by_world`, `by_owner` and `by_username`. `syncWorldPin(ctx, worldId)` in `model/pins.ts` upserts the pin when the world is public and its owner active, and deletes it otherwise.
   - Call sites today are `createPrimaryWorld`, `updateWorld`, `setThumbnail`, and the bloom processor only when the level changes.
   - Every later writer that changes visibility, owner status, name, username or level must call it too: moderation hide, suspension, account deletion (Phases 9 to 11).
   - `colorA` and `colorB` come from `pinColors(params)` in `shared/pins.ts`.
 - **Lean sector pins.** `universe.sectors` returns `{ id, slot, name, username, colorA, colorB, level }`. Thumbnail URLs are only resolved where they are shown: list mode, search, featured and just born.
 - **New queries** (all `publicQuery`):
   - `universe.overview` returns `{ slotCount, live }`. It is the galaxy's slot count plus the `universe.live` flag, which gates the live "just born" toast.
-  - `universe.search` is a username prefix search over `profiles.by_username` that returns at most 6 pins.
+  - `universe.search` is a username prefix search over `worldPins.by_username` that returns at most 6 pins.
   - `universe.list` pages through pins, newest first, with descriptions for list mode.
 - **Slot dust.** Positions come from the slot alone, so the client draws every slot from 0 to `slotCount` as one faint `Points` layer. Slots in loaded sectors take their pin's colors, and slots with no pin there (hidden or deleted worlds) fade out. The dust reveals nothing beyond "a slot was taken".
 - **Featured and just born are precomputed**, as §5.6 says. `jobs.rollups.trending` (hourly) writes world ids into the `universe.featured` and `universe.justBorn` settings keys through `setSystemSetting`, a job-only writer with no audit row because no person acted. Live births come from the sector subscriptions, not from the just born list.

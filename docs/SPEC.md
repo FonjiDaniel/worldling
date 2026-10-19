@@ -661,7 +661,8 @@ export default defineSchema({
     .index("by_sector_slot", ["sectorKey", "slot"])
     .index("by_slot", ["slot"])
     .index("by_world", ["worldId"])
-    .index("by_owner", ["ownerId"]),
+    .index("by_owner", ["ownerId"])
+    .index("by_username", ["username"]),
 
   worldVisits: defineTable({
     worldId: v.id("worlds"),

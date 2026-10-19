@@ -5,6 +5,7 @@ import type { ActiveViewer, Viewer } from "../lib/functions";
 import type { Logger } from "../lib/logger";
 import { enforceRateLimit } from "../lib/rateLimits";
 import { getSetting } from "../lib/settings";
+import { syncWorldPin } from "./pins";
 import { sectorKeyForSlot } from "../shared/galaxy";
 import { checkText } from "../shared/moderation";
 import {
@@ -16,7 +17,7 @@ import {
 } from "../shared/worldParams";
 
 // Worlds (SPEC §5.2, §5.7, §8.7). Onboarding creates the primary world (ADR-017), the creator
-// edits it (Phase 6) and Phase 8 adds the universe queries.
+// edits it (Phase 6) and Phase 8 mirrors it into worldPins for the universe (ADR-024).
 
 type ReadCtx = Pick<QueryCtx, "db" | "storage">;
 type WriteCtx = MutationCtx & { log: Logger; viewer: ActiveViewer };
@@ -43,7 +44,7 @@ export interface NewWorld {
 
 export async function createPrimaryWorld(ctx: MutationCtx, world: NewWorld): Promise<Id<"worlds">> {
   const slot = await allocateSlot(ctx);
-  return await ctx.db.insert("worlds", {
+  const worldId = await ctx.db.insert("worlds", {
     ...world,
     isPrimary: true,
     slot,
@@ -53,6 +54,8 @@ export async function createPrimaryWorld(ctx: MutationCtx, world: NewWorld): Pro
     cometReview: false,
     updatedAt: Date.now(),
   });
+  await syncWorldPin(ctx, worldId);
+  return worldId;
 }
 
 function invalid(field: string, problem: string): never {
@@ -153,6 +156,7 @@ export async function updateWorld(ctx: WriteCtx, input: WorldUpdate): Promise<vo
   if (input.name !== undefined) patch.name = parseWorldName(input.name, extraWords);
   if (input.params !== undefined) patch.params = parseWorldParams(input.params);
   await ctx.db.patch("worlds", world._id, { ...patch, updatedAt: Date.now() });
+  await syncWorldPin(ctx, world._id);
   ctx.log.info("world.update.succeeded", {
     worldId: world._id,
     name: patch.name !== undefined,
@@ -189,6 +193,7 @@ export async function setThumbnail(
   }
   const previous = world.thumbnailId;
   await ctx.db.patch("worlds", worldId, { thumbnailId: storageId });
+  await syncWorldPin(ctx, worldId);
   if (previous !== undefined && previous !== storageId) await ctx.storage.delete(previous);
   ctx.log.info("world.thumbnail.set", { worldId, size: file.size });
   return { ok: true };

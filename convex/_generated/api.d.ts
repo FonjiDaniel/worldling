@@ -42,6 +42,7 @@ import type * as email_unsubscribePage from "../email/unsubscribePage.js";
 import type * as email_workpool from "../email/workpool.js";
 import type * as http from "../http.js";
 import type * as jobs_bloom from "../jobs/bloom.js";
+import type * as jobs_rollups from "../jobs/rollups.js";
 import type * as lib_audit from "../lib/audit.js";
 import type * as lib_authEmail from "../lib/authEmail.js";
 import type * as lib_crypto from "../lib/crypto.js";
@@ -59,8 +60,11 @@ import type * as model_bloom from "../model/bloom.js";
 import type * as model_comets from "../model/comets.js";
 import type * as model_emailConfigs from "../model/emailConfigs.js";
 import type * as model_emailOutbox from "../model/emailOutbox.js";
+import type * as model_pins from "../model/pins.js";
 import type * as model_profiles from "../model/profiles.js";
+import type * as model_rails from "../model/rails.js";
 import type * as model_sessions from "../model/sessions.js";
+import type * as model_universe from "../model/universe.js";
 import type * as model_visits from "../model/visits.js";
 import type * as model_worlds from "../model/worlds.js";
 import type * as profiles from "../profiles.js";
@@ -77,6 +81,7 @@ import type * as shared_graphemes from "../shared/graphemes.js";
 import type * as shared_moderation from "../shared/moderation.js";
 import type * as shared_otp from "../shared/otp.js";
 import type * as shared_password from "../shared/password.js";
+import type * as shared_pins from "../shared/pins.js";
 import type * as shared_random from "../shared/random.js";
 import type * as shared_usernames from "../shared/usernames.js";
 import type * as shared_worldDescription from "../shared/worldDescription.js";
@@ -84,7 +89,9 @@ import type * as shared_worldPalettes from "../shared/worldPalettes.js";
 import type * as shared_worldParams from "../shared/worldParams.js";
 import type * as system from "../system.js";
 import type * as testing_e2e from "../testing/e2e.js";
+import type * as testing_universe from "../testing/universe.js";
 import type * as testing_world from "../testing/world.js";
+import type * as universe from "../universe.js";
 import type * as worlds from "../worlds.js";
 
 import type {
@@ -128,6 +135,7 @@ declare const fullApi: ApiFromModules<{
   "email/workpool": typeof email_workpool;
   http: typeof http;
   "jobs/bloom": typeof jobs_bloom;
+  "jobs/rollups": typeof jobs_rollups;
   "lib/audit": typeof lib_audit;
   "lib/authEmail": typeof lib_authEmail;
   "lib/crypto": typeof lib_crypto;
@@ -145,8 +153,11 @@ declare const fullApi: ApiFromModules<{
   "model/comets": typeof model_comets;
   "model/emailConfigs": typeof model_emailConfigs;
   "model/emailOutbox": typeof model_emailOutbox;
+  "model/pins": typeof model_pins;
   "model/profiles": typeof model_profiles;
+  "model/rails": typeof model_rails;
   "model/sessions": typeof model_sessions;
+  "model/universe": typeof model_universe;
   "model/visits": typeof model_visits;
   "model/worlds": typeof model_worlds;
   profiles: typeof profiles;
@@ -163,6 +174,7 @@ declare const fullApi: ApiFromModules<{
   "shared/moderation": typeof shared_moderation;
   "shared/otp": typeof shared_otp;
   "shared/password": typeof shared_password;
+  "shared/pins": typeof shared_pins;
   "shared/random": typeof shared_random;
   "shared/usernames": typeof shared_usernames;
   "shared/worldDescription": typeof shared_worldDescription;
@@ -170,7 +182,9 @@ declare const fullApi: ApiFromModules<{
   "shared/worldParams": typeof shared_worldParams;
   system: typeof system;
   "testing/e2e": typeof testing_e2e;
+  "testing/universe": typeof testing_universe;
   "testing/world": typeof testing_world;
+  universe: typeof universe;
   worlds: typeof worlds;
 }>;
 

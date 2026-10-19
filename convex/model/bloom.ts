@@ -3,6 +3,7 @@ import type { MutationCtx } from "../_generated/server";
 import type { Logger } from "../lib/logger";
 import { addUtcDays } from "../lib/time";
 import { DAILY_CAPS, levelForXp, streakAfter, streakBonus, XP } from "../shared/bloom";
+import { syncWorldPin } from "./pins";
 
 // Bloom XP (SPEC §2.4, §5.6, §5.7). Tends, visits and comets only insert into bloomQueue; the
 // processor is the single writer of worlds.bloom and applies the daily caps from worldStatsDaily.
@@ -83,6 +84,7 @@ async function applyWorld(
   bloom.level = Math.max(world.bloom.level, levelForXp(bloom.xp));
   await ctx.db.patch("worlds", world._id, { bloom });
   if (bloom.level <= world.bloom.level) return null;
+  await syncWorldPin(ctx, world._id);
   await ctx.db.insert("notifications", {
     userId: world.ownerId,
     type: "level_up",
